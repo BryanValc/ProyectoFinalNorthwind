@@ -3,26 +3,28 @@ package controlador;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.Product;
-import conexionBD.ConexionBD;
+import conexionBD.Conexion;
 import java.util.ArrayList;
 
 public class ProductDAO {
 
+    Conexion cn = new Conexion(2);
+
     public boolean insertarRegistro(Product producto) {
         boolean resultado = false;
-        resultado = ConexionBD.agregarRegistro(producto);
+        resultado = cn.agregarRegistro(producto);
         return resultado;
     }
 
     public boolean modificarRegistro(Product producto) {
         boolean resultado = false;
-        resultado=ConexionBD.actualizarRegistro(producto);
+        resultado=cn.actualizarRegistro(producto);
         return resultado;
     }
 
     public ArrayList<Product> buscar(String filtro) {
         ArrayList<Product> lista = new ArrayList<Product>();
-        ResultSet rs = ConexionBD.ejecutarConsulta(filtro);
+        ResultSet rs = cn.ejecutarConsulta(filtro);
         try {
             if(rs.next()){
                 do{
@@ -48,7 +50,7 @@ public class ProductDAO {
     public boolean borrarRegistro(Product producto) {
         boolean resultado = false;
         String sql = "DELETE FROM Products WHERE ProductID = " + producto.getProductID();
-        resultado=ConexionBD.eliminarRegistro(sql);
+        resultado=cn.eliminarRegistro(sql);
         return resultado;
     }
 

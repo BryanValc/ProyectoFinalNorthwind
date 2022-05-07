@@ -8,15 +8,17 @@ import java.util.ArrayList;
 
 public class SupplierDAO {
 
+    Conexion cn = new Conexion(2);
+
     public boolean insertarRegistro(Supplier proveedor) {
         boolean resultado = false;
-        resultado = ConexionBD.agregarRegistro(proveedor);
+        resultado = cn.agregarRegistro(proveedor);
         return resultado;
     }
 
     public boolean modificarRegistro(Supplier proveedor) {
         boolean resultado = false;
-        resultado=ConexionBD.actualizarRegistro(proveedor);
+        resultado=cn.actualizarRegistro(proveedor);
         return resultado;
     }
 
@@ -32,11 +34,13 @@ public class SupplierDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
-                        rs.getInt(8),
-                        rs.getInt(9),
-                        rs.getBoolean(10)));
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12)));
                 }while(rs.next());
             }
         } catch (SQLException ex) {
@@ -48,7 +52,7 @@ public class SupplierDAO {
     public boolean borrarRegistro(Supplier proveedor) {
         boolean resultado = false;
         String sql = "DELETE FROM Suppliers WHERE SupplierID = " + proveedor.getSupplierID();
-        resultado=ConexionBD.eliminarRegistro(sql);
+        resultado=cn.eliminarRegistro(sql);
         return resultado;
     }
     

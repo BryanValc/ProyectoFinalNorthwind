@@ -1,29 +1,32 @@
 package controlador;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.Category;
-import conexionBD.ConexionBD;
+import conexionBD.Conexion;
 import java.util.ArrayList;
 
 
 public class CategoryDAO {
 
+    Conexion cn = new Conexion(2);
+
     public boolean insertarRegistro(Category categoria) {
         boolean resultado = false;
-        resultado = ConexionBD.agregarRegistro(categoria);
+        resultado = cn.agregarRegistro(categoria);
         return resultado;
     }
 
     public boolean modificarRegistro(Category categoria) {
         boolean resultado = false;
-        resultado=ConexionBD.actualizarRegistro(categoria);
+        resultado=cn.actualizarRegistro(categoria);
         return resultado;
     }
 
     public ArrayList<Category> buscar(String filtro) {
         ArrayList<Category> lista = new ArrayList<Category>();
-        ResultSet rs = ConexionBD.ejecutarConsulta(filtro);
+        ResultSet rs = Conexion.ejecutarConsulta(filtro);
         try {
             if(rs.next()){
                 do{
@@ -42,7 +45,7 @@ public class CategoryDAO {
     public boolean borrarRegistro(Category categoria) {
         boolean resultado = false;
         String sql = "DELETE FROM Categories WHERE CategoryID = " + categoria.getCategoryID();
-        resultado=ConexionBD.eliminarRegistro(sql);
+        resultado=cn.eliminarRegistro(sql);
         return resultado;
     }
 
