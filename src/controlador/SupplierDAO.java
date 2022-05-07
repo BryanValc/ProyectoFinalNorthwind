@@ -3,7 +3,7 @@ package controlador;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.Supplier;
-import conexionBD.ConexionBD;
+import conexionBD.Conexion;
 import java.util.ArrayList;
 
 public class SupplierDAO {
@@ -22,7 +22,7 @@ public class SupplierDAO {
 
     public ArrayList<Supplier> buscar(String filtro) {
         ArrayList<Supplier> lista = new ArrayList<Supplier>();
-        ResultSet rs = ConexionBD.ejecutarConsulta(filtro);
+        ResultSet rs = Conexion.ejecutarConsulta(filtro);
         try {
             if(rs.next()){
                 do{

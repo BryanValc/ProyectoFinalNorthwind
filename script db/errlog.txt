@@ -1,0 +1,8 @@
+===5/7/2022===
+
+Msg 2812, Level 16, State 62, Line 22
+Could not find stored procedure 'sp_dboption'.
+Msg 2812, Level 16, State 62, Line 23
+Could not find stored procedure 'sp_dboption'.
+
+Completion time: 2022-05-07T10:39:32.2923045-05:00
