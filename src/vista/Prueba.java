@@ -21,14 +21,14 @@ public class Prueba {
 				"Mexico", "(514) 555-2955", "(514) 555-2921",
 				"http://www.microsoft.com/accessdev/sampleapps/gdaymate.htm");
 
-		if (ctDao.modificarRegistro(categoria)) {
-			System.out.println("Categoria modificada");
+		if (ctDao.borrarRegistro(categoria)) {
+			System.out.println("Categoria eiminada");
 		}
-		if (pdDao.modificarRegistro(producto)) {
-			System.out.println("Producto modificado");
+		if (pdDao.borrarRegistro(producto)) {
+			System.out.println("Producto eliminado");
 		}
-		if (suDao.modificarRegistro(proveedor)) {
-			System.out.println("Proveedor modificado");
+		if (suDao.borrarRegistro(proveedor)) {
+			System.out.println("Proveedor eliminado");
 		}
 
 	}

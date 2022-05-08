@@ -52,6 +52,7 @@ public class SupplierDAO {
     }
 
     public boolean borrarRegistro(Supplier proveedor) {
+        cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Suppliers WHERE SupplierID = " + proveedor.getSupplierID();
         resultado = cn.eliminarRegistro(sql);

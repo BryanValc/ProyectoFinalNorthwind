@@ -50,6 +50,7 @@ public class ProductDAO {
     }
 
     public boolean borrarRegistro(Product producto) {
+        cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Products WHERE ProductID = " + producto.getProductID();
         resultado = cn.eliminarRegistro(sql);

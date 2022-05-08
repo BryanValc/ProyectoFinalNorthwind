@@ -44,6 +44,7 @@ public class CategoryDAO {
     }
 
     public boolean borrarRegistro(Category categoria) {
+        cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Categories WHERE CategoryID = " + categoria.getCategoryID();
         resultado = cn.eliminarRegistro(sql);

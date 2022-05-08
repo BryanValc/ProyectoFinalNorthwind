@@ -71,12 +71,12 @@ public class Conexion {
 
     public static boolean eliminarRegistro(String sql) {
         try {
-            String consulta = sql;
-            pstm = conexion.prepareStatement(consulta);
+            pstm = conexion.prepareStatement(sql);
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.printf("Error al eliminar el registro");
+            //System.out.printf("Error al eliminar el registro");
+            ex.printStackTrace();
         }
         return false;
     }
@@ -123,7 +123,7 @@ public class Conexion {
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.printf("Error al modificar la categoria");
         }
         return false;
 
@@ -144,7 +144,7 @@ public class Conexion {
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.printf("Error al modificar el producto");
         }
         return false;
 
@@ -171,7 +171,7 @@ public class Conexion {
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.printf("Error al modificar el proveedor");
         }
         return false;
     }
