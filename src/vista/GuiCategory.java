@@ -71,10 +71,20 @@ public class GuiCategory extends JFrame {
 
 		jtf1 = new JFormattedTextField();
 		jtf1.setBounds(111, 11, 63, 20);
+		try {
+            jtf1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 		contentPane.add(jtf1);
 
 		jtf2 = new JFormattedTextField();
 		jtf2.setBounds(111, 36, 91, 20);
+		try {
+            jtf2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("???????????????")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 		contentPane.add(jtf2);
 
 		jtf3 = new JFormattedTextField();
@@ -108,13 +118,6 @@ public class GuiCategory extends JFrame {
 	}
 
 	public void obtenerRegistroTabla() {
-		/*
-		 * caja1.setText(""+jTable1.getValueAt(jTable1.getSelectedRow(),0));
-		 * caja2.setText(""+jTable1.getValueAt(jTable1.getSelectedRow(),1));
-		 * caja3.setText(""+jTable1.getValueAt(jTable1.getSelectedRow(),2));
-		 * caja4.setText(""+jTable1.getValueAt(jTable1.getSelectedRow(),3));
-		 * caja5.setText(""+jTable1.getValueAt(jTable1.getSelectedRow(),4));
-		 */
 		jtf1.setText("" + table.getValueAt(table.getSelectedRow(), 0));
 		jtf2.setText("" + table.getValueAt(table.getSelectedRow(), 1));
 		jtf3.setText("" + table.getValueAt(table.getSelectedRow(), 2));
