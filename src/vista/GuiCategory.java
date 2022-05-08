@@ -21,6 +21,7 @@ public class GuiCategory extends JFrame {
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JFormattedTextField jtf1, jtf2, jtf3;
+	private JButton btnLimpiar;
 
 	/**
 	 * Launch the application.
@@ -90,6 +91,15 @@ public class GuiCategory extends JFrame {
 		jtf3 = new JFormattedTextField();
 		jtf3.setBounds(111, 61, 136, 20);
 		contentPane.add(jtf3);
+		
+		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
+			}
+		});
+		btnLimpiar.setBounds(335, 52, 89, 23);
+		contentPane.add(btnLimpiar);
 	}
 
 	public void actualizarTabla(String sql) {
@@ -113,7 +123,7 @@ public class GuiCategory extends JFrame {
 				obtenerRegistroTabla();
 			}
 		});
-		scrollPane.getViewport().add(table);
+		scrollPane.setViewportView(table);
 
 	}
 
@@ -121,6 +131,12 @@ public class GuiCategory extends JFrame {
 		jtf1.setText("" + table.getValueAt(table.getSelectedRow(), 0));
 		jtf2.setText("" + table.getValueAt(table.getSelectedRow(), 1));
 		jtf3.setText("" + table.getValueAt(table.getSelectedRow(), 2));
+	}
+
+	public void limpiarCampos() {
+		jtf1.setText("");
+		jtf2.setText("");
+		jtf3.setText("");
 	}
 
 }
