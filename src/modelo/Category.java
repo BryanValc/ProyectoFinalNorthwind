@@ -11,7 +11,7 @@ public class Category {
         this.categoryName = categoryName;
         this.description = description;
     }
-    
+
     public int getCategoryID() {
         return categoryID;
     }
@@ -38,7 +38,8 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" + "categoryID=" + categoryID + ", categoryName=" + categoryName + ", description=" + description + '}';
+        return "Category{" + "categoryID=" + categoryID + ", categoryName=" + categoryName + ", description="
+                + description + '}';
     }
 
 }

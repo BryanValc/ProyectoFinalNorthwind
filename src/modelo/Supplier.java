@@ -15,7 +15,7 @@ public class Supplier {
     String fax;
     String homePage;
 
-   public Supplier(int supplierID,
+    public Supplier(int supplierID,
             String companyName,
             String contactName,
             String contactTitle,
@@ -139,7 +139,10 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return "Supplier{" + "supplierID=" + supplierID + ", companyName=" + companyName + ", contactName=" + contactName + ", contactTitle=" + contactTitle + ", address=" + address + ", city=" + city + ", region=" + region + ", postalCode=" + postalCode + ", country=" + country + ", phone=" + phone + ", fax=" + fax + ", homePage=" + homePage + '}';
+        return "Supplier{" + "supplierID=" + supplierID + ", companyName=" + companyName + ", contactName="
+                + contactName + ", contactTitle=" + contactTitle + ", address=" + address + ", city=" + city
+                + ", region=" + region + ", postalCode=" + postalCode + ", country=" + country + ", phone=" + phone
+                + ", fax=" + fax + ", homePage=" + homePage + '}';
     }
 
 }

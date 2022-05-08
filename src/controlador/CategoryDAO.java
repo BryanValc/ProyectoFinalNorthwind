@@ -7,20 +7,25 @@ import modelo.Category;
 import conexionBD.Conexion;
 import java.util.ArrayList;
 
-
 public class CategoryDAO {
 
     Conexion cn = new Conexion(2);
 
     public boolean insertarRegistro(Category categoria) {
+    	cn.getConexion();
         boolean resultado = false;
         resultado = cn.agregarRegistro(categoria);
+        if (resultado) {
+            System.out.println("Registro insertado correctamente");
+        } else {
+            System.out.println("Error al insertar el registro");
+        }
         return resultado;
     }
 
     public boolean modificarRegistro(Category categoria) {
         boolean resultado = false;
-        resultado=cn.actualizarRegistro(categoria);
+        resultado = cn.actualizarRegistro(categoria);
         return resultado;
     }
 
@@ -28,13 +33,13 @@ public class CategoryDAO {
         ArrayList<Category> lista = new ArrayList<Category>();
         ResultSet rs = Conexion.ejecutarConsulta(filtro);
         try {
-            if(rs.next()){
-                do{
+            if (rs.next()) {
+                do {
                     lista.add(new Category(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3)));
-                }while(rs.next());
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3)));
+                } while (rs.next());
             }
         } catch (SQLException ex) {
             System.out.printf("Error al buscar");
@@ -45,7 +50,7 @@ public class CategoryDAO {
     public boolean borrarRegistro(Category categoria) {
         boolean resultado = false;
         String sql = "DELETE FROM Categories WHERE CategoryID = " + categoria.getCategoryID();
-        resultado=cn.eliminarRegistro(sql);
+        resultado = cn.eliminarRegistro(sql);
         return resultado;
     }
 

@@ -2,38 +2,38 @@ package modelo;
 
 public class Product {
 
-    int productID;
-    String productName;
-    String supplierID;
-    String categoryID;
-    String quantityPerUnit;
-    double unitPrice;
-    int unitsInStock;
-    int unitsOnOrder;
-    int reorderLevel;
-    boolean discontinued;
+	int productID;
+	String productName;
+	int supplierID;
+	int categoryID;
+	String quantityPerUnit;
+	double unitPrice;
+	int unitsInStock;
+	int unitsOnOrder;
+	int reorderLevel;
+	boolean discontinued;
 
-    public Product(int productID,
-            String productName,
-            String supplierID,
-            String categoryID,
-            String quantityPerUnit,
-            double unitPrice,
-            int unitsInStock,
-            int unitsOnOrder,
-            int reorderLevel,
-            boolean discontinued) {
-        this.productID = productID;
-        this.productName = productName;
-        this.supplierID = supplierID;
-        this.categoryID = categoryID;
-        this.quantityPerUnit = quantityPerUnit;
-        this.unitPrice = unitPrice;
-        this.unitsInStock = unitsInStock;
-        this.unitsOnOrder = unitsOnOrder;
-        this.reorderLevel = reorderLevel;
-        this.discontinued = discontinued;
-    }
+	public Product(int productID,
+			String productName,
+			int supplierID,
+			int categoryID,
+			String quantityPerUnit,
+			double unitPrice,
+			int unitsInStock,
+			int unitsOnOrder,
+			int reorderLevel,
+			boolean discontinued) {
+		this.productID = productID;
+		this.productName = productName;
+		this.supplierID = supplierID;
+		this.categoryID = categoryID;
+		this.quantityPerUnit = quantityPerUnit;
+		this.unitPrice = unitPrice;
+		this.unitsInStock = unitsInStock;
+		this.unitsOnOrder = unitsOnOrder;
+		this.reorderLevel = reorderLevel;
+		this.discontinued = discontinued;
+	}
 
 	public int getProductID() {
 		return productID;
@@ -51,19 +51,19 @@ public class Product {
 		this.productName = productName;
 	}
 
-	public String getSupplierID() {
+	public int getSupplierID() {
 		return supplierID;
 	}
 
-	public void setSupplierID(String supplierID) {
+	public void setSupplierID(int supplierID) {
 		this.supplierID = supplierID;
 	}
 
-	public String getCategoryID() {
+	public int getCategoryID() {
 		return categoryID;
 	}
 
-	public void setCategoryID(String categoryID) {
+	public void setCategoryID(int categoryID) {
 		this.categoryID = categoryID;
 	}
 
@@ -114,10 +114,13 @@ public class Product {
 	public void setDiscontinued(boolean discontinued) {
 		this.discontinued = discontinued;
 	}
-    
-    @Override
-    public String toString() {  
-        return "Product{" + "productID=" + productID + ", productName=" + productName + ", supplierID=" + supplierID + ", categoryID=" + categoryID + ", quantityPerUnit=" + quantityPerUnit + ", unitPrice=" + unitPrice + ", unitsInStock=" + unitsInStock + ", unitsOnOrder=" + unitsOnOrder + ", reorderLevel=" + reorderLevel + ", discontinued=" + discontinued + '}';
-    }
+
+	@Override
+	public String toString() {
+		return "Product{" + "productID=" + productID + ", productName=" + productName + ", supplierID=" + supplierID
+				+ ", categoryID=" + categoryID + ", quantityPerUnit=" + quantityPerUnit + ", unitPrice=" + unitPrice
+				+ ", unitsInStock=" + unitsInStock + ", unitsOnOrder=" + unitsOnOrder + ", reorderLevel=" + reorderLevel
+				+ ", discontinued=" + discontinued + '}';
+	}
 
 }
