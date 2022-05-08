@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class GuiCategory extends JFrame {
 
@@ -21,7 +23,8 @@ public class GuiCategory extends JFrame {
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JFormattedTextField jtf1, jtf2, jtf3;
-	private JButton btnLimpiar;
+	private JButton btnLimpiar,btnOperacion;
+	JComboBox comboOperacion;
 
 	/**
 	 * Launch the application.
@@ -44,14 +47,14 @@ public class GuiCategory extends JFrame {
 	 */
 	public GuiCategory() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 325);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 86, 414, 169);
+		scrollPane.setBounds(10, 119, 414, 158);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -98,8 +101,32 @@ public class GuiCategory extends JFrame {
 				limpiarCampos();
 			}
 		});
-		btnLimpiar.setBounds(335, 52, 89, 23);
+		btnLimpiar.setBounds(10, 85, 89, 23);
 		contentPane.add(btnLimpiar);
+		
+		JComboBox comboFiltro = new JComboBox();
+		comboFiltro.setModel(new DefaultComboBoxModel(new String[] {"B\u00FAsqueda amplia", "B\u00FAsqueda precisa"}));
+		comboFiltro.setBounds(298, 7, 126, 22);
+		contentPane.add(comboFiltro);
+		
+		comboOperacion = new JComboBox();
+		comboOperacion.setModel(new DefaultComboBoxModel(new String[] {"Insertar", "Modificar", "Borrar"}));
+		comboOperacion.setBounds(298, 32, 126, 22);
+		comboOperacion.setToolTipText("Selecciona el tipo de operación");
+        comboOperacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboOperacionActionPerformed(evt);
+            }
+        });
+		contentPane.add(comboOperacion);
+		
+		btnOperacion = new JButton("Insertar");
+		btnOperacion.setBounds(298, 57, 89, 23);
+		contentPane.add(btnOperacion);
+		
+		JButton btnAplicar = new JButton("Aplicar");
+		btnAplicar.setBounds(298, 85, 89, 23);
+		contentPane.add(btnAplicar);
 	}
 
 	public void actualizarTabla(String sql) {
@@ -138,5 +165,9 @@ public class GuiCategory extends JFrame {
 		jtf2.setText("");
 		jtf3.setText("");
 	}
-
+	
+	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        btnOperacion.setText(""+comboOperacion.getSelectedItem());
+    }
+	
 }
