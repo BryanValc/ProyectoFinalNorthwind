@@ -15,15 +15,11 @@ public class CategoryDAO {
     	cn.getConexion();
         boolean resultado = false;
         resultado = cn.agregarRegistro(categoria);
-        if (resultado) {
-            System.out.println("Registro insertado correctamente");
-        } else {
-            System.out.println("Error al insertar el registro");
-        }
         return resultado;
     }
 
     public boolean modificarRegistro(Category categoria) {
+    	cn.getConexion();
         boolean resultado = false;
         resultado = cn.actualizarRegistro(categoria);
         return resultado;

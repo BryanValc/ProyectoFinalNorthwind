@@ -14,15 +14,11 @@ public class SupplierDAO {
     	cn.getConexion();
         boolean resultado = false;
         resultado = cn.agregarRegistro(proveedor);
-        if (resultado) {
-            System.out.println("Registro insertado correctamente");
-        } else {
-            System.out.println("Error al insertar el registro");
-        }
         return resultado;
     }
 
     public boolean modificarRegistro(Supplier proveedor) {
+    	cn.getConexion();
         boolean resultado = false;
         resultado = cn.actualizarRegistro(proveedor);
         return resultado;

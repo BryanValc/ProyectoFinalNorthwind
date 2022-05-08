@@ -115,14 +115,15 @@ public class Conexion {
 
     public static boolean actualizarRegistro(Category categoria) {
         try {
-            pstm = conexion.prepareStatement("UPDATE category SET categoryName = ?, description = ? WHERE categoryID = "
-                    + categoria.getCategoryID());
+            pstm = conexion
+                    .prepareStatement("UPDATE Categories SET categoryName = ?, description = ? WHERE categoryID = ? ");
             pstm.setString(1, categoria.getCategoryName());
             pstm.setString(2, categoria.getDescription());
+            pstm.setInt(3, categoria.getCategoryID());
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.printf("Error al actualizar el registro");
+            ex.printStackTrace();
         }
         return false;
 
@@ -130,9 +131,8 @@ public class Conexion {
 
     public static boolean actualizarRegistro(Product producto) {
         try {
-            pstm = conexion.prepareStatement("UPDATE product SET productName = ?, quantityPerUnit = ?, unitPrice = ?, "
-                    + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = "
-                    + producto.getProductID());
+            pstm = conexion.prepareStatement("UPDATE Products SET productName = ?, quantityPerUnit = ?, unitPrice = ?, "
+                    + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = ?");
             pstm.setString(1, producto.getProductName());
             pstm.setString(2, producto.getQuantityPerUnit());
             pstm.setDouble(3, producto.getUnitPrice());
@@ -140,10 +140,11 @@ public class Conexion {
             pstm.setInt(5, producto.getUnitsOnOrder());
             pstm.setInt(6, producto.getReorderLevel());
             pstm.setBoolean(7, producto.isDiscontinued());
+            pstm.setInt(8, producto.getProductID());
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.printf("Error al actualizar el registro");
+            ex.printStackTrace();
         }
         return false;
 
@@ -151,9 +152,10 @@ public class Conexion {
 
     public static boolean actualizarRegistro(Supplier proveedor) {
         try {
-            pstm = conexion.prepareStatement("UPDATE supplier SET companyName = ?, contactName = ?, contactTitle = ?, "
-                    + "address = ?, city = ?, region = ?, postalCode = ?, country = ?, phone = ?, fax = ?, homePage = ? WHERE supplierID = "
-                    + proveedor.getSupplierID());
+            // "UPDATE Messages SET description = ?, author = ? WHERE id = ? AND seq_num =
+            // ?");
+            pstm = conexion.prepareStatement("UPDATE Suppliers SET companyName = ?, contactName = ?, contactTitle = ?, "
+                    + "address = ?, city = ?, region = ?, postalCode = ?, country = ?, phone = ?, fax = ?, homePage = ? WHERE supplierID = ?");
             pstm.setString(1, proveedor.getCompanyName());
             pstm.setString(2, proveedor.getContactName());
             pstm.setString(3, proveedor.getContactTitle());
@@ -165,10 +167,11 @@ public class Conexion {
             pstm.setString(9, proveedor.getPhone());
             pstm.setString(10, proveedor.getFax());
             pstm.setString(11, proveedor.getHomePage());
+            pstm.setInt(12, proveedor.getSupplierID());
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            System.out.printf("Error al actualizar el registro");
+            ex.printStackTrace();
         }
         return false;
     }
@@ -176,13 +179,13 @@ public class Conexion {
     public static boolean agregarRegistro(Category categoria) {
         try {
             pstm = conexion.prepareStatement("INSERT \"Categories\"(\"CategoryName\",\"Description\") VALUES (?, ?)");
-            //pstm.setInt(1, categoria.getCategoryID());
+            // pstm.setInt(1, categoria.getCategoryID());
             pstm.setString(1, categoria.getCategoryName());
             pstm.setString(2, categoria.getDescription());
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-        	ex.printStackTrace();
+            System.out.printf("Error al agregar la categoria");
         }
         return false;
     }
@@ -191,7 +194,7 @@ public class Conexion {
         try {
             pstm = conexion.prepareStatement(
                     "INSERT \"Products\"(\"ProductName\",\"SupplierID\",\"CategoryID\",\"QuantityPerUnit\",\"UnitPrice\",\"UnitsInStock\",\"UnitsOnOrder\",\"ReorderLevel\",\"Discontinued\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            //pstm.setInt(1, producto.getProductID());
+            // pstm.setInt(1, producto.getProductID());
             pstm.setString(1, producto.getProductName());
             pstm.setInt(2, producto.getSupplierID());
             pstm.setInt(3, producto.getCategoryID());
@@ -204,7 +207,7 @@ public class Conexion {
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-        	ex.printStackTrace();
+            System.out.printf("Error al agregar el producto");
         }
         return false;
     }
@@ -213,7 +216,7 @@ public class Conexion {
         try {
             pstm = conexion.prepareStatement(
                     "INSERT \"Suppliers\"(\"CompanyName\",\"ContactName\",\"ContactTitle\",\"Address\",\"City\",\"Region\",\"PostalCode\",\"Country\",\"Phone\",\"Fax\",\"HomePage\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            //pstm.setInt(1, proveedor.getSupplierID());
+            // pstm.setInt(1, proveedor.getSupplierID());
             pstm.setString(1, proveedor.getCompanyName());
             pstm.setString(2, proveedor.getContactName());
             pstm.setString(3, proveedor.getContactTitle());
@@ -228,7 +231,7 @@ public class Conexion {
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.printf("Error al agregar el proveedor");
         }
         return false;
     }

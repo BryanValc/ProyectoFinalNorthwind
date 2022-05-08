@@ -12,18 +12,24 @@ public class Prueba {
 		ProductDAO pdDao = new ProductDAO();
 		SupplierDAO suDao = new SupplierDAO();
 
-		//Conexion cn = new Conexion(2);
-		//cn.getConexion();
+		// Conexion cn = new Conexion(2);
+		// cn.getConexion();
 
-		Category categoria = new Category(9, "Categoria 1", "Descripcion 1");
-		Product producto = new Product(78, "Producto 1", 1, 1, "Descripcion 1", 1, 1, 1, 1, true);
-		Supplier proveedor = new Supplier(30, "atlas", "juan", "jefe en minas", "la loma", "jerez", "zacs", "99350",
+		Category categoria = new Category(9, "Categoria 2", "Descripcion 1");
+		Product producto = new Product(78, "Producto 2", 1, 1, "Descripcion 1", 1, 1, 1, 1, true);
+		Supplier proveedor = new Supplier(30, "atlass", "juan", "jefe en minas", "la loma", "jerez", "zacs", "99350",
 				"Mexico", "(514) 555-2955", "(514) 555-2921",
 				"http://www.microsoft.com/accessdev/sampleapps/gdaymate.htm");
 
-		ctDao.insertarRegistro(categoria);
-		pdDao.insertarRegistro(producto);
-		suDao.insertarRegistro(proveedor);
+		if (ctDao.modificarRegistro(categoria)) {
+			System.out.println("Categoria modificada");
+		}
+		if (pdDao.modificarRegistro(producto)) {
+			System.out.println("Producto modificado");
+		}
+		if (suDao.modificarRegistro(proveedor)) {
+			System.out.println("Proveedor modificado");
+		}
 
 	}
 
