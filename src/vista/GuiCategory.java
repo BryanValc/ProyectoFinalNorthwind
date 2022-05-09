@@ -24,7 +24,7 @@ public class GuiCategory extends JFrame {
 	private JScrollPane scrollPane;
 	private JFormattedTextField jtf1, jtf2, jtf3;
 	private JButton btnLimpiar,btnOperacion;
-	JComboBox comboOperacion;
+	JComboBox comboOperacion, comboFiltro;
 
 	/**
 	 * Launch the application.
@@ -74,6 +74,11 @@ public class GuiCategory extends JFrame {
 		contentPane.add(lblDescripcin);
 
 		jtf1 = new JFormattedTextField();
+		jtf1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf1KeyReleased(evt);
+            }
+        });
 		jtf1.setBounds(111, 11, 63, 20);
 		try {
             jtf1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
@@ -83,6 +88,11 @@ public class GuiCategory extends JFrame {
 		contentPane.add(jtf1);
 
 		jtf2 = new JFormattedTextField();
+		jtf2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf2KeyReleased(evt);
+            }
+        });
 		jtf2.setBounds(111, 36, 91, 20);
 		try {
             jtf2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("???????????????")));
@@ -92,6 +102,11 @@ public class GuiCategory extends JFrame {
 		contentPane.add(jtf2);
 
 		jtf3 = new JFormattedTextField();
+		jtf3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtf3KeyReleased(evt);
+            }
+        });
 		jtf3.setBounds(111, 61, 136, 20);
 		contentPane.add(jtf3);
 		
@@ -104,7 +119,7 @@ public class GuiCategory extends JFrame {
 		btnLimpiar.setBounds(10, 85, 89, 23);
 		contentPane.add(btnLimpiar);
 		
-		JComboBox comboFiltro = new JComboBox();
+		comboFiltro = new JComboBox();
 		comboFiltro.setModel(new DefaultComboBoxModel(new String[] {"B\u00FAsqueda amplia", "B\u00FAsqueda precisa"}));
 		comboFiltro.setBounds(298, 7, 126, 22);
 		contentPane.add(comboFiltro);
@@ -112,7 +127,7 @@ public class GuiCategory extends JFrame {
 		comboOperacion = new JComboBox();
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] {"Insertar", "Modificar", "Borrar"}));
 		comboOperacion.setBounds(298, 32, 126, 22);
-		comboOperacion.setToolTipText("Selecciona el tipo de operación");
+		comboOperacion.setToolTipText("Selecciona el tipo de operaciï¿½n");
         comboOperacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboOperacionActionPerformed(evt);
@@ -164,6 +179,65 @@ public class GuiCategory extends JFrame {
 		jtf1.setText("");
 		jtf2.setText("");
 		jtf3.setText("");
+	}
+	
+	String op1,op2,op3;
+    public void setOps(JComboBox<String> caja) {
+		switch (""+caja.getSelectedItem()) {
+		case "Bï¿½squeda precisa":
+	            op1="= ";
+	            op2=" AND ";
+	            op3="";
+	            break;
+		case "Bï¿½squeda amplia":
+	            op1="LIKE ";
+	            op2=" OR ";
+	            op3="%";
+	            break;
+		default:
+			break;
+		}
+    }
+
+	public String consulta() {
+		String sql = "SELECT CategoryID, CategoryName, Description FROM Categories ";
+		setOps(comboFiltro);
+			
+		boolean primero=true;
+		if(!jtf1.getText().equals(" ")) {
+				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
+				primero=false;
+				sql+=("CategoryID "+op1+" '"+op3+jtf1.getText()+op3+"'");
+		}
+		if(!btnOperacion.getText().contains("Modificar")){
+			if(!jtf2.getText().equals("")) {
+				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
+				primero=false;
+				sql+=("CategoryName "+op1+" '"+op3+jtf2.getText()+op3+"'");
+			}
+			if(!jtf3.getText().equals("")) {
+				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
+				primero=false;
+				sql+=("Description "+op1+" '"+op3+jtf3.getText()+op3+"'");
+			}
+		}
+		System.out.println(sql);
+		return sql;
+	}
+
+	private void jtf1KeyReleased(java.awt.event.KeyEvent evt) {                                  
+        String sql = consulta();
+        actualizarTabla(sql);
+    }
+
+	private void jtf2KeyReleased(java.awt.event.KeyEvent evt) {                                  
+		String sql = consulta();
+		actualizarTabla(sql);
+	}
+
+	private void jtf3KeyReleased(java.awt.event.KeyEvent evt) {                                  
+		String sql = consulta();
+		actualizarTabla(sql);
 	}
 	
 	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                               
