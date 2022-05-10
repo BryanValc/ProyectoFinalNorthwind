@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Color;
 
-public class GuiCategory extends JFrame {
+public class GuiCategory extends JFrame implements Gui{
 
 	private JPanel contentPane;
 	private JTable table;
@@ -192,7 +192,7 @@ public class GuiCategory extends JFrame {
 		return category;
 	}
 
-	private void btnOperacionActionPerformed(java.awt.event.ActionEvent evt) {
+	public void btnOperacionActionPerformed(java.awt.event.ActionEvent evt) {
 		String operacion = btnOperacion.getText();
 		ArrayList<Category> comprobacion = new ArrayList<Category>();
 		CategoryDAO categoryDAO = new CategoryDAO();
@@ -382,7 +382,7 @@ public class GuiCategory extends JFrame {
 		return sql;
 	}
 
-	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {
+	public void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {
 		btnOperacion.setText("" + comboOperacion.getSelectedItem());
 		if(("" + comboOperacion.getSelectedItem()).equals("Insertar")) {
 			caja1.setText("");
