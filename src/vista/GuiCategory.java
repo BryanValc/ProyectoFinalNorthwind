@@ -16,13 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 public class GuiCategory extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JScrollPane scrollPane;
-	private JFormattedTextField jtf1, jtf2, jtf3;
 	private JButton btnLimpiar,btnOperacion;
 	JComboBox comboOperacion, comboFiltro;
 
@@ -46,6 +47,7 @@ public class GuiCategory extends JFrame {
 	 * Create the frame.
 	 */
 	public GuiCategory() {
+		setTitle("Categor\u00EDas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 325);
 		contentPane = new JPanel();
@@ -72,45 +74,9 @@ public class GuiCategory extends JFrame {
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
 		lblDescripcin.setBounds(10, 61, 91, 14);
 		contentPane.add(lblDescripcin);
-
-		jtf1 = new JFormattedTextField();
-		jtf1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf1KeyReleased(evt);
-            }
-        });
-		jtf1.setBounds(111, 11, 63, 20);
-		try {
-            jtf1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-		contentPane.add(jtf1);
-
-		jtf2 = new JFormattedTextField();
-		jtf2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf2KeyReleased(evt);
-            }
-        });
-		jtf2.setBounds(111, 36, 91, 20);
-		try {
-            jtf2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("???????????????")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-		contentPane.add(jtf2);
-
-		jtf3 = new JFormattedTextField();
-		jtf3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtf3KeyReleased(evt);
-            }
-        });
-		jtf3.setBounds(111, 61, 136, 20);
-		contentPane.add(jtf3);
 		
 		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setToolTipText("Limpiar el formulario");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
@@ -120,6 +86,7 @@ public class GuiCategory extends JFrame {
 		contentPane.add(btnLimpiar);
 		
 		comboFiltro = new JComboBox();
+		comboFiltro.setToolTipText("Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro.setModel(new DefaultComboBoxModel(new String[] {"B\u00FAsqueda amplia", "B\u00FAsqueda precisa"}));
 		comboFiltro.setBounds(298, 7, 126, 22);
 		contentPane.add(comboFiltro);
@@ -140,8 +107,26 @@ public class GuiCategory extends JFrame {
 		contentPane.add(btnOperacion);
 		
 		JButton btnAplicar = new JButton("Aplicar");
+		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setBounds(298, 85, 89, 23);
 		contentPane.add(btnAplicar);
+		
+		caja1 = new JTextField();
+		caja1.setBounds(108, 8, 86, 20);
+		contentPane.add(caja1);
+		caja1.setColumns(10);
+		
+		caja2 = new JTextField();
+		caja2.setColumns(10);
+		caja2.setBounds(108, 33, 126, 20);
+		contentPane.add(caja2);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(111, 61, 161, 52);
+		contentPane.add(scrollPane_1);
+		
+		caja3 = new JTextArea();
+		scrollPane_1.setViewportView(caja3);
 	}
 
 	public void actualizarTabla(String sql) {
@@ -170,18 +155,22 @@ public class GuiCategory extends JFrame {
 	}
 
 	public void obtenerRegistroTabla() {
-		jtf1.setText("" + table.getValueAt(table.getSelectedRow(), 0));
-		jtf2.setText("" + table.getValueAt(table.getSelectedRow(), 1));
-		jtf3.setText("" + table.getValueAt(table.getSelectedRow(), 2));
+		caja1.setText("" + table.getValueAt(table.getSelectedRow(), 0));
+		caja2.setText("" + table.getValueAt(table.getSelectedRow(), 1));
+		caja3.setText("" + table.getValueAt(table.getSelectedRow(), 2));
 	}
 
 	public void limpiarCampos() {
-		jtf1.setText("");
-		jtf2.setText("");
-		jtf3.setText("");
+		caja1.setText("");
+		caja2.setText("");
+		caja3.setText("");
 	}
 	
 	String op1,op2,op3;
+	private JTextField caja1;
+	private JTextField caja2;
+	private JTextArea caja3;
+	private JScrollPane scrollPane_1;
     public void setOps(JComboBox<String> caja) {
 		switch (""+caja.getSelectedItem()) {
 		case "B�squeda precisa":
@@ -204,44 +193,28 @@ public class GuiCategory extends JFrame {
 		setOps(comboFiltro);
 			
 		boolean primero=true;
-		if(!jtf1.getText().equals(" ")) {
+		if(!caja1.getText().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("CategoryID "+op1+" '"+op3+jtf1.getText()+op3+"'");
+				sql+=("CategoryID "+op1+" '"+op3+caja1.getText()+op3+"'");
 		}
 		if(!btnOperacion.getText().contains("Modificar")){
-			if(!jtf2.getText().equals("")) {
+			if(!caja2.getText().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("CategoryName "+op1+" '"+op3+jtf2.getText()+op3+"'");
+				sql+=("CategoryName "+op1+" '"+op3+caja2.getText()+op3+"'");
 			}
-			if(!jtf3.getText().equals("")) {
+			if(!caja3.getText().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("Description "+op1+" '"+op3+jtf3.getText()+op3+"'");
+				sql+=("Description "+op1+" '"+op3+caja3.getText()+op3+"'");
 			}
 		}
 		System.out.println(sql);
 		return sql;
 	}
-
-	private void jtf1KeyReleased(java.awt.event.KeyEvent evt) {                                  
-        String sql = consulta();
-        actualizarTabla(sql);
-    }
-
-	private void jtf2KeyReleased(java.awt.event.KeyEvent evt) {                                  
-		String sql = consulta();
-		actualizarTabla(sql);
-	}
-
-	private void jtf3KeyReleased(java.awt.event.KeyEvent evt) {                                  
-		String sql = consulta();
-		actualizarTabla(sql);
-	}
 	
 	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                               
         btnOperacion.setText(""+comboOperacion.getSelectedItem());
     }
-	
 }
