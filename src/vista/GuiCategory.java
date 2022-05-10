@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -106,6 +107,11 @@ public class GuiCategory extends JFrame {
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
+		btnOperacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//comprobarCampos();
+			}
+		});
 		btnOperacion.setBounds(298, 57, 89, 23);
 		contentPane.add(btnOperacion);
 
@@ -190,14 +196,17 @@ public class GuiCategory extends JFrame {
 		caja1.setText("");
 		caja2.setText("");
 		caja3.setText("");
+		String sql = consulta();
+        actualizarTabla(sql);
 	}
 
-	String op1, op2, op3;
+	
 	private JTextField caja1;
 	private JTextField caja2;
 	private JTextArea caja3;
 	private JScrollPane scrollPane_1;
 
+	String op1, op2, op3;
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
 			case "B\u00FAsqueda precisa":
@@ -213,6 +222,25 @@ public class GuiCategory extends JFrame {
 			default:
 				break;
 		}
+	}
+
+	public boolean comprobarCampos() {
+		if(caja1.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "No has introducido el ID");
+			caja1.requestFocus();
+			return false;
+		}
+		if(caja2.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "No has introducido el nombre");
+			caja2.requestFocus();
+			return false;
+		}
+		if(caja3.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "No has introducido la descripción");
+			caja3.requestFocus();
+			return false;
+		}
+		return true;
 	}
 
 	public String consulta() {
