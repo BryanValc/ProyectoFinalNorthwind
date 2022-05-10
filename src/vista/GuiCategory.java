@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
@@ -25,7 +26,7 @@ public class GuiCategory extends JFrame {
 	private JTable table;
 	private JScrollPane scrollPane;
 	private JButton btnLimpiar,btnOperacion;
-	JComboBox comboOperacion, comboFiltro;
+	JComboBox<String> comboOperacion, comboFiltro;
 
 	/**
 	 * Launch the application.
@@ -112,6 +113,14 @@ public class GuiCategory extends JFrame {
 		contentPane.add(btnAplicar);
 		
 		caja1 = new JTextField();
+		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                caja1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                caja1KeyReleased(evt);
+            }
+        });
 		caja1.setBounds(108, 8, 86, 20);
 		contentPane.add(caja1);
 		caja1.setColumns(10);
@@ -173,12 +182,12 @@ public class GuiCategory extends JFrame {
 	private JScrollPane scrollPane_1;
     public void setOps(JComboBox<String> caja) {
 		switch (""+caja.getSelectedItem()) {
-		case "B�squeda precisa":
+		case "B\u00FAsqueda precisa":
 	            op1="= ";
 	            op2=" AND ";
 	            op3="";
 	            break;
-		case "B�squeda amplia":
+		case "B\u00FAsqueda amplia":
 	            op1="LIKE ";
 	            op2=" OR ";
 	            op3="%";
@@ -191,25 +200,26 @@ public class GuiCategory extends JFrame {
 	public String consulta() {
 		String sql = "SELECT CategoryID, CategoryName, Description FROM Categories ";
 		setOps(comboFiltro);
-			
+		
 		boolean primero=true;
-		if(!caja1.getText().equals("")) {
+		if(!caja1.getText().toString().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("CategoryID "+op1+" '"+op3+caja1.getText()+op3+"'");
+				sql+=("CategoryID "+op1+" '"+op3+caja1.getText().toString()+op3+"'");
 		}
 		if(!btnOperacion.getText().contains("Modificar")){
-			if(!caja2.getText().equals("")) {
+			if(!caja2.getText().toString().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("CategoryName "+op1+" '"+op3+caja2.getText()+op3+"'");
+				sql+=("CategoryName "+op1+" '"+op3+caja2.getText().toString()+op3+"'");
 			}
-			if(!caja3.getText().equals("")) {
+			if(!caja3.getText().toString().equals("")) {
 				if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 				primero=false;
-				sql+=("Description "+op1+" '"+op3+caja3.getText()+op3+"'");
+				sql+=("Description "+op1+" '"+op3+caja3.getText().toString()+op3+"'");
 			}
 		}
+		
 		System.out.println(sql);
 		return sql;
 	}
@@ -217,4 +227,33 @@ public class GuiCategory extends JFrame {
 	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {                                               
         btnOperacion.setText(""+comboOperacion.getSelectedItem());
     }
+
+	private void caja1KeyPressed(java.awt.event.KeyEvent evt) {
+		int code=evt.getKeyCode();
+	    int limite=10;
+	    int valorMaximo =2147483647;
+	        JTextField caja = caja1;
+	    if (((evt.getKeyChar() >= '0'&&evt.getKeyChar() <= '9'))&&caja.getText().length()<limite) {
+	        try {
+				int valorCaja = Integer.parseInt(caja1.getText()+evt.getKeyChar());
+				if (valorCaja<=valorMaximo) {
+					caja.setEditable(true);
+				}else {
+					caja.setEditable(false);
+				}
+			} catch (Exception e) {
+				caja.setEditable(false);
+			}
+	    }else if(code==KeyEvent.VK_BACK_SPACE) {
+	    	caja.setEditable(true);
+	    }else{
+	        caja.setEditable(false);
+	    }
+	 }
+
+	 private void caja1KeyReleased(java.awt.event.KeyEvent evt) {                                  
+        String sql = consulta();
+        actualizarTabla(sql);
+    }
+
 }
