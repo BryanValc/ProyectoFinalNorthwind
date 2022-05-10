@@ -3,10 +3,15 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.CategoryDAO;
+import modelo.Category;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -107,11 +112,11 @@ public class GuiCategory extends JFrame {
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
-		btnOperacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//comprobarCampos();
-			}
-		});
+		btnOperacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOperacionActionPerformed(evt);
+            }
+        });
 		btnOperacion.setBounds(298, 57, 89, 23);
 		contentPane.add(btnOperacion);
 
@@ -161,6 +166,91 @@ public class GuiCategory extends JFrame {
 		scrollPane_1.setViewportView(caja3);
 	}
 
+	public Category createCategory(boolean isForDeletion) {
+		Category category = null;
+		if (isForDeletion) {
+			category = new Category(Integer.parseInt(caja1.getText()), "", "");
+		} else {
+			category = new Category(
+					Integer.parseInt(caja1.getText()),
+					caja2.getText(),
+					caja3.getText());
+		}
+		return category;
+	}
+
+	private void btnOperacionActionPerformed(java.awt.event.ActionEvent evt) {
+		String operacion = btnOperacion.getText();
+		ArrayList<Category> comprobacion = new ArrayList<Category>();
+		CategoryDAO categoryDAO = new CategoryDAO();
+		Category category = null;
+
+		switch (operacion) {
+			case "Borrar":
+				if (caja1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"No se esta especificando el codigo de la categoria a eliminar");
+				} else {
+					category = createCategory(true);
+					comprobacion = categoryDAO
+							.buscar("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
+									+ caja1.getText() + "'");
+					if (comprobacion.size() == 0) {
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
+					} else {
+						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la categoria?",
+								"Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (categoryDAO.borrarRegistro(category)) {
+								JOptionPane.showMessageDialog(null, "Categoria eliminada exitosamente");
+								limpiarCampos();
+							} else {
+								JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria");
+							}
+						}
+					}
+				}
+				break;
+			case "Modificar":
+				if (comprobarCampos()) {
+					category = createCategory(false);
+					System.out.println("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
+									+ caja1.getText() + "'");
+					comprobacion = categoryDAO
+							.buscar("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
+									+ caja1.getText() + "'");
+					if (comprobacion.size() == 0) {
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
+					} else {
+						if (categoryDAO.modificarRegistro(category)) {
+							JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo modificar la categoria");
+						}
+					}
+				}
+
+				break;
+			case "Insertar":
+				if (comprobarCampos()) {
+					category = createCategory(false);
+					if (categoryDAO.insertarRegistro(category)) {
+						JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente");
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"No se pudo agregar la categoria, quiza ya hay una con el mismo ID");
+					}
+				}
+				break;
+			default:
+				break;
+		}
+
+		String sql = consulta();
+		actualizarTabla(sql);
+
+	}
+
 	public void actualizarTabla(String sql) {
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
 				+ "user=asd;"
@@ -197,16 +287,16 @@ public class GuiCategory extends JFrame {
 		caja2.setText("");
 		caja3.setText("");
 		String sql = consulta();
-        actualizarTabla(sql);
+		actualizarTabla(sql);
 	}
 
-	
 	private JTextField caja1;
 	private JTextField caja2;
 	private JTextArea caja3;
 	private JScrollPane scrollPane_1;
 
 	String op1, op2, op3;
+
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
 			case "B\u00FAsqueda precisa":
@@ -225,17 +315,17 @@ public class GuiCategory extends JFrame {
 	}
 
 	public boolean comprobarCampos() {
-		if(caja1.getText().equals("")){
+		if (caja1.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el ID");
 			caja1.requestFocus();
 			return false;
 		}
-		if(caja2.getText().equals("")){
+		if (caja2.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el nombre");
 			caja2.requestFocus();
 			return false;
 		}
-		if(caja3.getText().equals("")){
+		if (caja3.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "No has introducido la descripción");
 			caja3.requestFocus();
 			return false;
@@ -308,28 +398,30 @@ public class GuiCategory extends JFrame {
 			caja.setEditable(false);
 		}
 	}
-	
+
 	private void caja2KeyPressed(java.awt.event.KeyEvent evt) {
 		int code = evt.getKeyCode();
-        int limite = 15;
-        JTextField caja = caja2;
-        if ((caja.getText().equals("")?true:!(caja.getText().charAt(caja.getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&(caja.getText().length()<limite||code==KeyEvent.VK_BACK_SPACE)) {
-                caja.setEditable(true);
-        }else{
-                caja.setEditable(false);
-        }
+		int limite = 15;
+		JTextField caja = caja2;
+		if ((caja.getText().equals("") ? true
+				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
 	}
 
 	private void caja1KeyReleased(java.awt.event.KeyEvent evt) {
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
-	
+
 	private void caja2KeyReleased(java.awt.event.KeyEvent evt) {
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
-	
+
 	private void caja3KeyReleased(java.awt.event.KeyEvent evt) {
 		String sql = consulta();
 		actualizarTabla(sql);

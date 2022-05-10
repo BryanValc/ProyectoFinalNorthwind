@@ -26,8 +26,9 @@ public class CategoryDAO {
     }
 
     public ArrayList<Category> buscar(String filtro) {
+    	cn.getConexion();
         ArrayList<Category> lista = new ArrayList<Category>();
-        ResultSet rs = Conexion.ejecutarConsulta(filtro);
+        ResultSet rs = cn.ejecutarConsulta(filtro);
         try {
             if (rs.next()) {
                 do {
