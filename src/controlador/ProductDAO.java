@@ -25,6 +25,7 @@ public class ProductDAO {
     }
 
     public ArrayList<Product> buscar(String filtro) {
+        cn.getConexion();
         ArrayList<Product> lista = new ArrayList<Product>();
         ResultSet rs = cn.ejecutarConsulta(filtro);
         try {

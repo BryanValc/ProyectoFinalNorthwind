@@ -55,7 +55,7 @@ public class GuiCategory extends JFrame implements Gui{
 	 * Create the frame.
 	 */
 	public GuiCategory() {
-		setTitle("Categor\u00EDas");
+		setTitle("Formulario categor\u00EDas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 325);
 		contentPane = new JPanel();
@@ -70,7 +70,7 @@ public class GuiCategory extends JFrame implements Gui{
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		actualizarTabla("SELECT CategoryID, CategoryName, Description FROM Categories");
+		actualizarTabla("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories");
 
 		JLabel lblNewLabel = new JLabel("ID");
 		lblNewLabel.setBounds(10, 11, 46, 14);
@@ -206,7 +206,7 @@ public class GuiCategory extends JFrame implements Gui{
 				} else {
 					category = createCategory(true);
 					comprobacion = categoryDAO
-							.buscar("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
+							.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
 									+ caja1.getText() + "'");
 					if (comprobacion.size() == 0) {
 						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
@@ -229,7 +229,7 @@ public class GuiCategory extends JFrame implements Gui{
 					category = createCategory(false);
 					
 					comprobacion = categoryDAO
-							.buscar("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
+							.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
 									+ caja1.getText() + "'");
 					if (comprobacion.size() == 0) {
 						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
@@ -346,7 +346,7 @@ public class GuiCategory extends JFrame implements Gui{
 	}
 
 	public String consulta() {
-		String sql = "SELECT CategoryID, CategoryName, Description FROM Categories ";
+		String sql = "SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories ";
 		setOps(comboFiltro);
 
 		boolean primero = true;
