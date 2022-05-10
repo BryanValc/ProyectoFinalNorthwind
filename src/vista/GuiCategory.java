@@ -25,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class GuiCategory extends JFrame {
 
@@ -58,6 +59,7 @@ public class GuiCategory extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 325);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(51, 153, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -83,6 +85,8 @@ public class GuiCategory extends JFrame {
 		contentPane.add(lblDescripcin);
 
 		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.setForeground(new Color(255, 255, 255));
+		btnLimpiar.setBackground(new Color(0, 102, 102));
 		btnLimpiar.setToolTipText("Limpiar el formulario");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,6 +97,8 @@ public class GuiCategory extends JFrame {
 		contentPane.add(btnLimpiar);
 
 		comboFiltro = new JComboBox();
+		comboFiltro.setForeground(new Color(255, 255, 255));
+		comboFiltro.setBackground(new Color(0, 102, 102));
 		comboFiltro.setToolTipText(
 				"Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro
@@ -101,6 +107,8 @@ public class GuiCategory extends JFrame {
 		contentPane.add(comboFiltro);
 
 		comboOperacion = new JComboBox();
+		comboOperacion.setForeground(new Color(255, 255, 255));
+		comboOperacion.setBackground(new Color(0, 102, 102));
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
 		comboOperacion.setBounds(298, 32, 126, 22);
 		comboOperacion.setToolTipText("Selecciona el tipo de operaci�n");
@@ -112,15 +120,19 @@ public class GuiCategory extends JFrame {
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
+		btnOperacion.setForeground(new Color(255, 255, 255));
+		btnOperacion.setBackground(new Color(0, 102, 102));
 		btnOperacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOperacionActionPerformed(evt);
-            }
-        });
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnOperacionActionPerformed(evt);
+			}
+		});
 		btnOperacion.setBounds(298, 57, 89, 23);
 		contentPane.add(btnOperacion);
 
 		JButton btnAplicar = new JButton("Aplicar");
+		btnAplicar.setForeground(new Color(255, 255, 255));
+		btnAplicar.setBackground(new Color(0, 102, 102));
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setBounds(298, 85, 89, 23);
 		contentPane.add(btnAplicar);
@@ -138,6 +150,7 @@ public class GuiCategory extends JFrame {
 		caja1.setBounds(108, 8, 86, 20);
 		contentPane.add(caja1);
 		caja1.setColumns(10);
+		caja1.setEditable(false);
 
 		caja2 = new JTextField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -214,8 +227,7 @@ public class GuiCategory extends JFrame {
 			case "Modificar":
 				if (comprobarCampos()) {
 					category = createCategory(false);
-					System.out.println("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
-									+ caja1.getText() + "'");
+					
 					comprobacion = categoryDAO
 							.buscar("SELECT CategoryID, CategoryName, Description FROM Categories WHERE CategoryID = '"
 									+ caja1.getText() + "'");
@@ -367,13 +379,19 @@ public class GuiCategory extends JFrame {
 				sql += ("Description " + op1 + " '" + op3 + caja3.getText().toString() + op3 + "'");
 			}
 		}
-
-		System.out.println(sql);
 		return sql;
 	}
 
 	private void comboOperacionActionPerformed(java.awt.event.ActionEvent evt) {
 		btnOperacion.setText("" + comboOperacion.getSelectedItem());
+		if(("" + comboOperacion.getSelectedItem()).equals("Insertar")) {
+			caja1.setText("");
+			caja1.setEditable(false);
+		}else {
+			caja1.setEditable(true);
+			caja1.requestFocus();
+			
+		}
 	}
 
 	private void caja1KeyPressed(java.awt.event.KeyEvent evt) {
