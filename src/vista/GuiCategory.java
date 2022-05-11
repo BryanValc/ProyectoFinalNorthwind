@@ -57,7 +57,7 @@ public class GuiCategory extends JFrame implements Gui{
 	public GuiCategory() {
 		setTitle("Formulario categor\u00EDas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 325);
+		setBounds(100, 100, 458, 325);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(51, 153, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,7 +65,7 @@ public class GuiCategory extends JFrame implements Gui{
 		contentPane.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 119, 414, 158);
+		scrollPane.setBounds(10, 119, 426, 158);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -103,14 +103,14 @@ public class GuiCategory extends JFrame implements Gui{
 				"Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro
 				.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
-		comboFiltro.setBounds(298, 7, 126, 22);
+		comboFiltro.setBounds(298, 7, 138, 22);
 		contentPane.add(comboFiltro);
 
 		comboOperacion = new JComboBox();
 		comboOperacion.setForeground(new Color(255, 255, 255));
 		comboOperacion.setBackground(new Color(0, 102, 102));
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
-		comboOperacion.setBounds(298, 32, 126, 22);
+		comboOperacion.setBounds(298, 32, 138, 22);
 		comboOperacion.setToolTipText("Selecciona el tipo de operaci�n");
 		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
