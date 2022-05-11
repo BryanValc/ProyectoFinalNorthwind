@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.SupplierDAO;
+import modelo.Category;
 import modelo.Supplier;
 
 import javax.swing.JLabel;
@@ -406,6 +407,11 @@ public class GuiSupplier extends JFrame implements Gui {
 				obtenerRegistroTabla();
 			}
 		});
+		table.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				obtenerRegistroTabla();
+			}
+		});
 		scrollPane.setViewportView(table);
 
 	}
@@ -685,6 +691,20 @@ public class GuiSupplier extends JFrame implements Gui {
 		Supplier supplier = null;
 		if (isForDeletion) {
 			supplier = new Supplier(Integer.parseInt(caja1.getText()), "", "", "", "", "", "", "", "", "", "", "");
+		} else if(btnOperacion.getText().equals("Insertar")) {
+			supplier = new Supplier(
+					1,
+					caja2.getText(),
+					caja3.getText(),
+					caja4.getText(),
+					caja5.getText(),
+					caja6.getText(),
+					caja7.getText(),
+					caja8.getText(),
+					caja9.getText(),
+					caja10.getText(),
+					caja11.getText(),
+					caja12.getText());
 		} else {
 			supplier = new Supplier(
 					Integer.parseInt(caja1.getText()),

@@ -289,6 +289,11 @@ public class GuiCategory extends JFrame implements Gui{
 				obtenerRegistroTabla();
 			}
 		});
+		table.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				obtenerRegistroTabla();
+			}
+		});
 		scrollPane.setViewportView(table);
 
 	}
