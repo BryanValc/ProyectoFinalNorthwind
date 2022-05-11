@@ -298,6 +298,14 @@ public class GuiCategory extends JFrame implements Gui{
 		caja1.setText("");
 		caja2.setText("");
 		caja3.setText("");
+
+		if(!btnOperacion.getText().equals("Insertar")){
+			caja1.setEditable(true);
+		}
+		caja2.setEditable(true);
+		caja3.setEditable(true);
+
+
 		String sql = consulta();
 		actualizarTabla(sql);
 	}

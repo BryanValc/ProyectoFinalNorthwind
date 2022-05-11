@@ -145,6 +145,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja2 = new JTextField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,40,caja2);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -155,6 +160,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja3 = new JTextField();
 		caja3.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,30,caja3);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -165,6 +175,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja4 = new JTextField();
 		caja4.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,30,caja4);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -175,6 +190,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja5 = new JTextField();
 		caja5.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,60,caja5);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -185,6 +205,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja6 = new JTextField();
 		caja6.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,15,caja6);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -195,6 +220,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja7 = new JTextField();
 		caja7.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,15,caja7);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -205,6 +235,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja8 = new JTextField();
 		caja8.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,10,caja8);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -215,6 +250,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja9 = new JTextField();
 		caja9.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,15,caja9);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -225,6 +265,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja10 = new JTextField();
 		caja10.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,24,caja10);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -235,6 +280,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja11 = new JTextField();
 		caja11.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,24,caja11);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -245,6 +295,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja12 = new JTextField();
 		caja12.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionString(evt,1000,caja12);
+			}
+			
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -592,6 +647,22 @@ public class GuiSupplier extends JFrame implements Gui {
 		caja10.setText("");
 		caja11.setText("");
 		caja12.setText("");
+
+		if(!btnOperacion.getText().equals("Insertar")){
+			caja1.setEditable(true);
+		}
+		caja2.setEditable(true);
+		caja3.setEditable(true);
+		caja4.setEditable(true);
+		caja5.setEditable(true);
+		caja6.setEditable(true);
+		caja7.setEditable(true);
+		caja8.setEditable(true);
+		caja9.setEditable(true);
+		caja10.setEditable(true);
+		caja11.setEditable(true);
+		caja12.setEditable(true);
+
 		String sql = consulta();
 		actualizarTabla(sql);
 
@@ -724,6 +795,19 @@ public class GuiSupplier extends JFrame implements Gui {
 				caja.setEditable(false);
 			}
 		} else if (code == KeyEvent.VK_BACK_SPACE) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
+	}
+	
+	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja) {
+		int code = evt.getKeyCode();
+		//int limite = 15;
+		//JTextField caja = caja2;
+		if ((caja.getText().equals("") ? true
+				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
 		} else {
 			caja.setEditable(false);
