@@ -183,6 +183,11 @@ public class GuiCategory extends JFrame implements Gui{
 		Category category = null;
 		if (isForDeletion) {
 			category = new Category(Integer.parseInt(caja1.getText()), "", "");
+		} else if(btnOperacion.getText().equals("Insertar")) {
+			category = new Category(
+					1,
+					caja2.getText(),
+					caja3.getText());
 		} else {
 			category = new Category(
 					Integer.parseInt(caja1.getText()),
