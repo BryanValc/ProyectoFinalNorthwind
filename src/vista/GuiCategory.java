@@ -335,7 +335,7 @@ public class GuiCategory extends JFrame implements Gui{
 	}
 
 	public boolean comprobarCampos() {
-		if (caja1.getText().equals("")) {
+		if (caja1.getText().equals("")&&!btnOperacion.getText().equals("Insertar")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el ID");
 			caja1.requestFocus();
 			return false;
