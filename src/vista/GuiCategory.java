@@ -72,15 +72,15 @@ public class GuiCategory extends JFrame implements Gui{
 		scrollPane.setViewportView(table);
 		actualizarTabla("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories");
 
-		JLabel lblNewLabel = new JLabel("ID");
+		JLabel lblNewLabel = new JLabel("ID:");
 		lblNewLabel.setBounds(10, 11, 46, 14);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(10, 36, 46, 14);
 		contentPane.add(lblNombre);
 
-		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
+		JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
 		lblDescripcin.setBounds(10, 61, 91, 14);
 		contentPane.add(lblDescripcin);
 
@@ -120,6 +120,7 @@ public class GuiCategory extends JFrame implements Gui{
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
+		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.setForeground(new Color(255, 255, 255));
 		btnOperacion.setBackground(new Color(0, 102, 102));
 		btnOperacion.addActionListener(new java.awt.event.ActionListener() {

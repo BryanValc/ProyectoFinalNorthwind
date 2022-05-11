@@ -330,12 +330,14 @@ public class GuiSupplier extends JFrame implements Gui {
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
+		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setForeground(new Color(255, 255, 255));
 		btnAplicar.setBackground(new Color(0, 51, 153));
 		btnAplicar.setBounds(981, 212, 89, 23);
 		contentPane.add(btnAplicar);
 
 		btnOperacion = new JButton("Insertar");
+		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnOperacionActionPerformed(e);
@@ -347,6 +349,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		contentPane.add(btnOperacion);
 
 		comboOperacion = new JComboBox();
+		comboOperacion.setToolTipText("Selecciona el tipo de operaci\u00F3n");
 		comboOperacion.setForeground(new Color(255, 255, 255));
 		comboOperacion.setBackground(new Color(0, 51, 153));
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
@@ -359,6 +362,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		contentPane.add(comboOperacion);
 
 		comboFiltro = new JComboBox();
+		comboFiltro.setToolTipText("Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro.setBackground(new Color(0, 51, 153));
 		comboFiltro
