@@ -46,7 +46,7 @@ public class UsuarioDAO {
     public boolean borrarRegistro(Usuario usuario) {
         cn.getConexion();
         boolean resultado = false;
-        String sql = "DELETE FROM Usuarios WHERE username = " + usuario.getUsername();
+        String sql = "DELETE FROM Usuarios WHERE username = '" + usuario.getUsername()+"'";
         resultado = cn.eliminarRegistro(sql);
         return resultado;
     }

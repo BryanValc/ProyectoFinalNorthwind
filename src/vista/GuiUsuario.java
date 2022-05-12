@@ -6,10 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controlador.UsuarioDAO;
+import modelo.Usuario;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -124,6 +129,11 @@ public class GuiUsuario extends JFrame implements Gui {
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
+		btnOperacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnOperacionActionPerformed(e);
+			}
+		});
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.setBackground(new Color(51, 102, 0));
 		btnOperacion.setForeground(new Color(255, 255, 255));
@@ -258,6 +268,7 @@ public class GuiUsuario extends JFrame implements Gui {
 				sql += ("password " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
 			}
 		}
+		System.out.println(sql);
 		return sql;
 	}
 
@@ -284,9 +295,85 @@ public class GuiUsuario extends JFrame implements Gui {
 		actualizarTabla(sql);
 	}
 
+	public Usuario createUsuario(boolean isForDeletion){
+		Usuario usuario = null;
+		if(isForDeletion){
+			usuario = new Usuario(caja1.getText(), null);
+		}else{
+			usuario = new Usuario(caja1.getText(), caja2.getText());
+		}
+		return usuario;
+	}
+
 	@Override
 	public void btnOperacionActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
+		String operacion = btnOperacion.getText();
+		ArrayList<Usuario> comprobacion = new ArrayList<Usuario>();
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = null;
+
+		switch (operacion) {
+			case "Borrar":
+				if (caja1.getText().equals("")) {
+					JOptionPane.showMessageDialog(null,
+							"No se esta especificando el usuario a eliminar");
+				} else {
+					usuario = createUsuario(true);
+					comprobacion = usuarioDAO
+							.buscar("SELECT * FROM Usuarios WHERE username = '"
+									+ caja1.getText() + "'");
+					if (comprobacion.size() == 0) {
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
+					} else {
+						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el usuario?",
+								"Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (usuarioDAO.borrarRegistro(usuario)) {
+								JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
+								limpiarCampos();
+							} else {
+								JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario");
+							}
+						}
+					}
+				}
+				break;
+			case "Modificar":
+				if (comprobarCampos()) {
+					usuario = createUsuario(false);
+
+					comprobacion = usuarioDAO
+							.buscar("SELECT * FROM Usuarios WHERE username = '"
+									+ caja1.getText() + "'");
+					if (comprobacion.size() == 0) {
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
+					} else {
+						if (usuarioDAO.modificarRegistro(usuario)) {
+							JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
+						} else {
+							JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario");
+						}
+					}
+				}
+
+				break;
+			case "Insertar":
+				if (comprobarCampos()) {
+					usuario = createUsuario(false);
+					if (usuarioDAO.insertarRegistro(usuario)) {
+						JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"No se pudo agregar el usuario, quiza ya hay uno con el mismo nombre");
+					}
+				}
+				break;
+			default:
+				break;
+		}
+
+		String sql = consulta();
+		actualizarTabla(sql);
 
 	}
 
