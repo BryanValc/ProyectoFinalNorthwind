@@ -268,7 +268,7 @@ public class GuiUsuario extends JFrame implements Gui {
 				sql += ("password " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
 			}
 		}
-		System.out.println(sql);
+//		System.out.println(sql);
 		return sql;
 	}
 
