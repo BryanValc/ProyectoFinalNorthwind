@@ -177,6 +177,32 @@ public class Conexion {
         }
         return false;
     }
+    
+    public static boolean actualizarRegistro(Usuario usuario){
+        try {
+            pstm = conexion.prepareStatement("UPDATE Usuarios SET password = ? WHERE username = ?");
+            pstm.setString(1, usuario.getPassword());
+            pstm.setString(2, usuario.getUsername());
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.printf("Error al modificar el usuario");
+        }
+        return false;
+    }
+
+    public static boolean insertarRegistro(Usuario usuario) {
+        try {
+            pstm = conexion.prepareStatement("INSERT \"Usuarios\"(\"username\",\"password\") VALUES (?, ?)");
+            pstm.setString(1, usuario.getUsername());
+            pstm.setString(2, usuario.getPassword());
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+            System.out.printf("Error al insertar el usuario");
+        }
+        return false;
+    }
 
     public static boolean agregarRegistro(Category categoria) {
         try {
