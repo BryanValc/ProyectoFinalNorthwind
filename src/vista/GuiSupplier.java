@@ -804,8 +804,6 @@ public class GuiSupplier extends JFrame implements Gui {
 	
 	private void validacionInt(java.awt.event.KeyEvent evt, int limite, int valorMaximo,JTextField caja) {
 		int code = evt.getKeyCode();
-		//int limite = 10;
-		//int valorMaximo = 2147483647;
 		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) && caja.getText().length() < limite) {
 			try {
 				int valorCaja = Integer.parseInt(caja.getText() + evt.getKeyChar());
@@ -826,8 +824,6 @@ public class GuiSupplier extends JFrame implements Gui {
 	
 	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja) {
 		int code = evt.getKeyCode();
-		//int limite = 15;
-		//JTextField caja = caja2;
 		if ((caja.getText().equals("") ? true
 				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {

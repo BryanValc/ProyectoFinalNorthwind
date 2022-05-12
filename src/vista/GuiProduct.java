@@ -3,6 +3,7 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -147,6 +148,16 @@ public class GuiProduct extends JFrame implements Gui {
 		contentPane.add(lblDescontinuado);
 
 		caja1 = new JTextField();
+		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
+			
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				validacionInt(evt,10,2147483647,caja1);
+			}
+			
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				cajaKeyReleased(evt);
+			}
+		});
 		caja1.setBounds(150, 11, 86, 20);
 		contentPane.add(caja1);
 		caja1.setColumns(10);
@@ -518,4 +529,81 @@ public class GuiProduct extends JFrame implements Gui {
 		// TODO Auto-generated method stub
 
 	}
+
+	private void cajaKeyReleased(java.awt.event.KeyEvent evt) {
+		String sql = consulta();
+		actualizarTabla(sql);
+	}
+
+	public void comboActionPerformed(ActionEvent evt) {
+		String sql = consulta();
+		actualizarTabla(sql);
+	}
+	
+	private void validacionInt(java.awt.event.KeyEvent evt, int limite, int valorMaximo,JTextField caja) {
+		int code = evt.getKeyCode();
+		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) && caja.getText().length() < limite) {
+			try {
+				int valorCaja = Integer.parseInt(caja.getText() + evt.getKeyChar());
+				if (valorCaja <= valorMaximo) {
+					caja.setEditable(true);
+				} else {
+					caja.setEditable(false);
+				}
+			} catch (Exception e) {
+				caja.setEditable(false);
+			}
+		} else if (code == KeyEvent.VK_BACK_SPACE) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
+	}
+	
+	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja) {
+		int code = evt.getKeyCode();
+		if ((caja.getText().equals("") ? true
+				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
+	}
+	int peCaja2 = 0;
+	private void validacionDouble(java.awt.event.KeyEvent evt, double valorMaximo, int limite1, int limite2, int peCaja, JTextField caja) {
+		int code = evt.getKeyCode();
+		//int limite1 = 3;
+		//int limite2 = 4;
+		//double valorMaximo = 115.2;
+		//JTextField caja = caja2;
+		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') && !caja.getText().contains("."))
+				&& caja.getText().length() < (limite1) || (code == KeyEvent.VK_BACK_SPACE)) {
+			// caja.setEditable(true);
+			double valorCaja = Double.parseDouble(caja.getText() + evt.getKeyChar());
+			if (valorCaja <= valorMaximo) {
+				caja.setEditable(true);
+			} else {
+				caja.setEditable(false);
+			}
+		} else if ((caja.getText().length() < (limite1 + 1))
+				&& (evt.getKeyChar() == '.' && !caja.getText().contains("."))) {
+			peCaja2 = caja.getText().length();
+			caja.setEditable(true);
+		} else if ((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')
+				&& (caja.getText().length() < (peCaja2 + limite2 + 1)) && caja.getText().contains(".")) {
+			// caja.setEditable(true);
+			double valorCaja = Double.parseDouble(caja.getText() + evt.getKeyChar());
+			if (valorCaja <= valorMaximo) {
+				caja.setEditable(true);
+			} else {
+				caja.setEditable(false);
+			}
+		} else {
+			caja.setEditable(false);
+		}
+	}
+
+
+
 }
