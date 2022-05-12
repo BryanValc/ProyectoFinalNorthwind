@@ -639,7 +639,6 @@ public class GuiSupplier extends JFrame implements Gui {
 				sql += ("HomePage " + op1 + " '" + op3 + caja12.getText().toString() + op3 + "'");
 			}
 		}
-		System.out.println(sql);
 		return sql;
 	}
 

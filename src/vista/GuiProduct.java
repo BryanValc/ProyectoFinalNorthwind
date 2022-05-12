@@ -8,11 +8,15 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Product;
+
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,7 +33,8 @@ public class GuiProduct extends JFrame implements Gui {
 	private JTextField caja7;
 	private JTextField caja8;
 	private JTable table;
-	JComboBox combo1, combo2, comboFiltro, comboOperacion;
+	JComboBox<String> combo1, combo2, comboFiltro, comboOperacion;
+	JButton btnOperacion;
 
 	JScrollPane scrollPane;
 
@@ -55,7 +60,7 @@ public class GuiProduct extends JFrame implements Gui {
 	public GuiProduct() {
 		setTitle("Formulario productos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 619, 578);
+		setBounds(100, 100, 1074, 578);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 204, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,7 +85,7 @@ public class GuiProduct extends JFrame implements Gui {
 		comboOperacion.setBounds(455, 44, 138, 22);
 		contentPane.add(comboOperacion);
 
-		JButton btnOperacion = new JButton("Insertar");
+		btnOperacion = new JButton("Insertar");
 		btnOperacion.setForeground(new Color(255, 255, 255));
 		btnOperacion.setBackground(new Color(204, 153, 0));
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
@@ -190,18 +195,22 @@ public class GuiProduct extends JFrame implements Gui {
 		contentPane.add(caja8);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 265, 583, 263);
+		scrollPane.setBounds(10, 265, 1038, 263);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
+
 		scrollPane.setViewportView(table);
 
-		actualizarTabla("");
+		actualizarTabla(
+				"SELECT ProductID AS 'ID Producto', ProductName AS Nombre, SupplierID AS 'ID Proveedor',"
+						+ " CategoryID AS 'ID Categoria', QuantityPerUnit AS 'Cantidad por unidad', UnitPrice AS 'Precio unitario',"
+						+ " UnitsInStock AS 'Unidades en existencia', UnitsOnOrder AS 'Unidades ordenadas', ReorderLevel AS 'Nivel de prioridad',"
+						+ " Discontinued AS 'Descontinuado' FROM Products");
 	}
 
 	@Override
 	public void actualizarTabla(String sql) {
-		sql = "SELECT ProductID AS 'ID Producto', ProductName AS Nombre, SupplierID AS 'ID Proveedor', CategoryID AS 'ID Categoria', QuantityPerUnit AS 'Cantidad por unidad', UnitPrice AS 'Precio unitario', UnitsInStock AS 'Unidades en existencia', UnitsOnOrder AS 'Unidades ordenadas', ReorderLevel AS 'Nivel de prioridad', Discontinued AS 'Descontinuado' FROM Products";
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
 				+ "user=asd;"
 				+ "password=c1s1g7o;"
@@ -233,38 +242,275 @@ public class GuiProduct extends JFrame implements Gui {
 
 	@Override
 	public void obtenerRegistroTabla() {
-		// TODO Auto-generated method stub
+		caja1.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+		caja2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+		combo1.setSelectedItem(table.getValueAt(table.getSelectedRow(), 2).toString());
+		combo2.setSelectedItem(table.getValueAt(table.getSelectedRow(), 3).toString());
+		caja3.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+		caja4.setText(table.getValueAt(table.getSelectedRow(), 5).toString());
+		caja5.setText(table.getValueAt(table.getSelectedRow(), 6).toString());
+		caja6.setText(table.getValueAt(table.getSelectedRow(), 7).toString());
+		caja7.setText(table.getValueAt(table.getSelectedRow(), 8).toString());
+		caja8.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
 
 	}
 
 	@Override
 	public boolean comprobarCampos() {
-		// TODO Auto-generated method stub
-		return false;
+		if (caja1.getText().equals("") && !btnOperacion.getText().equals("Insertar")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el ID del producto");
+			caja1.requestFocus();
+			return false;
+		}
+		if (caja2.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el nombre del producto");
+			caja2.requestFocus();
+			return false;
+		}
+		if (combo1.getSelectedItem().toString().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el ID del proveedor");
+			combo1.requestFocus();
+			return false;
+		}
+		if (combo2.getSelectedItem().toString().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el ID de la categoria");
+			combo2.requestFocus();
+			return false;
+		}
+		if (caja3.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido la cantidad por unidad");
+			caja3.requestFocus();
+			return false;
+		}
+		if (caja4.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el precio unitario");
+			caja4.requestFocus();
+			return false;
+		}
+		if (caja5.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido las unidades en existencia");
+			caja5.requestFocus();
+			return false;
+		}
+		if (caja6.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido las unidades en ordenadas");
+			caja6.requestFocus();
+			return false;
+		}
+		if (caja7.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el nivel de prioridad");
+			caja7.requestFocus();
+			return false;
+		}
+		if (caja8.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "No has introducido el estado del producto");
+			caja8.requestFocus();
+			return false;
+		}
+		return true;
 	}
+
+	String op1, op2, op3;
 
 	@Override
 	public void setOps(JComboBox<String> caja) {
-		// TODO Auto-generated method stub
+		switch ("" + caja.getSelectedItem()) {
+			case "B\u00FAsqueda precisa":
+				op1 = "= ";
+				op2 = " AND ";
+				op3 = "";
+				break;
+			case "B\u00FAsqueda amplia":
+				op1 = "LIKE ";
+				op2 = " OR ";
+				op3 = "%";
+				break;
+			default:
+				break;
+		}
 
 	}
 
 	@Override
 	public String consulta() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT ProductID AS 'ID Producto', ProductName AS Nombre, SupplierID AS 'ID Proveedor',"
+				+ " CategoryID AS 'ID Categoria', QuantityPerUnit AS 'Cantidad por unidad', UnitPrice AS 'Precio unitario',"
+				+ " UnitsInStock AS 'Unidades en existencia', UnitsOnOrder AS 'Unidades ordenadas', ReorderLevel AS 'Nivel de prioridad',"
+				+ " Discontinued AS 'Descontinuado' FROM Products";
+		setOps(comboFiltro);
+
+		boolean primero = true;
+
+		if (!caja1.getText().toString().equals("")) {
+			if (!primero) {
+				sql += op2;
+			} else {
+				sql += "WHERE ";
+			}
+			primero = false;
+			sql += ("ProductID " + op1 + " '" + op3 + caja1.getText().toString() + op3 + "'");
+		}
+		if (!btnOperacion.getText().contains("Modificar")) {
+			if (!caja2.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("ProductName " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
+			}
+			if (!combo1.getSelectedItem().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("SupplierID " + op1 + " '" + op3 + combo1.getSelectedItem().toString() + op3 + "'");
+			}
+			if (!combo2.getSelectedItem().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("CategoryID " + op1 + " '" + op3 + combo2.getSelectedItem().toString() + op3 + "'");
+			}
+			if (!caja3.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("QuantityPerUnit " + op1 + " '" + op3 + caja3.getText().toString() + op3 + "'");
+			}
+			if (!caja4.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("UnitPrice " + op1 + " '" + op3 + caja4.getText().toString() + op3 + "'");
+			}
+			if (!caja5.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("UnitsInStock " + op1 + " '" + op3 + caja5.getText().toString() + op3 + "'");
+			}
+			if (!caja6.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("UnitsOnOrder " + op1 + " '" + op3 + caja6.getText().toString() + op3 + "'");
+			}
+			if (!caja7.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("ReorderLevel " + op1 + " '" + op3 + caja7.getText().toString() + op3 + "'");
+			}
+			if (!caja8.getText().toString().equals("")) {
+				if (!primero) {
+					sql += op2;
+				} else {
+					sql += "WHERE ";
+				}
+				primero = false;
+				sql += ("Discontinued " + op1 + " '" + op3 + caja8.getText().toString() + op3 + "'");
+			}
+
+		}
+		return sql;
 	}
 
 	@Override
 	public void limpiarCampos() {
-		// TODO Auto-generated method stub
+		caja1.setText("");
+		caja2.setText("");
+		caja3.setText("");
+		caja4.setText("");
+		caja5.setText("");
+		caja6.setText("");
+		caja7.setText("");
+		caja8.setText("");
+		combo1.setSelectedIndex(-1);
+		combo2.setSelectedIndex(-1);
 
+		if (!btnOperacion.getText().contains("Insertar")) {
+			caja1.setEditable(true);
+		}
+		caja2.setEditable(true);
+		caja3.setEditable(true);
+		caja4.setEditable(true);
+		caja5.setEditable(true);
+		caja6.setEditable(true);
+		caja7.setEditable(true);
+		caja8.setEditable(true);
+		combo1.setEnabled(true);
+		combo2.setEnabled(true);
+
+		String sql = consulta();
+		actualizarTabla(sql);
+
+	}
+
+	public Product createProduct(boolean isForDeletion) {
+		Product product = null;
+		if (isForDeletion) {
+			product = new Product(Integer.parseInt(caja1.getText()), "", 0, 0, "", 0.0, 0, 0, 0, false);
+		} else if (btnOperacion.getText().equals("Insertar")) {
+			product = new Product(
+					0,
+					caja2.getText(),
+					Integer.parseInt(combo1.getSelectedItem().toString()),
+					Integer.parseInt(combo2.getSelectedItem().toString()),
+					caja3.getText(),
+					Double.parseDouble(caja4.getText()),
+					Integer.parseInt(caja5.getText()),
+					Integer.parseInt(caja6.getText()),
+					Integer.parseInt(caja7.getText()),
+					Boolean.parseBoolean(caja8.getText()));
+		} else {
+			product = new Product(
+					Integer.parseInt(caja1.getText()),
+					caja2.getText(),
+					Integer.parseInt(combo1.getSelectedItem().toString()),
+					Integer.parseInt(combo2.getSelectedItem().toString()),
+					caja3.getText(),
+					Double.parseDouble(caja4.getText()),
+					Integer.parseInt(caja5.getText()),
+					Integer.parseInt(caja6.getText()),
+					Integer.parseInt(caja7.getText()),
+					Boolean.parseBoolean(caja8.getText()));
+		}
+		return product;
 	}
 
 	@Override
 	public void comboOperacionActionPerformed(ActionEvent evt) {
-		// TODO Auto-generated method stub
+		btnOperacion.setText("" + comboOperacion.getSelectedItem());
+		if (("" + comboOperacion.getSelectedItem()).equals("Insertar")) {
+			caja1.setText("");
+			caja1.setEditable(false);
+		} else {
+			caja1.setEditable(true);
+			caja1.requestFocus();
 
+		}
 	}
 
 	@Override
