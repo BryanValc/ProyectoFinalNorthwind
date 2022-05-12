@@ -767,7 +767,7 @@ public class GuiSupplier extends JFrame implements Gui {
 							.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
 									+ caja1.getText() + "'");
 					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a eliminar");
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a modificar");
 					} else {
 						if (supplierDAO.modificarRegistro(supplier)) {
 							JOptionPane.showMessageDialog(null, "Proveedor modificado exitosamente");

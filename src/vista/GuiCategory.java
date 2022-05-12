@@ -238,7 +238,7 @@ public class GuiCategory extends JFrame implements Gui{
 							.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
 									+ caja1.getText() + "'");
 					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
+						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
 					} else {
 						if (categoryDAO.modificarRegistro(category)) {
 							JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");

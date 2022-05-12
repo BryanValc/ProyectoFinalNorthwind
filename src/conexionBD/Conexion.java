@@ -131,16 +131,18 @@ public class Conexion {
 
     public static boolean actualizarRegistro(Product producto) {
         try {
-            pstm = conexion.prepareStatement("UPDATE Products SET productName = ?, quantityPerUnit = ?, unitPrice = ?, "
+            pstm = conexion.prepareStatement("UPDATE Products SET productName = ?, supplierID = ?, categoryID = ?, quantityPerUnit = ?, unitPrice = ?, "
                     + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = ?");
             pstm.setString(1, producto.getProductName());
-            pstm.setString(2, producto.getQuantityPerUnit());
-            pstm.setDouble(3, producto.getUnitPrice());
-            pstm.setInt(4, producto.getUnitsInStock());
-            pstm.setInt(5, producto.getUnitsOnOrder());
-            pstm.setInt(6, producto.getReorderLevel());
-            pstm.setBoolean(7, producto.isDiscontinued());
-            pstm.setInt(8, producto.getProductID());
+            pstm.setInt(2,producto.getSupplierID());
+            pstm.setInt(3,producto.getCategoryID());
+            pstm.setString(4, producto.getQuantityPerUnit());
+            pstm.setDouble(5, producto.getUnitPrice());
+            pstm.setInt(6, producto.getUnitsInStock());
+            pstm.setInt(7, producto.getUnitsOnOrder());
+            pstm.setInt(8, producto.getReorderLevel());
+            pstm.setBoolean(9, producto.isDiscontinued());
+            pstm.setInt(10, producto.getProductID());
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
