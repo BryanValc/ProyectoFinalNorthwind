@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import java.awt.event.ActionListener;
 
 public class GuiProduct extends JFrame implements Gui {
 
@@ -121,6 +122,12 @@ public class GuiProduct extends JFrame implements Gui {
 		comboOperacion.setToolTipText("Seleccione el tipo de operaci\u00F3n");
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
 		comboOperacion.setBounds(455, 44, 138, 22);
+		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				comboOperacionActionPerformed(evt);
+			}
+		});
+		
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
@@ -138,6 +145,11 @@ public class GuiProduct extends JFrame implements Gui {
 		contentPane.add(btnAplicar);
 
 		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiarCampos();
+			}
+		});
 		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setBackground(new Color(204, 153, 0));
 		btnLimpiar.setToolTipText("Limpiar el formulario");
@@ -587,8 +599,8 @@ public class GuiProduct extends JFrame implements Gui {
 		caja6.setText("");
 		caja7.setText("");
 		caja8.setText("");
-		combo1.setSelectedIndex(-1);
-		combo2.setSelectedIndex(-1);
+		combo1.setSelectedIndex(0);
+		combo2.setSelectedIndex(0);
 
 		if (!btnOperacion.getText().contains("Insertar")) {
 			caja1.setEditable(true);
@@ -600,8 +612,6 @@ public class GuiProduct extends JFrame implements Gui {
 		caja6.setEditable(true);
 		caja7.setEditable(true);
 		caja8.setEditable(true);
-		combo1.setEnabled(true);
-		combo2.setEnabled(true);
 
 		String sql = consulta();
 		actualizarTabla(sql);
@@ -616,8 +626,8 @@ public class GuiProduct extends JFrame implements Gui {
 			product = new Product(
 					0,
 					caja2.getText(),
-					Integer.parseInt(combo1.getSelectedItem().toString()),
-					Integer.parseInt(combo2.getSelectedItem().toString()),
+					combo1.getSelectedIndex(),
+					combo2.getSelectedIndex(),
 					caja3.getText(),
 					Double.parseDouble(caja4.getText()),
 					Integer.parseInt(caja5.getText()),
@@ -628,8 +638,8 @@ public class GuiProduct extends JFrame implements Gui {
 			product = new Product(
 					Integer.parseInt(caja1.getText()),
 					caja2.getText(),
-					Integer.parseInt(combo1.getSelectedItem().toString()),
-					Integer.parseInt(combo2.getSelectedItem().toString()),
+					combo1.getSelectedIndex(),
+					combo2.getSelectedIndex(),
 					caja3.getText(),
 					Double.parseDouble(caja4.getText()),
 					Integer.parseInt(caja5.getText()),
