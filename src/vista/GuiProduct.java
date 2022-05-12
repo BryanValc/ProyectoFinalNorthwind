@@ -101,7 +101,6 @@ public class GuiProduct extends JFrame implements Gui {
 	 */
 	public GuiProduct() {
 		setTitle("Formulario productos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1074, 515);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 204, 102));

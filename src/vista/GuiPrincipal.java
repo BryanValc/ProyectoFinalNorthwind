@@ -55,6 +55,11 @@ public class GuiPrincipal extends JFrame {
 		btnCategory.setBackground(new Color(0, 153, 153));
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+		            public void run() {
+		                new GuiCategory().setVisible(true);
+		            }
+		        });
 			}
 		});
 		
@@ -89,6 +94,15 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(btnCategory);
 		
 		JButton btnProduct = new JButton("");
+		btnProduct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+		            public void run() {
+		                new GuiProduct().setVisible(true);
+		            }
+		        });
+			}
+		});
 		btnProduct.setToolTipText("Gestionar productos");
 		btnProduct.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\product.png"));
 		btnProduct.setForeground(Color.WHITE);
@@ -97,6 +111,15 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(btnProduct);
 		
 		JButton btnSupplier = new JButton("");
+		btnSupplier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+		            public void run() {
+		                new GuiSupplier().setVisible(true);
+		            }
+		        });
+			}
+		});
 		btnSupplier.setToolTipText("Gestionar proveedores");
 		btnSupplier.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\supplier.png"));
 		btnSupplier.setForeground(Color.WHITE);
@@ -105,6 +128,15 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(btnSupplier);
 		
 		JButton btnUsuario = new JButton("");
+		btnUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+		            public void run() {
+		                new GuiUsuario().setVisible(true);
+		            }
+		        });
+			}
+		});
 		btnUsuario.setToolTipText("Gestionar usuarios del sistema");
 		btnUsuario.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\usuario.png"));
 		btnUsuario.setForeground(Color.WHITE);

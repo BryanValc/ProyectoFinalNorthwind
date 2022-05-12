@@ -59,7 +59,6 @@ public class GuiUsuario extends JFrame implements Gui {
 	 */
 	public GuiUsuario() {
 		setTitle("Formulario usuarios");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 356, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 204, 51));

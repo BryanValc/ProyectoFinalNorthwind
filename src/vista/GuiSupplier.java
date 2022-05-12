@@ -71,7 +71,6 @@ public class GuiSupplier extends JFrame implements Gui {
 	 */
 	public GuiSupplier() {
 		setTitle("Gui proveedores");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1108, 481);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(51, 102, 255));

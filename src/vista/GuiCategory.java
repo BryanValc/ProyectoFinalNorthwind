@@ -38,25 +38,24 @@ public class GuiCategory extends JFrame implements Gui{
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiCategory frame = new GuiCategory();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuiCategory frame = new GuiCategory();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public GuiCategory() {
 		setTitle("Formulario categor\u00EDas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 458, 325);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(51, 153, 153));
