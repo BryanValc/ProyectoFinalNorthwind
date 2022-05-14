@@ -6,6 +6,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import conexionBD.Conexion;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.engine.JasperReport;
+//import net.sf.jasperreports.engine.util.JRLoader;
+//import net.sf.jasperreports.view.JasperViewer;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -41,7 +49,7 @@ public class GuiPrincipal extends JFrame {
 	public GuiPrincipal() {
 		setTitle("Menu principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 562, 753);
+		setBounds(100, 100, 844, 753);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,5 +151,52 @@ public class GuiPrincipal extends JFrame {
 		btnUsuario.setBackground(new Color(153, 204, 51));
 		btnUsuario.setBounds(276, 349, 256, 256);
 		contentPane.add(btnUsuario);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+//			        try {
+//			        	Conexion cn = new Conexion(2);
+//			        	//cn.getConexion();
+//			            String ruta=System.getProperty("user.dir")+"/src/vista/Leaf_Green.jasper";
+//			            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+//			            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+//			            JasperViewer view= new JasperViewer(print,false);
+//			            view.setVisible(true);
+//			        } catch (Exception ex) {
+//			            System.err.println("Error al generar el reporte---->"+ex.getMessage());
+//			        }
+
+			    
+			}
+		});
+		btnNewButton.setBounds(10, 616, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnListado = new JButton("");
+		btnListado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+		            public void run() {
+		                new ListadoProductos().setVisible(true);
+		            }
+		        });
+			}
+		});
+		btnListado.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\Listado.png"));
+		btnListado.setToolTipText("Gestionar usuarios del sistema");
+		btnListado.setForeground(Color.WHITE);
+		btnListado.setBackground(new Color(255, 153, 102));
+		btnListado.setBounds(542, 46, 256, 256);
+		contentPane.add(btnListado);
+		
+		JLabel lblListado = new JLabel("Listado de productos");
+		lblListado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListado.setForeground(Color.WHITE);
+		lblListado.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblListado.setBounds(542, 11, 256, 24);
+		contentPane.add(lblListado);
 	}
 }
