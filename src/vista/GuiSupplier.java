@@ -55,18 +55,18 @@ public class GuiSupplier extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuiSupplier frame = new GuiSupplier();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	//	public static void main(String[] args) {
+	//		EventQueue.invokeLater(new Runnable() {
+	//			public void run() {
+	//				try {
+	//					GuiSupplier frame = new GuiSupplier();
+	//					frame.setVisible(true);
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//			}
+	//		});
+	//	}
 
 	/**
 	 * Create the frame.
@@ -140,11 +140,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja1 = new JTextField();
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionInt(evt,10,2147483647,caja1, caja2);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -156,11 +156,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja2 = new JTextField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,40,caja2, caja3);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -171,11 +171,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja3 = new JTextField();
 		caja3.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,30,caja3, caja4);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -186,11 +186,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja4 = new JTextField();
 		caja4.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,30,caja4, caja5);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -201,11 +201,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja5 = new JTextField();
 		caja5.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,60,caja5, caja6);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -216,11 +216,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja6 = new JTextField();
 		caja6.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,15,caja6, caja7);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -231,11 +231,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja7 = new JTextField();
 		caja7.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,15,caja7, caja8);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -246,11 +246,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja8 = new JTextField();
 		caja8.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,10,caja8, caja9);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -261,11 +261,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja9 = new JTextField();
 		caja9.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,15,caja9, caja10);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -276,11 +276,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja10 = new JTextField();
 		caja10.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,24,caja10, caja11);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -291,11 +291,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja11 = new JTextField();
 		caja11.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,24,caja11, caja12);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -306,11 +306,11 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		caja12 = new JTextField();
 		caja12.addKeyListener(new java.awt.event.KeyAdapter() {
-			
+
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt,1000,caja12, caja1);
 			}
-			
+
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				cajaKeyReleased(evt);
 			}
@@ -347,7 +347,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		btnLimpiar.setBackground(new Color(0, 51, 153));
 		btnLimpiar.setBounds(615, 212, 89, 23);
 		btnLimpiar.setToolTipText("Limpiar el formulario");
-		
+
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
@@ -399,20 +399,20 @@ public class GuiSupplier extends JFrame implements Gui {
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro.setBackground(new Color(0, 51, 153));
 		comboFiltro
-				.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(931, 87, 139, 22);
 		contentPane.add(comboFiltro);
-		
+
 		JLabel lblNewLabel = new JLabel("Datos generales");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setBounds(142, 11, 165, 23);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblUbicacinFsica = new JLabel("Ubicaci\u00F3n f\u00EDsica");
 		lblUbicacinFsica.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblUbicacinFsica.setBounds(692, 11, 190, 23);
 		contentPane.add(lblUbicacinFsica);
-		
+
 		JLabel lblContactoElectrnico = new JLabel("Contacto electr\u00F3nico");
 		lblContactoElectrnico.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblContactoElectrnico.setBounds(200, 154, 206, 23);
@@ -538,18 +538,18 @@ public class GuiSupplier extends JFrame implements Gui {
 	@Override
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
-			case "B\u00FAsqueda precisa":
-				op1 = "= ";
-				op2 = " AND ";
-				op3 = "";
-				break;
-			case "B\u00FAsqueda amplia":
-				op1 = "LIKE ";
-				op2 = " OR ";
-				op3 = "%";
-				break;
-			default:
-				break;
+		case "B\u00FAsqueda precisa":
+			op1 = "= ";
+			op2 = " AND ";
+			op3 = "";
+			break;
+		case "B\u00FAsqueda amplia":
+			op1 = "LIKE ";
+			op2 = " OR ";
+			op3 = "%";
+			break;
+		default:
+			break;
 		}
 
 	}
@@ -717,10 +717,10 @@ public class GuiSupplier extends JFrame implements Gui {
 		}else {
 			caja1.setEditable(true);
 			caja1.requestFocus();
-			
+
 		}
 	}
-	
+
 	public Supplier createSupplier(boolean isForDeletion) {
 		Supplier supplier = null;
 		if (isForDeletion) {
@@ -765,63 +765,63 @@ public class GuiSupplier extends JFrame implements Gui {
 		Supplier supplier = null;
 
 		switch (operacion) {
-			case "Borrar":
-				if (caja1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"No se esta especificando el codigo del proveedor a eliminar");
+		case "Borrar":
+			if (caja1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,
+						"No se esta especificando el codigo del proveedor a eliminar");
+			} else {
+				supplier = createSupplier(true);
+				comprobacion = supplierDAO
+						.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a eliminar");
 				} else {
-					supplier = createSupplier(true);
-					comprobacion = supplierDAO
-							.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a eliminar");
-					} else {
-						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el proveedor?",
-								"Alerta!", JOptionPane.YES_NO_OPTION);
-						if (reply == JOptionPane.YES_OPTION) {
-							if (supplierDAO.borrarRegistro(supplier)) {
-								JOptionPane.showMessageDialog(null, "Proveedor eliminada exitosamente");
-								limpiarCampos();
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo eliminar el proveedor");
-							}
-						}
-					}
-				}
-				break;
-			case "Modificar":
-				if (comprobarCampos()) {
-					supplier = createSupplier(false);
-					
-					comprobacion = supplierDAO
-							.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a modificar");
-					} else {
-						if (supplierDAO.modificarRegistro(supplier)) {
-							JOptionPane.showMessageDialog(null, "Proveedor modificado exitosamente");
+					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el proveedor?",
+							"Alerta!", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						if (supplierDAO.borrarRegistro(supplier)) {
+							JOptionPane.showMessageDialog(null, "Proveedor eliminada exitosamente");
+							limpiarCampos();
 						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo modificar el proveedor");
+							JOptionPane.showMessageDialog(null, "No se pudo eliminar el proveedor");
 						}
 					}
 				}
+			}
+			break;
+		case "Modificar":
+			if (comprobarCampos()) {
+				supplier = createSupplier(false);
 
-				break;
-			case "Insertar":
-				if (comprobarCampos()) {
-					supplier = createSupplier(false);
-					if (supplierDAO.insertarRegistro(supplier)) {
-						JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente");
+				comprobacion = supplierDAO
+						.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a modificar");
+				} else {
+					if (supplierDAO.modificarRegistro(supplier)) {
+						JOptionPane.showMessageDialog(null, "Proveedor modificado exitosamente");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"No se pudo agregar el proveedor, quiza ya hay uno con el mismo ID");
+						JOptionPane.showMessageDialog(null, "No se pudo modificar el proveedor");
 					}
 				}
-				break;
-			default:
-				break;
+			}
+
+			break;
+		case "Insertar":
+			if (comprobarCampos()) {
+				supplier = createSupplier(false);
+				if (supplierDAO.insertarRegistro(supplier)) {
+					JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No se pudo agregar el proveedor, quiza ya hay uno con el mismo ID");
+				}
+			}
+			break;
+		default:
+			break;
 		}
 
 		String sql = consulta();
@@ -832,7 +832,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
-	
+
 	private void validacionInt(java.awt.event.KeyEvent evt, int limite, int valorMaximo,JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
@@ -855,7 +855,7 @@ public class GuiSupplier extends JFrame implements Gui {
 			caja.setEditable(false);
 		}
 	}
-	
+
 	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
@@ -869,5 +869,5 @@ public class GuiSupplier extends JFrame implements Gui {
 			caja.setEditable(false);
 		}
 	}
-	
+
 }

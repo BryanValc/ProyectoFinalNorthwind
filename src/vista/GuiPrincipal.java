@@ -53,28 +53,28 @@ public class GuiPrincipal extends JFrame {
 	public GuiPrincipal() {
 		Conexion cn = new Conexion(2);
 		cn.getConexion();
-        addWindowListener(new WindowAdapter() {
-        	public void windowClosing(WindowEvent we) {
-            
-	        int result = JOptionPane.showConfirmDialog(null,"¿Quieres aplicar los cambios?", "Cerrando programa",JOptionPane.YES_NO_OPTION);
-	        if(result == JOptionPane.YES_OPTION){
-	        	try {
-					cn.guardar();
-				} catch (SQLException e) {
-					System.out.println("No se pudieron guardar los cambios");
-					e.printStackTrace();
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+
+				int result = JOptionPane.showConfirmDialog(null,"¿Quieres aplicar los cambios?", "Cerrando programa",JOptionPane.YES_NO_OPTION);
+				if(result == JOptionPane.YES_OPTION){
+					try {
+						cn.guardar();
+					} catch (SQLException e) {
+						System.out.println("No se pudieron guardar los cambios");
+						e.printStackTrace();
+					}
+				}else{
+					try {
+						cn.volver();
+					} catch (SQLException e) {
+						System.out.println("No se pudo regresar al estado anterior");
+						e.printStackTrace();
+					}
 				}
-	        }else{
-	        	try {
-					cn.volver();
-				} catch (SQLException e) {
-					System.out.println("No se pudo regresar al estado anterior");
-					e.printStackTrace();
-				}
-	        	}
-        	}
-        });
-		
+			}
+		});
+
 		setTitle("Menu principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 844, 753);
@@ -83,7 +83,7 @@ public class GuiPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JButton btnCategory = new JButton("");
 		btnCategory.setToolTipText("Gestionar categor\u00EDas");
 		btnCategory.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\categoryy.png"));
@@ -92,34 +92,34 @@ public class GuiPrincipal extends JFrame {
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
-		            public void run() {
-		                GuiCategory.getInstance().setVisible(true);
-		            }
-		        });
+					public void run() {
+						GuiCategory.getInstance().setVisible(true);
+					}
+				});
 			}
 		});
-		
+
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setForeground(new Color(255, 255, 255));
 		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuarios.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblUsuarios.setBounds(276, 313, 256, 24);
 		contentPane.add(lblUsuarios);
-		
+
 		JLabel lblProveedores = new JLabel("Proveedores");
 		lblProveedores.setForeground(new Color(255, 255, 255));
 		lblProveedores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProveedores.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblProveedores.setBounds(10, 313, 256, 24);
 		contentPane.add(lblProveedores);
-		
+
 		JLabel lblProductos = new JLabel("Productos");
 		lblProductos.setForeground(new Color(255, 255, 255));
 		lblProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductos.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblProductos.setBounds(276, 11, 256, 24);
 		contentPane.add(lblProductos);
-		
+
 		JLabel lblNewLabel = new JLabel("Categor\u00EDas");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -128,15 +128,15 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(lblNewLabel);
 		btnCategory.setBounds(10, 46, 256, 256);
 		contentPane.add(btnCategory);
-		
+
 		JButton btnProduct = new JButton("");
 		btnProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
-		            public void run() {
-		            	GuiProduct.getInstance().setVisible(true);
-		            }
-		        });
+					public void run() {
+						GuiProduct.getInstance().setVisible(true);
+					}
+				});
 			}
 		});
 		btnProduct.setToolTipText("Gestionar productos");
@@ -145,15 +145,15 @@ public class GuiPrincipal extends JFrame {
 		btnProduct.setBackground(new Color(255, 204, 102));
 		btnProduct.setBounds(276, 46, 256, 256);
 		contentPane.add(btnProduct);
-		
+
 		JButton btnSupplier = new JButton("");
 		btnSupplier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
-		            public void run() {
-		            	GuiSupplier.getInstance().setVisible(true);
-		            }
-		        });
+					public void run() {
+						GuiSupplier.getInstance().setVisible(true);
+					}
+				});
 			}
 		});
 		btnSupplier.setToolTipText("Gestionar proveedores");
@@ -162,15 +162,15 @@ public class GuiPrincipal extends JFrame {
 		btnSupplier.setBackground(new Color(51, 102, 204));
 		btnSupplier.setBounds(10, 349, 256, 256);
 		contentPane.add(btnSupplier);
-		
+
 		JButton btnUsuario = new JButton("");
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
-		            public void run() {
-		            	GuiUsuario.getInstance().setVisible(true);
-		            }
-		        });
+					public void run() {
+						GuiUsuario.getInstance().setVisible(true);
+					}
+				});
 			}
 		});
 		btnUsuario.setToolTipText("Gestionar usuarios del sistema");
@@ -179,38 +179,38 @@ public class GuiPrincipal extends JFrame {
 		btnUsuario.setBackground(new Color(153, 204, 51));
 		btnUsuario.setBounds(276, 349, 256, 256);
 		contentPane.add(btnUsuario);
-		
+
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 
-//			        try {
-//			        	Conexion cn = new Conexion(2);
-//			        	//cn.getConexion();
-//			            String ruta=System.getProperty("user.dir")+"/src/vista/Leaf_Green.jasper";
-//			            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
-//			            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
-//			            JasperViewer view= new JasperViewer(print,false);
-//			            view.setVisible(true);
-//			        } catch (Exception ex) {
-//			            System.err.println("Error al generar el reporte---->"+ex.getMessage());
-//			        }
 
-			    
+				//			        try {
+				//			        	Conexion cn = new Conexion(2);
+				//			        	//cn.getConexion();
+				//			            String ruta=System.getProperty("user.dir")+"/src/vista/Leaf_Green.jasper";
+				//			            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+				//			            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+				//			            JasperViewer view= new JasperViewer(print,false);
+				//			            view.setVisible(true);
+				//			        } catch (Exception ex) {
+				//			            System.err.println("Error al generar el reporte---->"+ex.getMessage());
+				//			        }
+
+
 			}
 		});
 		btnNewButton.setBounds(10, 616, 89, 23);
 		contentPane.add(btnNewButton);
-		
+
 		JButton btnListado = new JButton("");
 		btnListado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
-		            public void run() {
-		            	ListadoProductos.getInstance().setVisible(true);
-		            }
-		        });
+					public void run() {
+						ListadoProductos.getInstance().setVisible(true);
+					}
+				});
 			}
 		});
 		btnListado.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\Listado.png"));
@@ -219,7 +219,7 @@ public class GuiPrincipal extends JFrame {
 		btnListado.setBackground(new Color(255, 153, 102));
 		btnListado.setBounds(542, 46, 256, 256);
 		contentPane.add(btnListado);
-		
+
 		JLabel lblListado = new JLabel("Listado de productos");
 		lblListado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListado.setForeground(Color.WHITE);

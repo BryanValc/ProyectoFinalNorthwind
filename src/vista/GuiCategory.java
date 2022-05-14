@@ -29,8 +29,8 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 
 public class GuiCategory extends JFrame implements Gui{
-	
-	
+
+
 
 	private JPanel contentPane;
 	private JTable table;
@@ -42,31 +42,31 @@ public class GuiCategory extends JFrame implements Gui{
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuiCategory frame = new GuiCategory();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	//	public static void main(String[] args) {
+	//		EventQueue.invokeLater(new Runnable() {
+	//			public void run() {
+	//				try {
+	//					GuiCategory frame = new GuiCategory();
+	//					frame.setVisible(true);
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//			}
+	//		});
+	//	}
 
 	/**
 	 * Create the frame.
 	 */
 	private static GuiCategory singleObject = null;
-	
+
 	public static GuiCategory getInstance() {
 		if (singleObject == null) {
 			singleObject = new GuiCategory();
 		}
 		return singleObject;
 	}
-	
+
 	private GuiCategory() {
 		setTitle("Formulario categor\u00EDas");
 		setBounds(100, 100, 458, 325);
@@ -125,7 +125,7 @@ public class GuiCategory extends JFrame implements Gui{
 		comboFiltro.setToolTipText(
 				"Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro
-				.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(298, 7, 138, 22);
 		contentPane.add(comboFiltro);
 
@@ -148,7 +148,12 @@ public class GuiCategory extends JFrame implements Gui{
 		btnOperacion.setBackground(new Color(0, 102, 102));
 		btnOperacion.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnOperacionActionPerformed(evt);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						btnOperacionActionPerformed(evt);
+					}
+				}).start();
 			}
 		});
 		btnOperacion.setBounds(298, 57, 89, 23);
@@ -240,63 +245,63 @@ public class GuiCategory extends JFrame implements Gui{
 		Category category = null;
 
 		switch (operacion) {
-			case "Borrar":
-				if (caja1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"No se esta especificando el codigo de la categoria a eliminar");
+		case "Borrar":
+			if (caja1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,
+						"No se esta especificando el codigo de la categoria a eliminar");
+			} else {
+				category = createCategory(true);
+				comprobacion = categoryDAO
+						.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
 				} else {
-					category = createCategory(true);
-					comprobacion = categoryDAO
-							.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
-					} else {
-						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la categoria?",
-								"Alerta!", JOptionPane.YES_NO_OPTION);
-						if (reply == JOptionPane.YES_OPTION) {
-							if (categoryDAO.borrarRegistro(category)) {
-								JOptionPane.showMessageDialog(null, "Categoria eliminada exitosamente");
-								limpiarCampos();
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria");
-							}
-						}
-					}
-				}
-				break;
-			case "Modificar":
-				if (comprobarCampos()) {
-					category = createCategory(false);
-					
-					comprobacion = categoryDAO
-							.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
-					} else {
-						if (categoryDAO.modificarRegistro(category)) {
-							JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");
+					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la categoria?",
+							"Alerta!", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						if (categoryDAO.borrarRegistro(category)) {
+							JOptionPane.showMessageDialog(null, "Categoria eliminada exitosamente");
+							limpiarCampos();
 						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo modificar la categoria");
+							JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria");
 						}
 					}
 				}
+			}
+			break;
+		case "Modificar":
+			if (comprobarCampos()) {
+				category = createCategory(false);
 
-				break;
-			case "Insertar":
-				if (comprobarCampos()) {
-					category = createCategory(false);
-					if (categoryDAO.insertarRegistro(category)) {
-						JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente");
+				comprobacion = categoryDAO
+						.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
+				} else {
+					if (categoryDAO.modificarRegistro(category)) {
+						JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"No se pudo agregar la categoria, quiza ya hay una con el mismo ID");
+						JOptionPane.showMessageDialog(null, "No se pudo modificar la categoria");
 					}
 				}
-				break;
-			default:
-				break;
+			}
+
+			break;
+		case "Insertar":
+			if (comprobarCampos()) {
+				category = createCategory(false);
+				if (categoryDAO.insertarRegistro(category)) {
+					JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No se pudo agregar la categoria, quiza ya hay una con el mismo ID");
+				}
+			}
+			break;
+		default:
+			break;
 		}
 
 		String sql = consulta();
@@ -330,14 +335,14 @@ public class GuiCategory extends JFrame implements Gui{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		try {
-//			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-//		} catch (ClassNotFoundException e1) {
-//			e1.printStackTrace();
-//		} catch (SQLException e1) {
-//			e1.printStackTrace();
-//		}
-		
+		//		try {
+		//			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+		//		} catch (ClassNotFoundException e1) {
+		//			e1.printStackTrace();
+		//		} catch (SQLException e1) {
+		//			e1.printStackTrace();
+		//		}
+
 	}
 
 	public void obtenerRegistroTabla() {
@@ -371,18 +376,18 @@ public class GuiCategory extends JFrame implements Gui{
 
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
-			case "B\u00FAsqueda precisa":
-				op1 = "= ";
-				op2 = " AND ";
-				op3 = "";
-				break;
-			case "B\u00FAsqueda amplia":
-				op1 = "LIKE ";
-				op2 = " OR ";
-				op3 = "%";
-				break;
-			default:
-				break;
+		case "B\u00FAsqueda precisa":
+			op1 = "= ";
+			op2 = " AND ";
+			op3 = "";
+			break;
+		case "B\u00FAsqueda amplia":
+			op1 = "LIKE ";
+			op2 = " OR ";
+			op3 = "%";
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -450,7 +455,7 @@ public class GuiCategory extends JFrame implements Gui{
 		}else {
 			caja1.setEditable(true);
 			caja1.requestFocus();
-			
+
 		}
 	}
 

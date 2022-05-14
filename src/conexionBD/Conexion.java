@@ -81,7 +81,7 @@ public class Conexion {
             conexion.commit();
             return true;
         } catch (Exception ex) {
-        	conexion.rollback(sp);
+        	//conexion.rollback(sp);
             //System.out.printf("Error al eliminar el registro");
             ex.printStackTrace();
         }
@@ -101,12 +101,12 @@ public class Conexion {
     }
     
     public static void guardar() throws SQLException {
-    	conexion.commit();
+    	//conexion.commit();
     	//conexion.releaseSavepoint(sp);
     }
     
     public static void volver() throws SQLException {
-    	conexion.rollback(sp);
+    	//conexion.rollback(sp);
     }
 
     public static void llamada() {

@@ -43,18 +43,18 @@ public class GuiUsuario extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuiUsuario frame = new GuiUsuario();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	//	public static void main(String[] args) {
+	//		EventQueue.invokeLater(new Runnable() {
+	//			public void run() {
+	//				try {
+	//					GuiUsuario frame = new GuiUsuario();
+	//					frame.setVisible(true);
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//			}
+	//		});
+	//	}
 
 	/**
 	 * Create the frame.
@@ -121,7 +121,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		comboFiltro.setBackground(new Color(51, 102, 0));
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro
-				.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(199, 7, 131, 22);
 		contentPane.add(comboFiltro);
 
@@ -165,20 +165,20 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnAplicar = new JButton("Aplicar");
 		btnAplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Thread t = new Thread() {
-//				    public void run() {
-//				    	Conexion cn = new Conexion(2);
-//						cn.getConexion();
-//						try {
-//							cn.guardar();
-//						} catch (SQLException ex) {
-//							System.out.println("No se pudieron guardar los cambios");
-//							ex.printStackTrace();
-//							cn.cerrarConexion();
-//						}
-//				    }
-//				};
-//				t.start();
+				//				Thread t = new Thread() {
+				//				    public void run() {
+				//				    	Conexion cn = new Conexion(2);
+				//						cn.getConexion();
+				//						try {
+				//							cn.guardar();
+				//						} catch (SQLException ex) {
+				//							System.out.println("No se pudieron guardar los cambios");
+				//							ex.printStackTrace();
+				//							cn.cerrarConexion();
+				//						}
+				//				    }
+				//				};
+				//				t.start();
 			}
 		});
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
@@ -265,18 +265,18 @@ public class GuiUsuario extends JFrame implements Gui {
 	@Override
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
-			case "B\u00FAsqueda precisa":
-				op1 = "= ";
-				op2 = " AND ";
-				op3 = "";
-				break;
-			case "B\u00FAsqueda amplia":
-				op1 = "LIKE ";
-				op2 = " OR ";
-				op3 = "%";
-				break;
-			default:
-				break;
+		case "B\u00FAsqueda precisa":
+			op1 = "= ";
+			op2 = " AND ";
+			op3 = "";
+			break;
+		case "B\u00FAsqueda amplia":
+			op1 = "LIKE ";
+			op2 = " OR ";
+			op3 = "%";
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -306,7 +306,7 @@ public class GuiUsuario extends JFrame implements Gui {
 				sql += ("password " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
 			}
 		}
-//		System.out.println(sql);
+		//		System.out.println(sql);
 		return sql;
 	}
 
@@ -328,7 +328,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	@Override
 	public void comboOperacionActionPerformed(ActionEvent evt) {
 		btnOperacion.setText("" + comboOperacion.getSelectedItem());
-		
+
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
@@ -351,63 +351,63 @@ public class GuiUsuario extends JFrame implements Gui {
 		Usuario usuario = null;
 
 		switch (operacion) {
-			case "Borrar":
-				if (caja1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"No se esta especificando el usuario a eliminar");
+		case "Borrar":
+			if (caja1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,
+						"No se esta especificando el usuario a eliminar");
+			} else {
+				usuario = createUsuario(true);
+				comprobacion = usuarioDAO
+						.buscar("SELECT * FROM Usuarios WHERE username = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
 				} else {
-					usuario = createUsuario(true);
-					comprobacion = usuarioDAO
-							.buscar("SELECT * FROM Usuarios WHERE username = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
-					} else {
-						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el usuario?",
-								"Alerta!", JOptionPane.YES_NO_OPTION);
-						if (reply == JOptionPane.YES_OPTION) {
-							if (usuarioDAO.borrarRegistro(usuario)) {
-								JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
-								limpiarCampos();
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario");
-							}
-						}
-					}
-				}
-				break;
-			case "Modificar":
-				if (comprobarCampos()) {
-					usuario = createUsuario(false);
-
-					comprobacion = usuarioDAO
-							.buscar("SELECT * FROM Usuarios WHERE username = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
-					} else {
-						if (usuarioDAO.modificarRegistro(usuario)) {
-							JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
+					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el usuario?",
+							"Alerta!", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						if (usuarioDAO.borrarRegistro(usuario)) {
+							JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
+							limpiarCampos();
 						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario");
+							JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario");
 						}
 					}
 				}
+			}
+			break;
+		case "Modificar":
+			if (comprobarCampos()) {
+				usuario = createUsuario(false);
 
-				break;
-			case "Insertar":
-				if (comprobarCampos()) {
-					usuario = createUsuario(false);
-					if (usuarioDAO.insertarRegistro(usuario)) {
-						JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
+				comprobacion = usuarioDAO
+						.buscar("SELECT * FROM Usuarios WHERE username = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
+				} else {
+					if (usuarioDAO.modificarRegistro(usuario)) {
+						JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"No se pudo agregar el usuario, quiza ya hay uno con el mismo nombre");
+						JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario");
 					}
 				}
-				break;
-			default:
-				break;
+			}
+
+			break;
+		case "Insertar":
+			if (comprobarCampos()) {
+				usuario = createUsuario(false);
+				if (usuarioDAO.insertarRegistro(usuario)) {
+					JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No se pudo agregar el usuario, quiza ya hay uno con el mismo nombre");
+				}
+			}
+			break;
+		default:
+			break;
 		}
 
 		String sql = consulta();

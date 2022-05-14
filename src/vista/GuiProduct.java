@@ -55,18 +55,18 @@ public class GuiProduct extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuiProduct frame = new GuiProduct();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	//	public static void main(String[] args) {
+	//		EventQueue.invokeLater(new Runnable() {
+	//			public void run() {
+	//				try {
+	//					GuiProduct frame = new GuiProduct();
+	//					frame.setVisible(true);
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//			}
+	//		});
+	//	}
 
 	public void llenarCombos() {
 		combo1.removeAllItems();
@@ -127,7 +127,7 @@ public class GuiProduct extends JFrame implements Gui {
 		comboFiltro.setToolTipText(
 				"Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro
-				.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(503, 11, 138, 22);
 		contentPane.add(comboFiltro);
 
@@ -520,18 +520,18 @@ public class GuiProduct extends JFrame implements Gui {
 	@Override
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
-			case "B\u00FAsqueda precisa":
-				op1 = "= ";
-				op2 = " AND ";
-				op3 = "";
-				break;
-			case "B\u00FAsqueda amplia":
-				op1 = "LIKE ";
-				op2 = " OR ";
-				op3 = "%";
-				break;
-			default:
-				break;
+		case "B\u00FAsqueda precisa":
+			op1 = "= ";
+			op2 = " AND ";
+			op3 = "";
+			break;
+		case "B\u00FAsqueda amplia":
+			op1 = "LIKE ";
+			op2 = " OR ";
+			op3 = "%";
+			break;
+		default:
+			break;
 		}
 
 	}
@@ -729,63 +729,63 @@ public class GuiProduct extends JFrame implements Gui {
 		Product product = null;
 
 		switch (operacion) {
-			case "Borrar":
-				if (caja1.getText().equals("")) {
-					JOptionPane.showMessageDialog(null,
-							"No se esta especificando el codigo del producto a eliminar");
+		case "Borrar":
+			if (caja1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null,
+						"No se esta especificando el codigo del producto a eliminar");
+			} else {
+				product = createProduct(true);
+				comprobacion = productDAO
+						.buscar("SELECT * FROM Products WHERE ProductID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a eliminar");
 				} else {
-					product = createProduct(true);
-					comprobacion = productDAO
-							.buscar("SELECT * FROM Products WHERE ProductID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a eliminar");
-					} else {
-						int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el producto?",
-								"Alerta!", JOptionPane.YES_NO_OPTION);
-						if (reply == JOptionPane.YES_OPTION) {
-							if (productDAO.borrarRegistro(product)) {
-								JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente");
-								limpiarCampos();
-							} else {
-								JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto");
-							}
-						}
-					}
-				}
-				break;
-			case "Modificar":
-				if (comprobarCampos()) {
-					product = createProduct(false);
-
-					comprobacion = productDAO
-							.buscar("SELECT * FROM Products WHERE ProductID = '"
-									+ caja1.getText() + "'");
-					if (comprobacion.size() == 0) {
-						JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a modificar");
-					} else {
-						if (productDAO.modificarRegistro(product)) {
-							JOptionPane.showMessageDialog(null, "Producto modificado exitosamente");
+					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el producto?",
+							"Alerta!", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						if (productDAO.borrarRegistro(product)) {
+							JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente");
+							limpiarCampos();
 						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo modificar el producto");
+							JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto");
 						}
 					}
 				}
+			}
+			break;
+		case "Modificar":
+			if (comprobarCampos()) {
+				product = createProduct(false);
 
-				break;
-			case "Insertar":
-				if (comprobarCampos()) {
-					product = createProduct(false);
-					if (productDAO.insertarRegistro(product)) {
-						JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
+				comprobacion = productDAO
+						.buscar("SELECT * FROM Products WHERE ProductID = '"
+								+ caja1.getText() + "'");
+				if (comprobacion.size() == 0) {
+					JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a modificar");
+				} else {
+					if (productDAO.modificarRegistro(product)) {
+						JOptionPane.showMessageDialog(null, "Producto modificado exitosamente");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"No se pudo agregar el producto, quiza ya hay uno con el mismo ID");
+						JOptionPane.showMessageDialog(null, "No se pudo modificar el producto");
 					}
 				}
-				break;
-			default:
-				break;
+			}
+
+			break;
+		case "Insertar":
+			if (comprobarCampos()) {
+				product = createProduct(false);
+				if (productDAO.insertarRegistro(product)) {
+					JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No se pudo agregar el producto, quiza ya hay uno con el mismo ID");
+				}
+			}
+			break;
+		default:
+			break;
 		}
 
 		String sql = consulta();
