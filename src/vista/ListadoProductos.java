@@ -21,6 +21,7 @@ public class ListadoProductos extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private ResultSetTableModel modeloDatos = null;
 	JScrollPane scrollPane;
 
 	/**
@@ -83,22 +84,32 @@ public class ListadoProductos extends JFrame {
 	
 	public void actualizarTabla() {
 		String sql = "SELECT * FROM \"Products by Category\";";
+		
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=asd;"
+				+ "user=vistaTablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
-		ResultSetTableModel modeloDatos = null;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+					if(modeloDatos!=null) {
+						table.setModel(modeloDatos);
+					}
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}).start();
 		try {
-			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		scrollPane.getViewport().remove(table);
-		table = new JTable(modeloDatos);
-		scrollPane.setViewportView(table);
-
 	}
 	
 }

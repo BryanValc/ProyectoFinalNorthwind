@@ -46,7 +46,7 @@ public class GuiProduct extends JFrame implements Gui {
 	private JTextField caja7;
 	private JTextField caja8;
 	private JTable table;
-	private ResultSetTableModel modeloDatos;
+	private ResultSetTableModel modeloDatos = null;
 	JComboBox<String> combo1, combo2, comboFiltro, comboOperacion;
 	JButton btnOperacion;
 
@@ -223,7 +223,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionInt(evt, 10, 2147483647, caja1);
+				validacionInt(evt, 10, 2147483647, caja1, caja2);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -238,7 +238,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 40, caja2);
+				validacionString(evt, 40, caja2, caja3);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -279,7 +279,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja3.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 20, caja3);
+				validacionString(evt, 20, caja3, caja4);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -294,7 +294,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja4.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionDouble(evt, 922337203685477.5807, 15, 4, caja4);
+				validacionDouble(evt, 922337203685477.5807, 15, 4, caja4, caja5);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -309,7 +309,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja5.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionInt(evt, 5, 32767, caja5);
+				validacionInt(evt, 5, 32767, caja5, caja6);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -324,7 +324,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja6.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionInt(evt, 5, 32767, caja6);
+				validacionInt(evt, 5, 32767, caja6, caja7);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -339,7 +339,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja7.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionInt(evt, 5, 32767, caja7);
+				validacionInt(evt, 5, 32767, caja7, caja8);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -354,7 +354,7 @@ public class GuiProduct extends JFrame implements Gui {
 		caja8.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 5, caja8);
+				validacionString(evt, 5, caja8, caja1);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -794,9 +794,12 @@ public class GuiProduct extends JFrame implements Gui {
 		actualizarTabla(sql);
 	}
 
-	private void validacionInt(java.awt.event.KeyEvent evt, int limite, int valorMaximo, JTextField caja) {
+	private void validacionInt(java.awt.event.KeyEvent evt, int limite, int valorMaximo, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
-		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) && caja.getText().length() < limite) {
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) && caja.getText().length() < limite) {
 			try {
 				int valorCaja = Integer.parseInt(caja.getText() + evt.getKeyChar());
 				if (valorCaja <= valorMaximo) {
@@ -814,9 +817,12 @@ public class GuiProduct extends JFrame implements Gui {
 		}
 	}
 
-	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja) {
+	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
-		if ((caja.getText().equals("") ? true
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if ((caja.getText().equals("") ? true
 				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
@@ -830,13 +836,16 @@ public class GuiProduct extends JFrame implements Gui {
 	private JLabel lblNewLabel_2;
 
 	private void validacionDouble(java.awt.event.KeyEvent evt, double valorMaximo, int limite1, int limite2,
-			JTextField caja) {
+			JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
 		// int limite1 = 3;
 		// int limite2 = 4;
 		// double valorMaximo = 115.2;
 		// JTextField caja = caja2;
-		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') && !caja.getText().contains("."))
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') && !caja.getText().contains("."))
 				&& caja.getText().length() < (limite1) || (code == KeyEvent.VK_BACK_SPACE)) {
 			// caja.setEditable(true);
 			double valorCaja = Double.parseDouble(caja.getText() + evt.getKeyChar());

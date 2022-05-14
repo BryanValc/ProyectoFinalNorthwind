@@ -38,7 +38,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	private JButton btnAplicar;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private ResultSetTableModel modeloDatos;
+	private ResultSetTableModel modeloDatos = null;
 
 	/**
 	 * Launch the application.
@@ -80,7 +80,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 255, caja1);
+				validacionString(evt, 255, caja1, caja2);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -95,7 +95,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
 
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 255, caja2);
+				validacionString(evt, 255, caja2, caja1);
 			}
 
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -412,9 +412,12 @@ public class GuiUsuario extends JFrame implements Gui {
 		actualizarTabla(sql);
 	}
 
-	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja) {
+	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
-		if ((caja.getText().equals("") ? true
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if ((caja.getText().equals("") ? true
 				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);

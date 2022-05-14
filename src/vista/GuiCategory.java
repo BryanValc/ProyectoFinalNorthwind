@@ -32,7 +32,7 @@ public class GuiCategory extends JFrame implements Gui{
 
 	private JPanel contentPane;
 	private JTable table;
-	private ResultSetTableModel modeloDatos;
+	private ResultSetTableModel modeloDatos = null;
 	private JScrollPane scrollPane;
 	private JButton btnLimpiar, btnOperacion;
 	JComboBox<String> comboOperacion, comboFiltro;
@@ -461,6 +461,9 @@ public class GuiCategory extends JFrame implements Gui{
 			}
 		} else if (code == KeyEvent.VK_BACK_SPACE) {
 			caja.setEditable(true);
+		} else if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			caja2.requestFocus();
 		} else {
 			caja.setEditable(false);
 		}
@@ -474,6 +477,9 @@ public class GuiCategory extends JFrame implements Gui{
 				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
+		} else if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			caja3.requestFocus();
 		} else {
 			caja.setEditable(false);
 		}
