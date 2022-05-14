@@ -14,14 +14,24 @@ public class CategoryDAO {
     public boolean insertarRegistro(Category categoria) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.agregarRegistro(categoria);
+        try {
+			resultado = cn.agregarRegistro(categoria);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
     public boolean modificarRegistro(Category categoria) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.actualizarRegistro(categoria);
+        try {
+			resultado = cn.actualizarRegistro(categoria);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
@@ -48,7 +58,12 @@ public class CategoryDAO {
         cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Categories WHERE CategoryID = " + categoria.getCategoryID();
-        resultado = cn.eliminarRegistro(sql);
+        try {
+			resultado = cn.eliminarRegistro(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 

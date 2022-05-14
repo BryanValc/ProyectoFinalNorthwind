@@ -14,14 +14,24 @@ public class UsuarioDAO {
     public boolean insertarRegistro(Usuario usuario) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.insertarRegistro(usuario);
+        try {
+			resultado = cn.insertarRegistro(usuario);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
     public boolean modificarRegistro(Usuario usuario) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.actualizarRegistro(usuario);
+        try {
+			resultado = cn.actualizarRegistro(usuario);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
@@ -47,7 +57,12 @@ public class UsuarioDAO {
         cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Usuarios WHERE username = '" + usuario.getUsername()+"'";
-        resultado = cn.eliminarRegistro(sql);
+        try {
+			resultado = cn.eliminarRegistro(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 

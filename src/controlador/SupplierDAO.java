@@ -13,14 +13,24 @@ public class SupplierDAO {
     public boolean insertarRegistro(Supplier proveedor) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.agregarRegistro(proveedor);
+        try {
+			resultado = cn.agregarRegistro(proveedor);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
     public boolean modificarRegistro(Supplier proveedor) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.actualizarRegistro(proveedor);
+        try {
+			resultado = cn.actualizarRegistro(proveedor);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
@@ -56,7 +66,12 @@ public class SupplierDAO {
         cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Suppliers WHERE SupplierID = " + proveedor.getSupplierID();
-        resultado = cn.eliminarRegistro(sql);
+        try {
+			resultado = cn.eliminarRegistro(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 

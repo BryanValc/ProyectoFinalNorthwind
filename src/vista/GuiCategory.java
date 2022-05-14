@@ -32,6 +32,7 @@ public class GuiCategory extends JFrame implements Gui{
 
 	private JPanel contentPane;
 	private JTable table;
+	private ResultSetTableModel modeloDatos;
 	private JScrollPane scrollPane;
 	private JButton btnLimpiar, btnOperacion;
 	JComboBox<String> comboOperacion, comboFiltro;
@@ -69,6 +70,17 @@ public class GuiCategory extends JFrame implements Gui{
 		contentPane.add(scrollPane);
 
 		table = new JTable();
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				obtenerRegistroTabla();
+			}
+		});
+		table.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				obtenerRegistroTabla();
+			}
+		});
 		scrollPane.setViewportView(table);
 		actualizarTabla("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories");
 
@@ -283,32 +295,38 @@ public class GuiCategory extends JFrame implements Gui{
 
 	public void actualizarTabla(String sql) {
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=asd;"
+				+ "user=vistaTablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
-		ResultSetTableModel modeloDatos = null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		scrollPane.getViewport().remove(table);
-		table = new JTable(modeloDatos);
-		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		new Thread(new Runnable() {
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				obtenerRegistroTabla();
+			public void run() {
+				try {
+					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+					if(modeloDatos!=null) {
+						table.setModel(modeloDatos);
+					}
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
-		});
-		table.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				obtenerRegistroTabla();
-			}
-		});
-		scrollPane.setViewportView(table);
-
+		}).start();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		try {
+//			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+//		} catch (ClassNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (SQLException e1) {
+//			e1.printStackTrace();
+//		}
+		
 	}
 
 	public void obtenerRegistroTabla() {

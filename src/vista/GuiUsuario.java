@@ -38,6 +38,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	private JButton btnAplicar;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private ResultSetTableModel modeloDatos;
 
 	/**
 	 * Launch the application.
@@ -182,27 +183,6 @@ public class GuiUsuario extends JFrame implements Gui {
 		contentPane.add(scrollPane);
 
 		table = new JTable();
-		scrollPane.setViewportView(table);
-
-		actualizarTabla("SELECT * FROM Usuarios");
-	}
-
-	@Override
-	public void actualizarTabla(String sql) {
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=asd;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
-		ResultSetTableModel modeloDatos = null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		scrollPane.getViewport().remove(table);
-		table = new JTable(modeloDatos);
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -215,6 +195,37 @@ public class GuiUsuario extends JFrame implements Gui {
 			}
 		});
 		scrollPane.setViewportView(table);
+
+		actualizarTabla("SELECT * FROM Usuarios");
+	}
+
+	@Override
+	public void actualizarTabla(String sql) {
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
+				+ "user=vistaTablas;"
+				+ "password=c1s1g7o;"
+				+ "encrypt=true;trustServerCertificate=true;";
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+					if(modeloDatos!=null) {
+						table.setModel(modeloDatos);
+					}
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}).start();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

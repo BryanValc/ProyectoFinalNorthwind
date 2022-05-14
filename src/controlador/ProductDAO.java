@@ -13,14 +13,24 @@ public class ProductDAO {
     public boolean insertarRegistro(Product producto) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.agregarRegistro(producto);
+        try {
+			resultado = cn.agregarRegistro(producto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
     public boolean modificarRegistro(Product producto) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.actualizarRegistro(producto);
+        try {
+			resultado = cn.actualizarRegistro(producto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
@@ -54,7 +64,12 @@ public class ProductDAO {
         cn.getConexion();
         boolean resultado = false;
         String sql = "DELETE FROM Products WHERE ProductID = " + producto.getProductID();
-        resultado = cn.eliminarRegistro(sql);
+        try {
+			resultado = cn.eliminarRegistro(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return resultado;
     }
 
