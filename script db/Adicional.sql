@@ -59,15 +59,19 @@ CREATE TABLE "bkp_Products" (
 
     CREATE TRIGGER TR_Products_delete
     ON [dbo].[Products] FOR DELETE
+
     AS
     BEGIN
-
     SET NOCOUNT ON;
     INSERT INTO [dbo].[bkp_Products] (DeletionTime,ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued)
     SELECT CURRENT_TIMESTAMP, ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued
     FROM deleted
-
-    
     END
 
     GO
+
+
+CREATE  INDEX "CompanyName" ON "dbo"."Suppliers"("CompanyName")
+GO
+CREATE  INDEX "PostalCode" ON "dbo"."Suppliers"("PostalCode")
+GO
