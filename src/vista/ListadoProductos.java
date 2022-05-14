@@ -27,23 +27,32 @@ public class ListadoProductos extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListadoProductos frame = new ListadoProductos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					ListadoProductos frame = new ListadoProductos();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ListadoProductos() {
+	private static ListadoProductos singleObject = null;
+
+	public static ListadoProductos getInstance() {
+		if (singleObject == null) {
+			singleObject = new ListadoProductos();
+		}
+		return singleObject;
+	}
+
+	private ListadoProductos() {
 		setTitle("Listado de productos");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 630, 521);

@@ -55,23 +55,32 @@ public class GuiSupplier extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiSupplier frame = new GuiSupplier();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuiSupplier frame = new GuiSupplier();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GuiSupplier() {
+	private static GuiSupplier singleObject = null;
+
+	public static GuiSupplier getInstance() {
+		if (singleObject == null) {
+			singleObject = new GuiSupplier();
+		}
+		return singleObject;
+	}
+
+	private GuiSupplier() {
 		setTitle("Gui proveedores");
 		setBounds(100, 100, 1108, 481);
 		contentPane = new JPanel();

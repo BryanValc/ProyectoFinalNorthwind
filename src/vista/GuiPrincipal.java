@@ -93,7 +93,7 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 		            public void run() {
-		                new GuiCategory().setVisible(true);
+		                GuiCategory.getInstance().setVisible(true);
 		            }
 		        });
 			}
@@ -134,7 +134,7 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 		            public void run() {
-		                new GuiProduct().setVisible(true);
+		            	GuiProduct.getInstance().setVisible(true);
 		            }
 		        });
 			}
@@ -151,7 +151,7 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 		            public void run() {
-		                new GuiSupplier().setVisible(true);
+		            	GuiSupplier.getInstance().setVisible(true);
 		            }
 		        });
 			}
@@ -168,7 +168,7 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 		            public void run() {
-		                new GuiUsuario().setVisible(true);
+		            	GuiUsuario.getInstance().setVisible(true);
 		            }
 		        });
 			}
@@ -208,7 +208,7 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				java.awt.EventQueue.invokeLater(new Runnable() {
 		            public void run() {
-		                new ListadoProductos().setVisible(true);
+		            	ListadoProductos.getInstance().setVisible(true);
 		            }
 		        });
 			}

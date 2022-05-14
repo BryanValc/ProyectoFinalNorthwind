@@ -55,18 +55,18 @@ public class GuiProduct extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiProduct frame = new GuiProduct();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuiProduct frame = new GuiProduct();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	public void llenarCombos() {
 		combo1.removeAllItems();
@@ -103,7 +103,16 @@ public class GuiProduct extends JFrame implements Gui {
 	/**
 	 * Create the frame.
 	 */
-	public GuiProduct() {
+	private static GuiProduct singleObject = null;
+
+	public static GuiProduct getInstance() {
+		if (singleObject == null) {
+			singleObject = new GuiProduct();
+		}
+		return singleObject;
+	}
+
+	private GuiProduct() {
 		setTitle("Formulario productos");
 		setBounds(100, 100, 1074, 515);
 		contentPane = new JPanel();

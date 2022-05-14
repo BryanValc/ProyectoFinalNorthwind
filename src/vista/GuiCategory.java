@@ -29,6 +29,8 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 
 public class GuiCategory extends JFrame implements Gui{
+	
+	
 
 	private JPanel contentPane;
 	private JTable table;
@@ -56,7 +58,16 @@ public class GuiCategory extends JFrame implements Gui{
 	/**
 	 * Create the frame.
 	 */
-	public GuiCategory() {
+	private static GuiCategory singleObject = null;
+	
+	public static GuiCategory getInstance() {
+		if (singleObject == null) {
+			singleObject = new GuiCategory();
+		}
+		return singleObject;
+	}
+	
+	private GuiCategory() {
 		setTitle("Formulario categor\u00EDas");
 		setBounds(100, 100, 458, 325);
 		contentPane = new JPanel();

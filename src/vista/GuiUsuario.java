@@ -43,23 +43,32 @@ public class GuiUsuario extends JFrame implements Gui {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiUsuario frame = new GuiUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuiUsuario frame = new GuiUsuario();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GuiUsuario() {
+	private static GuiUsuario singleObject = null;
+
+	public static GuiUsuario getInstance() {
+		if (singleObject == null) {
+			singleObject = new GuiUsuario();
+		}
+		return singleObject;
+	}
+
+	private GuiUsuario() {
 		setTitle("Formulario usuarios");
 		setBounds(100, 100, 356, 300);
 		contentPane = new JPanel();
