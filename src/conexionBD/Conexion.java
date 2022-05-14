@@ -10,7 +10,7 @@ import modelo.*;
 
 public class Conexion {
 
-    private static PreparedStatement pstm;
+    private static PreparedStatement pstm = null;
     private static CallableStatement cs;
     private static ResultSet rs;
 
@@ -32,6 +32,7 @@ public class Conexion {
             try {
                 conexion = DriverManager.getConnection(URL);
                 System.out.println("--Conexion efectuada correctamente--");
+                conexion.setAutoCommit(true);
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -58,7 +59,7 @@ public class Conexion {
         return conexion;
     }
 
-    static void cerrarConexion() {
+    public static void cerrarConexion() {
         try {
             cs.close();
             pstm.close();
@@ -83,13 +84,22 @@ public class Conexion {
 
     public static boolean Transaccion(String instruccion) {
         try {
-            pstm = conexion.prepareStatement(instruccion);
-            pstm.executeUpdate();
+        	//conexion.setAutoCommit(false);
+            //pstm = conexion.prepareStatement(instruccion);
+            //pstm.execute();
             return true;
         } catch (Exception ex) {
-            System.out.printf("Error al ejecutar la transaccion");
+            ex.printStackTrace();
         }
         return false;
+    }
+    
+    public static void guardar() throws SQLException {
+    	conexion.commit();
+    }
+    
+    public static void volver() throws SQLException {
+    	conexion.rollback();
     }
 
     public static void llamada() {
@@ -122,14 +132,14 @@ public class Conexion {
             pstm.setInt(3, categoria.getCategoryID());
             pstm.executeUpdate();
             return true;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.printf("Error al modificar la categoria");
         }
         return false;
 
     }
 
-    public static boolean actualizarRegistro(Product producto) {
+    public static boolean actualizarRegistro(Product producto){
         try {
             pstm = conexion.prepareStatement("UPDATE Products SET productName = ?, supplierID = ?, categoryID = ?, quantityPerUnit = ?, unitPrice = ?, "
                     + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = ?");

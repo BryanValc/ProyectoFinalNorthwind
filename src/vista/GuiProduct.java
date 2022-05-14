@@ -28,6 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
+import conexionBD.Conexion;
+
 import java.awt.event.ActionListener;
 import java.awt.Font;
 
@@ -145,6 +148,18 @@ public class GuiProduct extends JFrame implements Gui {
 		contentPane.add(btnOperacion);
 
 		JButton btnAplicar = new JButton("Aplicar");
+		btnAplicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Conexion cn = new Conexion(2);
+				cn.getConexion();
+				try {
+					cn.guardar();
+				} catch (SQLException ex) {
+					System.out.println("No se pudieron guardar los cambios");
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnAplicar.setForeground(new Color(255, 255, 255));
 		btnAplicar.setBackground(new Color(204, 153, 0));
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");

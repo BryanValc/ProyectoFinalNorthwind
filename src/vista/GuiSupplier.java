@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import conexionBD.Conexion;
 import controlador.SupplierDAO;
 import modelo.Category;
 import modelo.Supplier;
@@ -329,6 +330,18 @@ public class GuiSupplier extends JFrame implements Gui {
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
+		btnAplicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Conexion cn = new Conexion(2);
+				cn.getConexion();
+				try {
+					cn.guardar();
+				} catch (SQLException ex) {
+					System.out.println("No se pudieron guardar los cambios");
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setForeground(new Color(255, 255, 255));
 		btnAplicar.setBackground(new Color(0, 51, 153));

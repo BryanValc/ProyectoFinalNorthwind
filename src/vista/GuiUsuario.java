@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import conexionBD.Conexion;
 import controlador.UsuarioDAO;
 import modelo.Usuario;
 
@@ -152,6 +153,24 @@ public class GuiUsuario extends JFrame implements Gui {
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
+		btnAplicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				Thread t = new Thread() {
+//				    public void run() {
+//				    	Conexion cn = new Conexion(2);
+//						cn.getConexion();
+//						try {
+//							cn.guardar();
+//						} catch (SQLException ex) {
+//							System.out.println("No se pudieron guardar los cambios");
+//							ex.printStackTrace();
+//							cn.cerrarConexion();
+//						}
+//				    }
+//				};
+//				t.start();
+			}
+		});
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setBackground(new Color(51, 102, 0));
 		btnAplicar.setForeground(new Color(255, 255, 255));

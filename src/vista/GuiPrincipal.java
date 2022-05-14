@@ -16,10 +16,14 @@ import conexionBD.Conexion;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
@@ -47,6 +51,30 @@ public class GuiPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public GuiPrincipal() {
+		Conexion cn = new Conexion(2);
+		cn.getConexion();
+        addWindowListener(new WindowAdapter() {
+        	public void windowClosing(WindowEvent we) {
+            
+	        int result = JOptionPane.showConfirmDialog(null,"¿Quieres aplicar los cambios?", "Cerrando programa",JOptionPane.YES_NO_OPTION);
+	        if(result == JOptionPane.YES_OPTION){
+	        	try {
+					cn.guardar();
+				} catch (SQLException e) {
+					System.out.println("No se pudieron guardar los cambios");
+					e.printStackTrace();
+				}
+	        }else{
+	        	try {
+					cn.volver();
+				} catch (SQLException e) {
+					System.out.println("No se pudo regresar al estado anterior");
+					e.printStackTrace();
+				}
+	        	}
+        	}
+        });
+		
 		setTitle("Menu principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 844, 753);
