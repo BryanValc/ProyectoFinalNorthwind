@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class GuiGrafica extends JFrame {
 
@@ -44,6 +45,7 @@ public class GuiGrafica extends JFrame {
 	 * Create the frame.
 	 */
 	public GuiGrafica() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiGrafica.class.getResource("/recursosVisuales/graficaPastel.png")));
 		setTitle("Stock por cada proveedor");
 		setResizable(false);
 		setBounds(100, 100, 1050, 1050);

@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class GuiSupplier extends JFrame implements Gui {
 
@@ -81,6 +82,8 @@ public class GuiSupplier extends JFrame implements Gui {
 	}
 
 	private GuiSupplier() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiSupplier.class.getResource("/recursosVisuales/supplier.png")));
+		setResizable(false);
 		setTitle("Gui proveedores");
 		setBounds(100, 100, 1108, 481);
 		contentPane = new JPanel();

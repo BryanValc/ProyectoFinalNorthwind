@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.Toolkit;
 
 public class GuiUsuario extends JFrame implements Gui {
 
@@ -69,6 +70,8 @@ public class GuiUsuario extends JFrame implements Gui {
 	}
 
 	private GuiUsuario() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiUsuario.class.getResource("/recursosVisuales/usuario.png")));
+		setResizable(false);
 		setTitle("Formulario usuarios");
 		setBounds(100, 100, 356, 300);
 		contentPane = new JPanel();

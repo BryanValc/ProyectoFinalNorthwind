@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 public class GuiPrincipal extends JFrame {
 
@@ -54,6 +55,9 @@ public class GuiPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public GuiPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiPrincipal.class.getResource("/recursosVisuales/northwind.png")));
+		setBackground(new Color(255, 255, 255));
+		setResizable(false);
 		Conexion cn = new Conexion(2);
 		cn.getConexion();
 		addWindowListener(new WindowAdapter() {
@@ -105,27 +109,27 @@ public class GuiPrincipal extends JFrame {
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setForeground(new Color(255, 255, 255));
 		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuarios.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblUsuarios.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblUsuarios.setBounds(404, 313, 256, 24);
 		contentPane.add(lblUsuarios);
 
 		JLabel lblProveedores = new JLabel("Proveedores");
 		lblProveedores.setForeground(new Color(255, 255, 255));
 		lblProveedores.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProveedores.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblProveedores.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblProveedores.setBounds(138, 313, 256, 24);
 		contentPane.add(lblProveedores);
 
 		JLabel lblProductos = new JLabel("Productos");
 		lblProductos.setForeground(new Color(255, 255, 255));
 		lblProductos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProductos.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblProductos.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblProductos.setBounds(276, 11, 256, 24);
 		contentPane.add(lblProductos);
 
 		JLabel lblNewLabel = new JLabel("Categor\u00EDas");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 11, 256, 24);
 		contentPane.add(lblNewLabel);
@@ -192,7 +196,8 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(btnUsuario);
 
 		JButton btnInventario = new JButton("");
-		btnInventario.setBackground(new Color(0, 51, 153));
+		btnInventario.setToolTipText("Imprimir un inventario que \r\ntiene un litado de todos los\r\nproductos existentes junto\r\ncon los productos que est\u00E1n\r\nen camino");
+		btnInventario.setBackground(new Color(153, 102, 255));
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -237,7 +242,7 @@ public class GuiPrincipal extends JFrame {
 		JLabel lblListado = new JLabel("Listado de productos");
 		lblListado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListado.setForeground(Color.WHITE);
-		lblListado.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblListado.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblListado.setBounds(542, 11, 256, 24);
 		contentPane.add(lblListado);
 		
@@ -253,7 +258,7 @@ public class GuiPrincipal extends JFrame {
 		});
 		btnGraficaPastel.setToolTipText("Gestionar usuarios del sistema");
 		btnGraficaPastel.setForeground(Color.WHITE);
-		btnGraficaPastel.setBackground(new Color(51, 204, 153));
+		btnGraficaPastel.setBackground(new Color(204, 51, 51));
 		btnGraficaPastel.setBounds(670, 349, 256, 256);
 		ImageIcon iconoGraficaPastel=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/graficaPastel.png"));
         btnGraficaPastel.setIcon(resizeIcon(iconoGraficaPastel,btnGraficaPastel));
@@ -262,14 +267,14 @@ public class GuiPrincipal extends JFrame {
 		JLabel lblStockDeCada = new JLabel("Stock de cada proveedor");
 		lblStockDeCada.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStockDeCada.setForeground(Color.WHITE);
-		lblStockDeCada.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblStockDeCada.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblStockDeCada.setBounds(670, 313, 256, 24);
 		contentPane.add(lblStockDeCada);
 		
 		JLabel lblImprimirInventario = new JLabel("Imprimir Inventario");
 		lblImprimirInventario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImprimirInventario.setForeground(Color.WHITE);
-		lblImprimirInventario.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblImprimirInventario.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblImprimirInventario.setBounds(808, 11, 256, 24);
 		contentPane.add(lblImprimirInventario);
 	}

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class ListadoProductos extends JFrame {
 
@@ -53,6 +54,8 @@ public class ListadoProductos extends JFrame {
 	}
 
 	private ListadoProductos() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoProductos.class.getResource("/recursosVisuales/Listado.png")));
+		setResizable(false);
 		setTitle("Listado de productos");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 630, 521);

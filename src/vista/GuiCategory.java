@@ -27,6 +27,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class GuiCategory extends JFrame implements Gui{
 
@@ -68,6 +69,8 @@ public class GuiCategory extends JFrame implements Gui{
 	}
 
 	private GuiCategory() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiCategory.class.getResource("/recursosVisuales/categoryy.png")));
+		setResizable(false);
 		setTitle("Formulario categor\u00EDas");
 		setBounds(100, 100, 458, 325);
 		contentPane = new JPanel();

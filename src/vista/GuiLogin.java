@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import java.awt.Toolkit;
 
 public class GuiLogin extends JFrame {
 
@@ -54,6 +55,8 @@ public class GuiLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public GuiLogin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiLogin.class.getResource("/recursosVisuales/usuario.png")));
+		setResizable(false);
 		setTitle("Inicio de sesi\u00F3n");
 		setBounds(100, 100, 295, 547);
 		contentPane = new JPanel();

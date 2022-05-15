@@ -33,6 +33,7 @@ import conexionBD.Conexion;
 
 import java.awt.event.ActionListener;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class GuiProduct extends JFrame implements Gui {
 
@@ -115,6 +116,8 @@ public class GuiProduct extends JFrame implements Gui {
 	}
 
 	private GuiProduct() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiProduct.class.getResource("/recursosVisuales/product.png")));
+		setResizable(false);
 		setTitle("Formulario productos");
 		setBounds(100, 100, 1074, 515);
 		contentPane = new JPanel();
