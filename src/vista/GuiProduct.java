@@ -247,6 +247,7 @@ public class GuiProduct extends JFrame implements Gui {
 			}
 		});
 		caja1.setBounds(85, 41, 86, 20);
+		caja1.setEditable(false);
 		contentPane.add(caja1);
 		caja1.setColumns(10);
 
@@ -453,10 +454,19 @@ public class GuiProduct extends JFrame implements Gui {
 		caja2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
 
 		int indiceCombo1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
-		combo1.setSelectedIndex(indiceCombo1);
+		for (Supplier supplier : proveedores) {
+			if(supplier.getSupplierID()==indiceCombo1) {
+				combo1.setSelectedItem(supplier.getCompanyName());
+			}
+		}
+		
 
 		int indiceCombo2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 3).toString());
-		combo2.setSelectedIndex(indiceCombo2);
+		for (Category category : categorias) {
+			if(category.getCategoryID()==indiceCombo2) {
+				combo2.setSelectedItem(category.getCategoryName());
+			}
+		}
 
 		caja3.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
 		caja4.setText(table.getValueAt(table.getSelectedRow(), 5).toString());
