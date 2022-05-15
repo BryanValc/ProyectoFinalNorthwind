@@ -39,7 +39,7 @@
 					<textElement>
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[ProductName]]></text>
+					<text><![CDATA[Nombre]]></text>
 				</staticText>
 				<textField>
 					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="63a1a6cf-00a8-40de-bbd7-86a1c1954f07"/>
@@ -69,14 +69,14 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TITLE]]></text>
+					<text><![CDATA[Inventario]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="880375e8-ae4a-4593-88a5-47cca5e3052a"/>
+					<reportElement x="340" y="43" width="235" height="20" forecolor="#FFFFFF" uuid="880375e8-ae4a-4593-88a5-47cca5e3052a"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Add a description here]]></text>
+					<text><![CDATA[Unidades en existencia y en camino]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -96,7 +96,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[QuantityPerUnit]]></text>
+				<text><![CDATA[cnt por unidad]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6d1b6435-c758-4a69-af31-1e2f3e9ed8fa">
@@ -105,7 +105,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UnitPrice]]></text>
+				<text><![CDATA[precio]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b1539ab9-9b25-4a00-b615-206fe9aa7b4b">
@@ -114,7 +114,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UnitsInStock]]></text>
+				<text><![CDATA[unidades]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="965d8b57-acc1-4e24-ae8e-8a17d0f9f885">
@@ -123,7 +123,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UnitsOnOrder]]></text>
+				<text><![CDATA[en camino]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f22f1703-e1ff-4bf9-bd88-c315a85480ec">
@@ -132,7 +132,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ReorderLevel]]></text>
+				<text><![CDATA[prioridad]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

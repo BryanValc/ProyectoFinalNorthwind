@@ -80,9 +80,9 @@ public class GuiPrincipal extends JFrame {
 
 		setTitle("Menu principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 844, 753);
+		setBounds(100, 100, 1092, 660);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 102, 153));
+		contentPane.setBackground(new Color(102, 102, 102));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -106,14 +106,14 @@ public class GuiPrincipal extends JFrame {
 		lblUsuarios.setForeground(new Color(255, 255, 255));
 		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUsuarios.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblUsuarios.setBounds(276, 313, 256, 24);
+		lblUsuarios.setBounds(404, 313, 256, 24);
 		contentPane.add(lblUsuarios);
 
 		JLabel lblProveedores = new JLabel("Proveedores");
 		lblProveedores.setForeground(new Color(255, 255, 255));
 		lblProveedores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProveedores.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblProveedores.setBounds(10, 313, 256, 24);
+		lblProveedores.setBounds(138, 313, 256, 24);
 		contentPane.add(lblProveedores);
 
 		JLabel lblProductos = new JLabel("Productos");
@@ -167,7 +167,7 @@ public class GuiPrincipal extends JFrame {
 		//btnSupplier.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png")));
 		btnSupplier.setForeground(Color.WHITE);
 		btnSupplier.setBackground(new Color(51, 102, 204));
-		btnSupplier.setBounds(10, 349, 256, 256);
+		btnSupplier.setBounds(138, 349, 256, 256);
 		ImageIcon iconoSupplier=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png"));
         btnSupplier.setIcon(resizeIcon(iconoSupplier,btnSupplier));
 		contentPane.add(btnSupplier);
@@ -186,33 +186,34 @@ public class GuiPrincipal extends JFrame {
 		//btnUsuario.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png")));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setBackground(new Color(153, 204, 51));
-		btnUsuario.setBounds(276, 349, 256, 256);
+		btnUsuario.setBounds(404, 349, 256, 256);
 		ImageIcon iconoUsuario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png"));
         btnUsuario.setIcon(resizeIcon(iconoUsuario,btnUsuario));
 		contentPane.add(btnUsuario);
 
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnInventario = new JButton("");
+		btnInventario.setBackground(new Color(0, 51, 153));
+		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-
-							        try {
-							        	Conexion cn = new Conexion(2);
-							        	//cn.getConexion();
-							            String ruta=System.getProperty("user.dir")+"/src/vista/reporte.jasper";
-							            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
-							            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
-							            JasperViewer view= new JasperViewer(print,false);
-							            view.setVisible(true);
-							        } catch (Exception ex) {
-							            System.err.println("Error al generar el reporte---->"+ex.getMessage());
-							        }
-
+				try {
+					Conexion cn = new Conexion(2);
+					//cn.getConexion();
+					String ruta=System.getProperty("user.dir")+"/src/vista/reporte.jasper";
+					JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+					JasperViewer view= new JasperViewer(print,false);
+					view.setVisible(true);
+				} catch (Exception ex) {
+					System.err.println("Error al generar el reporte---->"+ex.getMessage());
+				}
 
 			}
 		});
-		btnNewButton.setBounds(10, 616, 89, 23);
-		contentPane.add(btnNewButton);
+		btnInventario.setBounds(808, 46, 256, 256);
+		ImageIcon iconoInventario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/inventario.jpg"));
+        btnInventario.setIcon(resizeIcon(iconoInventario,btnInventario));
+		contentPane.add(btnInventario);
 
 		JButton btnListado = new JButton("");
 		btnListado.addActionListener(new ActionListener() {
@@ -253,7 +254,7 @@ public class GuiPrincipal extends JFrame {
 		btnGraficaPastel.setToolTipText("Gestionar usuarios del sistema");
 		btnGraficaPastel.setForeground(Color.WHITE);
 		btnGraficaPastel.setBackground(new Color(51, 204, 153));
-		btnGraficaPastel.setBounds(542, 349, 256, 256);
+		btnGraficaPastel.setBounds(670, 349, 256, 256);
 		ImageIcon iconoGraficaPastel=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/graficaPastel.png"));
         btnGraficaPastel.setIcon(resizeIcon(iconoGraficaPastel,btnGraficaPastel));
 		contentPane.add(btnGraficaPastel);
@@ -262,8 +263,15 @@ public class GuiPrincipal extends JFrame {
 		lblStockDeCada.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStockDeCada.setForeground(Color.WHITE);
 		lblStockDeCada.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblStockDeCada.setBounds(542, 313, 256, 24);
+		lblStockDeCada.setBounds(670, 313, 256, 24);
 		contentPane.add(lblStockDeCada);
+		
+		JLabel lblImprimirInventario = new JLabel("Imprimir Inventario");
+		lblImprimirInventario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImprimirInventario.setForeground(Color.WHITE);
+		lblImprimirInventario.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblImprimirInventario.setBounds(808, 11, 256, 24);
+		contentPane.add(lblImprimirInventario);
 	}
 	
 	private Icon resizeIcon(ImageIcon icon,JButton boton) {
