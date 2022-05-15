@@ -65,7 +65,7 @@ public class GuiLogin extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBackground(new Color(153, 102, 255));
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\usuario.png"));
+		lblNewLabel.setIcon(new ImageIcon(GuiLogin.class.getResource("/recursosVisuales/usuario.png")));
 		lblNewLabel.setBounds(10, 41, 256, 256);
 		contentPane.add(lblNewLabel);
 		
@@ -84,6 +84,11 @@ public class GuiLogin extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		caja1 = new JTextField();
+		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				validacionString(evt,255,caja1,caja2);
+			}
+		});
 		caja1.setToolTipText("Ingresa tu nombre de usuario");
 		caja1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		caja1.setBounds(34, 331, 208, 32);
@@ -100,7 +105,7 @@ public class GuiLogin extends JFrame {
 		caja2 = new JPasswordField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				jPasswordFieldKeyReleased(evt);
+				jPasswordFieldKeyReleased(evt,255,caja1);
 			}
 		});
 		caja2.setToolTipText("Ingresa tu contrase\u00F1a");
@@ -137,21 +142,59 @@ public class GuiLogin extends JFrame {
 		}
     } 
 	
-	private void jPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {                                            
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-            if (verificar()) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-                                    
-					new GuiPrincipal().setVisible(true);
-				}
-			});
-			setVisible(false);
-		}else {
-			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
+		int code = evt.getKeyCode();
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if ((caja.getText().equals("") ? true
+				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
 		}
-        }
+	}
+	
+	private void jPasswordFieldKeyReleased(java.awt.event.KeyEvent evt, int limite, JTextField caja) {                                            
+		//        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
+		//            if (verificar()) {
+		//			SwingUtilities.invokeLater(new Runnable() {
+		//				@Override
+		//				public void run() {
+		//                                    
+		//					new GuiPrincipal().setVisible(true);
+		//				}
+		//			});
+		//			setVisible(false);
+		//		}else {
+		//			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+		//		}
+		//           
+		//        }
+        
+        int code = evt.getKeyCode();
+		if (code == KeyEvent.VK_ENTER) {
+			if (verificar()) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+	                                    
+						new GuiPrincipal().setVisible(true);
+					}
+				});
+				setVisible(false);
+			}else {
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+			}
+		} else if ((caja.getText().equals("") ? true
+				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
+        
     }
 	
 	public boolean verificar() {

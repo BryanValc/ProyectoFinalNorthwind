@@ -86,7 +86,7 @@ public class GuiPrincipal extends JFrame {
 
 		JButton btnCategory = new JButton("");
 		btnCategory.setToolTipText("Gestionar categor\u00EDas");
-		btnCategory.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\categoryy.png"));
+		btnCategory.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/categoryy.png")));
 		btnCategory.setForeground(new Color(255, 255, 255));
 		btnCategory.setBackground(new Color(0, 153, 153));
 		btnCategory.addActionListener(new ActionListener() {
@@ -140,7 +140,7 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnProduct.setToolTipText("Gestionar productos");
-		btnProduct.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\product.png"));
+		btnProduct.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/product.png")));
 		btnProduct.setForeground(Color.WHITE);
 		btnProduct.setBackground(new Color(255, 204, 102));
 		btnProduct.setBounds(276, 46, 256, 256);
@@ -157,7 +157,7 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnSupplier.setToolTipText("Gestionar proveedores");
-		btnSupplier.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\supplier.png"));
+		btnSupplier.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png")));
 		btnSupplier.setForeground(Color.WHITE);
 		btnSupplier.setBackground(new Color(51, 102, 204));
 		btnSupplier.setBounds(10, 349, 256, 256);
@@ -174,7 +174,7 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnUsuario.setToolTipText("Gestionar usuarios del sistema");
-		btnUsuario.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\usuario.png"));
+		btnUsuario.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png")));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setBackground(new Color(153, 204, 51));
 		btnUsuario.setBounds(276, 349, 256, 256);
@@ -213,7 +213,7 @@ public class GuiPrincipal extends JFrame {
 				});
 			}
 		});
-		btnListado.setIcon(new ImageIcon("C:\\Eclipse\\ProyectoFinalNorthwind\\archivos\\Listado.png"));
+		btnListado.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/Listado.png")));
 		btnListado.setToolTipText("Gestionar usuarios del sistema");
 		btnListado.setForeground(Color.WHITE);
 		btnListado.setBackground(new Color(255, 153, 102));
@@ -226,5 +226,12 @@ public class GuiPrincipal extends JFrame {
 		lblListado.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblListado.setBounds(542, 11, 256, 24);
 		contentPane.add(lblListado);
+		
+		JButton btnGraficaPastel = new JButton("");
+		btnGraficaPastel.setToolTipText("Gestionar usuarios del sistema");
+		btnGraficaPastel.setForeground(Color.WHITE);
+		btnGraficaPastel.setBackground(new Color(51, 204, 153));
+		btnGraficaPastel.setBounds(542, 349, 256, 256);
+		contentPane.add(btnGraficaPastel);
 	}
 }
