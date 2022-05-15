@@ -1,54 +1,81 @@
-DROP TABLE IF EXISTS `Categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Categories` (
-  `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
-  `CategoryName` varchar(15) NOT NULL,
-  `Description` mediumtext,
-  PRIMARY KEY (`CategoryID`),
-  KEY `CategoryName` (`CategoryName`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+CREATE TABLE "Categories" (
+	"CategoryID" "int" IDENTITY (1, 1) NOT NULL ,
+	"CategoryName" nvarchar (15) NOT NULL ,
+	"Description" "ntext" NULL ,
+	"Picture" "image" NULL ,
+	CONSTRAINT "PK_Categories" PRIMARY KEY  CLUSTERED 
+	(
+		"CategoryID"
+	)
+)
+GO
+ CREATE  INDEX "CategoryName" ON "dbo"."Categories"("CategoryName")
+GO
 
-DROP TABLE IF EXISTS `Suppliers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Suppliers` (
-  `SupplierID` int(11) NOT NULL AUTO_INCREMENT,
-  `CompanyName` varchar(40) NOT NULL,
-  `ContactName` varchar(30) DEFAULT NULL,
-  `ContactTitle` varchar(30) DEFAULT NULL,
-  `Address` varchar(60) DEFAULT NULL,
-  `City` varchar(15) DEFAULT NULL,
-  `Region` varchar(15) DEFAULT NULL,
-  `PostalCode` varchar(10) DEFAULT NULL,
-  `Country` varchar(15) DEFAULT NULL,
-  `Phone` varchar(24) DEFAULT NULL,
-  `Fax` varchar(24) DEFAULT NULL,
-  `HomePage` mediumtext,
-  PRIMARY KEY (`SupplierID`),
-  KEY `CompanyName` (`CompanyName`),
-  KEY `PostalCode` (`PostalCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+CREATE TABLE "Suppliers" (
+	"SupplierID" "int" IDENTITY (1, 1) NOT NULL ,
+	"CompanyName" nvarchar (40) NOT NULL ,
+	"ContactName" nvarchar (30) NULL ,
+	"ContactTitle" nvarchar (30) NULL ,
+	"Address" nvarchar (60) NULL ,
+	"City" nvarchar (15) NULL ,
+	"Region" nvarchar (15) NULL ,
+	"PostalCode" nvarchar (10) NULL ,
+	"Country" nvarchar (15) NULL ,
+	"Phone" nvarchar (24) NULL ,
+	"Fax" nvarchar (24) NULL ,
+	"HomePage" "ntext" NULL ,
+	CONSTRAINT "PK_Suppliers" PRIMARY KEY  CLUSTERED 
+	(
+		"SupplierID"
+	)
+)
+GO
+ CREATE  INDEX "CompanyName" ON "dbo"."Suppliers"("CompanyName")
+GO
+ CREATE  INDEX "PostalCode" ON "dbo"."Suppliers"("PostalCode")
+GO
 
-DROP TABLE IF EXISTS `Products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Products` (
-  `ProductID` int(11) NOT NULL AUTO_INCREMENT,
-  `ProductName` varchar(40) NOT NULL,
-  `SupplierID` int(11) DEFAULT NULL,
-  `CategoryID` int(11) DEFAULT NULL,
-  `QuantityPerUnit` varchar(20) DEFAULT NULL,
-  `UnitPrice` decimal(10,4) DEFAULT '0.0000',
-  `UnitsInStock` smallint(2) DEFAULT '0',
-  `UnitsOnOrder` smallint(2) DEFAULT '0',
-  `ReorderLevel` smallint(2) DEFAULT '0',
-  `Discontinued` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`ProductID`),
-  KEY `ProductName` (`ProductName`),
-  KEY `FK_Products_Categories` (`CategoryID`),
-  KEY `FK_Products_Suppliers` (`SupplierID`),
-  CONSTRAINT `FK_Products_Suppliers` FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`),
-  CONSTRAINT `FK_Products_Categories` FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE "Products" (
+	"ProductID" "int" IDENTITY (1, 1) NOT NULL ,
+	"ProductName" nvarchar (40) NOT NULL ,
+	"SupplierID" "int" NULL ,
+	"CategoryID" "int" NULL ,
+	"QuantityPerUnit" nvarchar (20) NULL ,
+	"UnitPrice" "money" NULL CONSTRAINT "DF_Products_UnitPrice" DEFAULT (0),
+	"UnitsInStock" "smallint" NULL CONSTRAINT "DF_Products_UnitsInStock" DEFAULT (0),
+	"UnitsOnOrder" "smallint" NULL CONSTRAINT "DF_Products_UnitsOnOrder" DEFAULT (0),
+	"ReorderLevel" "smallint" NULL CONSTRAINT "DF_Products_ReorderLevel" DEFAULT (0),
+	"Discontinued" "bit" NOT NULL CONSTRAINT "DF_Products_Discontinued" DEFAULT (0),
+	CONSTRAINT "PK_Products" PRIMARY KEY  CLUSTERED 
+	(
+		"ProductID"
+	),
+	CONSTRAINT "FK_Products_Categories" FOREIGN KEY 
+	(
+		"CategoryID"
+	) REFERENCES "dbo"."Categories" (
+		"CategoryID"
+	),
+	CONSTRAINT "FK_Products_Suppliers" FOREIGN KEY 
+	(
+		"SupplierID"
+	) REFERENCES "dbo"."Suppliers" (
+		"SupplierID"
+	),
+	CONSTRAINT "CK_Products_UnitPrice" CHECK (UnitPrice >= 0),
+	CONSTRAINT "CK_ReorderLevel" CHECK (ReorderLevel >= 0),
+	CONSTRAINT "CK_UnitsInStock" CHECK (UnitsInStock >= 0),
+	CONSTRAINT "CK_UnitsOnOrder" CHECK (UnitsOnOrder >= 0)
+)
+GO
+ CREATE  INDEX "CategoriesProducts" ON "dbo"."Products"("CategoryID")
+GO
+ CREATE  INDEX "CategoryID" ON "dbo"."Products"("CategoryID")
+GO
+ CREATE  INDEX "ProductName" ON "dbo"."Products"("ProductName")
+GO
+ CREATE  INDEX "SupplierID" ON "dbo"."Products"("SupplierID")
+GO
+ CREATE  INDEX "SuppliersProducts" ON "dbo"."Products"("SupplierID")
+GO
