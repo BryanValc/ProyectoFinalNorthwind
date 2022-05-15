@@ -850,8 +850,13 @@ public class GuiProduct extends JFrame implements Gui {
 	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
-			caja.setEditable(true);
-			siguienteCaja.requestFocus();
+			if(caja==caja8&&btnOperacion.getText().equals("Insertar")) {
+				caja.setEditable(true);
+				caja2.requestFocus();
+			}else {
+				caja.setEditable(true);
+				siguienteCaja.requestFocus();
+			}
 		} else if ((caja.getText().equals("") ? true
 				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
