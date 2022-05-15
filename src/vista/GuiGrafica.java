@@ -17,22 +17,28 @@ public class GuiGrafica extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
+	
+	private static GuiGrafica singleObject = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiGrafica frame = new GuiGrafica();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static GuiGrafica getInstance() {
+		if (singleObject == null) {
+			singleObject = new GuiGrafica();
+		}
+		return singleObject;
 	}
+
+//	private static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuiGrafica frame = new GuiGrafica();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.

@@ -241,6 +241,15 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(lblListado);
 		
 		JButton btnGraficaPastel = new JButton("");
+		btnGraficaPastel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						GuiGrafica.getInstance().setVisible(true);
+					}
+				});
+			}
+		});
 		btnGraficaPastel.setToolTipText("Gestionar usuarios del sistema");
 		btnGraficaPastel.setForeground(Color.WHITE);
 		btnGraficaPastel.setBackground(new Color(51, 204, 153));
