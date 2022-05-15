@@ -141,7 +141,12 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnOperacion = new JButton("Insertar");
 		btnOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnOperacionActionPerformed(e);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						btnOperacionActionPerformed(e);
+					}
+				}).start();
 			}
 		});
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");

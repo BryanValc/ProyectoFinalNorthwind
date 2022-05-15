@@ -373,7 +373,12 @@ public class GuiSupplier extends JFrame implements Gui {
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnOperacionActionPerformed(e);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						btnOperacionActionPerformed(e);
+					}
+				}).start();
 			}
 		});
 		btnOperacion.setForeground(new Color(255, 255, 255));

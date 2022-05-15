@@ -46,6 +46,8 @@ public class GuiProduct extends JFrame implements Gui {
 	private JTextField caja7;
 	private JTextField caja8;
 	private JTable table;
+	private ArrayList<Supplier> proveedores;
+	private ArrayList<Category> categorias;
 	private ResultSetTableModel modeloDatos = null;
 	JComboBox<String> combo1, combo2, comboFiltro, comboOperacion;
 	JButton btnOperacion;
@@ -72,7 +74,7 @@ public class GuiProduct extends JFrame implements Gui {
 		combo1.removeAllItems();
 		combo2.removeAllItems();
 
-		ArrayList<Supplier> proveedores = new ArrayList<Supplier>();
+		proveedores = new ArrayList<Supplier>();
 		SupplierDAO supplierDAO = new SupplierDAO();
 		proveedores = supplierDAO.buscar(
 				"SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers");
@@ -80,12 +82,12 @@ public class GuiProduct extends JFrame implements Gui {
 		ArrayList<String> proveedoresStr = new ArrayList<String>();
 		proveedoresStr.add(" ");
 		for (Supplier supplier : proveedores) {
-			proveedoresStr.add(supplier.getSupplierID() + "-" + supplier.getCompanyName());
+			proveedoresStr.add(/*supplier.getSupplierID() + "-" +*/ supplier.getCompanyName());
 		}
 
 		combo1.setModel(new DefaultComboBoxModel(proveedoresStr.toArray()));
 
-		ArrayList<Category> categorias = new ArrayList<Category>();
+		categorias = new ArrayList<Category>();
 		CategoryDAO categoryDAO = new CategoryDAO();
 		categorias = categoryDAO
 				.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories");
@@ -93,7 +95,7 @@ public class GuiProduct extends JFrame implements Gui {
 		ArrayList<String> categoriasStr = new ArrayList<String>();
 		categoriasStr.add(" ");
 		for (Category category : categorias) {
-			categoriasStr.add(category.getCategoryID() + "-" + category.getCategoryName());
+			categoriasStr.add(/*category.getCategoryID() + "-" +*/ category.getCategoryName());
 		}
 
 		combo2.setModel(new DefaultComboBoxModel(categoriasStr.toArray()));
@@ -148,7 +150,12 @@ public class GuiProduct extends JFrame implements Gui {
 		btnOperacion = new JButton("Insertar");
 		btnOperacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnOperacionActionPerformed(e);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						btnOperacionActionPerformed(e);
+					}
+				}).start();
 			}
 		});
 		btnOperacion.setForeground(new Color(255, 255, 255));
@@ -574,7 +581,8 @@ public class GuiProduct extends JFrame implements Gui {
 				}
 				primero = false;
 				// String[] result = combo1.getSelectedItem().toString().split("-");
-				sql += ("SupplierID " + op1 + " '" + op3 + combo1.getSelectedIndex() + op3 + "'");
+				int supplierID = proveedores.get(combo1.getSelectedIndex()-1).getSupplierID();
+				sql += ("SupplierID " + op1 + " '" + op3 + supplierID + op3 + "'");
 			}
 			if (!combo2.getSelectedItem().toString().equals(" ")) {
 				if (!primero) {
@@ -584,7 +592,8 @@ public class GuiProduct extends JFrame implements Gui {
 				}
 				primero = false;
 				// String[] result = combo2.getSelectedItem().toString().split("-");
-				sql += ("CategoryID " + op1 + " '" + op3 + combo2.getSelectedIndex() + op3 + "'");
+				int categoryID = categorias.get(combo2.getSelectedIndex()-1).getCategoryID();
+				sql += ("CategoryID " + op1 + " '" + op3 + categoryID + op3 + "'");
 			}
 			if (!caja3.getText().toString().equals("")) {
 				if (!primero) {
@@ -678,14 +687,16 @@ public class GuiProduct extends JFrame implements Gui {
 
 	public Product createProduct(boolean isForDeletion) {
 		Product product = null;
+		int supplierID = proveedores.get(combo1.getSelectedIndex()-1).getSupplierID();
+		int categoryID = categorias.get(combo2.getSelectedIndex()-1).getCategoryID();
 		if (isForDeletion) {
 			product = new Product(Integer.parseInt(caja1.getText()), "", 0, 0, "", 0.0, 0, 0, 0, false);
 		} else if (btnOperacion.getText().equals("Insertar")) {
 			product = new Product(
 					0,
 					caja2.getText(),
-					combo1.getSelectedIndex(),
-					combo2.getSelectedIndex(),
+					supplierID,
+					categoryID,
 					caja3.getText(),
 					Double.parseDouble(caja4.getText()),
 					Integer.parseInt(caja5.getText()),
@@ -696,8 +707,8 @@ public class GuiProduct extends JFrame implements Gui {
 			product = new Product(
 					Integer.parseInt(caja1.getText()),
 					caja2.getText(),
-					combo1.getSelectedIndex(),
-					combo2.getSelectedIndex(),
+					supplierID,
+					categoryID,
 					caja3.getText(),
 					Double.parseDouble(caja4.getText()),
 					Integer.parseInt(caja5.getText()),
