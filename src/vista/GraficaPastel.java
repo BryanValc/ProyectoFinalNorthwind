@@ -11,6 +11,9 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -20,7 +23,8 @@ public class GraficaPastel {
 	
 	Conexion cn = new Conexion(2);
 	
-	public boolean dibujar() {
+	public ImageIcon dibujar() {
+		ImageIcon icono = null;
 		try {
 			cn.getConexion();
 			String sql = "EXEC [dbo].[sp_Suppliers_Stock]";
@@ -34,19 +38,20 @@ public class GraficaPastel {
 				}
 			}catch(SQLException ex) {
 				Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
-				return false;
+				return null;
 			}
 			
 	        JFreeChart chart= ChartFactory.createPieChart("Stock en dólares por cada proveedor", dataset, true, true, false);
 	        int x=1000;
 	        int y=1000;
-			File f = new File("Grafica.png");
-			ChartUtilities.saveChartAsPNG(f, chart, x, y);
-		} catch (IOException ex) {
-            Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+	        icono = new ImageIcon(chart.createBufferedImage(x, y));
+			//File f = new File("Grafica.png");
+			//ChartUtilities.saveChartAsPNG(f, chart, x, y);
+		} catch (/*IO8*/Exception ex) {
+            //Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
+            //return false;
         }
-		return true;
+		return icono;
 	}
 
 }

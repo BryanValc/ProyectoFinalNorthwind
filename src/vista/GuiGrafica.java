@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import java.awt.event.ActionEvent;
 public class GuiGrafica extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -48,8 +50,7 @@ public class GuiGrafica extends JFrame {
 		JButton btnNewButton = new JButton("Actualizar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GraficaPastel gp = new GraficaPastel();
-				gp.dibujar();
+				establecerIcono();
 			}
 		});
 		btnNewButton.setBackground(new Color(0, 153, 102));
@@ -57,9 +58,19 @@ public class GuiGrafica extends JFrame {
 		btnNewButton.setBounds(10, 5, 108, 23);
 		contentPane.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(10, 5, 1000, 1000);
+		establecerIcono();
 		contentPane.add(lblNewLabel);
+	}
+	
+	public void establecerIcono() {
+		GraficaPastel gp = new GraficaPastel();
+		ImageIcon icono = gp.dibujar();
+		
+		if(icono!=null) {
+			lblNewLabel.setIcon(icono);
+		}
 	}
 
 }
