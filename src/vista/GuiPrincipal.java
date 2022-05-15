@@ -21,11 +21,14 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 
 public class GuiPrincipal extends JFrame {
 
@@ -86,7 +89,7 @@ public class GuiPrincipal extends JFrame {
 
 		JButton btnCategory = new JButton("");
 		btnCategory.setToolTipText("Gestionar categor\u00EDas");
-		btnCategory.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/categoryy.png")));
+		//btnCategory.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/categoryy.png")));
 		btnCategory.setForeground(new Color(255, 255, 255));
 		btnCategory.setBackground(new Color(0, 153, 153));
 		btnCategory.addActionListener(new ActionListener() {
@@ -127,6 +130,8 @@ public class GuiPrincipal extends JFrame {
 		lblNewLabel.setBounds(10, 11, 256, 24);
 		contentPane.add(lblNewLabel);
 		btnCategory.setBounds(10, 46, 256, 256);
+		ImageIcon iconoCategory=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/categoryy.png"));
+        btnCategory.setIcon(resizeIcon(iconoCategory,btnCategory));
 		contentPane.add(btnCategory);
 
 		JButton btnProduct = new JButton("");
@@ -140,10 +145,12 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnProduct.setToolTipText("Gestionar productos");
-		btnProduct.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/product.png")));
+		//btnProduct.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/product.png")));
 		btnProduct.setForeground(Color.WHITE);
 		btnProduct.setBackground(new Color(255, 204, 102));
 		btnProduct.setBounds(276, 46, 256, 256);
+		ImageIcon iconoProduct=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/product.png"));
+        btnProduct.setIcon(resizeIcon(iconoProduct,btnProduct));
 		contentPane.add(btnProduct);
 
 		JButton btnSupplier = new JButton("");
@@ -157,10 +164,12 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnSupplier.setToolTipText("Gestionar proveedores");
-		btnSupplier.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png")));
+		//btnSupplier.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png")));
 		btnSupplier.setForeground(Color.WHITE);
 		btnSupplier.setBackground(new Color(51, 102, 204));
 		btnSupplier.setBounds(10, 349, 256, 256);
+		ImageIcon iconoSupplier=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png"));
+        btnSupplier.setIcon(resizeIcon(iconoSupplier,btnSupplier));
 		contentPane.add(btnSupplier);
 
 		JButton btnUsuario = new JButton("");
@@ -174,10 +183,12 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnUsuario.setToolTipText("Gestionar usuarios del sistema");
-		btnUsuario.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png")));
+		//btnUsuario.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png")));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setBackground(new Color(153, 204, 51));
 		btnUsuario.setBounds(276, 349, 256, 256);
+		ImageIcon iconoUsuario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png"));
+        btnUsuario.setIcon(resizeIcon(iconoUsuario,btnUsuario));
 		contentPane.add(btnUsuario);
 
 		JButton btnNewButton = new JButton("New button");
@@ -213,11 +224,13 @@ public class GuiPrincipal extends JFrame {
 				});
 			}
 		});
-		btnListado.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/Listado.png")));
+		//btnListado.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/Listado.png")));
 		btnListado.setToolTipText("Gestionar usuarios del sistema");
 		btnListado.setForeground(Color.WHITE);
 		btnListado.setBackground(new Color(255, 153, 102));
 		btnListado.setBounds(542, 46, 256, 256);
+		ImageIcon iconoListado=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/Listado.png"));
+        btnListado.setIcon(resizeIcon(iconoListado,btnListado));
 		contentPane.add(btnListado);
 
 		JLabel lblListado = new JLabel("Listado de productos");
@@ -232,6 +245,22 @@ public class GuiPrincipal extends JFrame {
 		btnGraficaPastel.setForeground(Color.WHITE);
 		btnGraficaPastel.setBackground(new Color(51, 204, 153));
 		btnGraficaPastel.setBounds(542, 349, 256, 256);
+		ImageIcon iconoGraficaPastel=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/graficaPastel.png"));
+        btnGraficaPastel.setIcon(resizeIcon(iconoGraficaPastel,btnGraficaPastel));
 		contentPane.add(btnGraficaPastel);
+		
+		JLabel lblStockDeCada = new JLabel("Stock de cada proveedor");
+		lblStockDeCada.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStockDeCada.setForeground(Color.WHITE);
+		lblStockDeCada.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblStockDeCada.setBounds(542, 313, 256, 24);
+		contentPane.add(lblStockDeCada);
 	}
+	
+	private Icon resizeIcon(ImageIcon icon,JButton boton) {
+        Image img = icon.getImage();
+        Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
+    }
+	
 }

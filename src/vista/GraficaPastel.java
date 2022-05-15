@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,10 +27,10 @@ public class GraficaPastel {
 			
 			ResultSet rs=cn.ejecutarConsulta(sql);
 			DefaultPieDataset dataset = new DefaultPieDataset();
-			
+			DecimalFormat formateador = new DecimalFormat("####.##");
 			try {
 				while(rs.next()) {
-					dataset.setValue(rs.getString("Proveedor"), Float.parseFloat(rs.getString("Valor en stock")));
+					dataset.setValue(rs.getString("Proveedor")+"="+formateador.format(rs.getDouble("Valor en stock")), Float.parseFloat(rs.getString("Valor en stock")));
 				}
 			}catch(SQLException ex) {
 				Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
