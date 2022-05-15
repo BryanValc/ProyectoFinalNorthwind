@@ -109,9 +109,9 @@ public class Conexion {
     	//conexion.rollback(sp);
     }
 
-    public static void llamada() {
+    public static void llamada(String simpleProc) {
         try {
-            String simpleProc = "{sp_CantidadDePaises()}";
+            //String simpleProc = "{sp_CantidadDePaises()}";
             cs = conexion.prepareCall(simpleProc);
             cs.executeUpdate();
         } catch (Exception ex) {
