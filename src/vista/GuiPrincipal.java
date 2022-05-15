@@ -8,11 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import conexionBD.Conexion;
-//import net.sf.jasperreports.engine.JasperFillManager;
-//import net.sf.jasperreports.engine.JasperPrint;
-//import net.sf.jasperreports.engine.JasperReport;
-//import net.sf.jasperreports.engine.util.JRLoader;
-//import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -196,17 +196,17 @@ public class GuiPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 
-				//			        try {
-				//			        	Conexion cn = new Conexion(2);
-				//			        	//cn.getConexion();
-				//			            String ruta=System.getProperty("user.dir")+"/src/vista/Leaf_Green.jasper";
-				//			            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
-				//			            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
-				//			            JasperViewer view= new JasperViewer(print,false);
-				//			            view.setVisible(true);
-				//			        } catch (Exception ex) {
-				//			            System.err.println("Error al generar el reporte---->"+ex.getMessage());
-				//			        }
+							        try {
+							        	Conexion cn = new Conexion(2);
+							        	//cn.getConexion();
+							            String ruta=System.getProperty("user.dir")+"/src/vista/reporte.jasper";
+							            JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+							            JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+							            JasperViewer view= new JasperViewer(print,false);
+							            view.setVisible(true);
+							        } catch (Exception ex) {
+							            System.err.println("Error al generar el reporte---->"+ex.getMessage());
+							        }
 
 
 			}
