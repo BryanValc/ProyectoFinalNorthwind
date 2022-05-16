@@ -26,6 +26,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class GuiUsuario extends JFrame implements Gui {
 
@@ -73,7 +74,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GuiUsuario.class.getResource("/recursosVisuales/usuario.png")));
 		setResizable(false);
 		setTitle("Formulario usuarios");
-		setBounds(100, 100, 356, 300);
+		setBounds(100, 100, 407, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 204, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,7 +100,7 @@ public class GuiUsuario extends JFrame implements Gui {
 				cajaKeyReleased(evt);
 			}
 		});
-		caja1.setBounds(103, 8, 86, 20);
+		caja1.setBounds(86, 8, 109, 20);
 		contentPane.add(caja1);
 		caja1.setColumns(10);
 
@@ -115,7 +116,7 @@ public class GuiUsuario extends JFrame implements Gui {
 			}
 		});
 		caja2.setColumns(10);
-		caja2.setBounds(103, 33, 86, 20);
+		caja2.setBounds(86, 33, 109, 20);
 		contentPane.add(caja2);
 
 		comboFiltro = new JComboBox();
@@ -125,7 +126,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro
 		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
-		comboFiltro.setBounds(199, 7, 131, 22);
+		comboFiltro.setBounds(250, 11, 131, 22);
 		contentPane.add(comboFiltro);
 
 		comboOperacion = new JComboBox();
@@ -133,7 +134,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		comboOperacion.setBackground(new Color(51, 102, 0));
 		comboOperacion.setForeground(new Color(255, 255, 255));
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Borrar", "Modificar" }));
-		comboOperacion.setBounds(199, 36, 131, 22);
+		comboOperacion.setBounds(250, 44, 131, 22);
 		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				comboOperacionActionPerformed(evt);
@@ -155,10 +156,11 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.setBackground(new Color(51, 102, 0));
 		btnOperacion.setForeground(new Color(255, 255, 255));
-		btnOperacion.setBounds(241, 69, 89, 23);
+		btnOperacion.setBounds(292, 73, 89, 23);
 		contentPane.add(btnOperacion);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton("");
+		btnLimpiar.setIcon(new ImageIcon(GuiUsuario.class.getResource("/recursosVisuales/escoba.png")));
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
@@ -167,7 +169,7 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnLimpiar.setToolTipText("Limpiar el formulario");
 		btnLimpiar.setBackground(new Color(51, 102, 0));
 		btnLimpiar.setForeground(new Color(255, 255, 255));
-		btnLimpiar.setBounds(10, 69, 89, 23);
+		btnLimpiar.setBounds(10, 61, 30, 30);
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
@@ -192,11 +194,11 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setBackground(new Color(51, 102, 0));
 		btnAplicar.setForeground(new Color(255, 255, 255));
-		btnAplicar.setBounds(128, 69, 89, 23);
+		btnAplicar.setBounds(179, 73, 89, 23);
 		contentPane.add(btnAplicar);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 103, 320, 147);
+		scrollPane.setBounds(10, 103, 371, 147);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -212,6 +214,11 @@ public class GuiUsuario extends JFrame implements Gui {
 			}
 		});
 		scrollPane.setViewportView(table);
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(GuiUsuario.class.getResource("/recursosVisuales/lupa.png")));
+		lblNewLabel_2.setBounds(210, 11, 30, 30);
+		contentPane.add(lblNewLabel_2);
 
 		actualizarTabla("SELECT * FROM Usuarios");
 	}
@@ -269,6 +276,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	}
 
 	String op1, op2, op3;
+	private JLabel lblNewLabel_2;
 
 	@Override
 	public void setOps(JComboBox<String> caja) {

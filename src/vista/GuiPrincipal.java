@@ -216,7 +216,7 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnInventario.setBounds(808, 46, 256, 256);
-		ImageIcon iconoInventario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/inventario.jpg"));
+		ImageIcon iconoInventario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/inventario.png"));
         btnInventario.setIcon(resizeIcon(iconoInventario,btnInventario));
 		contentPane.add(btnInventario);
 

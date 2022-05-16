@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class GuiSupplier extends JFrame implements Gui {
 
@@ -340,7 +341,8 @@ public class GuiSupplier extends JFrame implements Gui {
 		});
 		scrollPane.setViewportView(table);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton("");
+		btnLimpiar.setIcon(new ImageIcon(GuiSupplier.class.getResource("/recursosVisuales/escoba.png")));
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
@@ -348,7 +350,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		});
 		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setBackground(new Color(0, 51, 153));
-		btnLimpiar.setBounds(615, 212, 89, 23);
+		btnLimpiar.setBounds(613, 200, 30, 30);
 		btnLimpiar.setToolTipText("Limpiar el formulario");
 
 		contentPane.add(btnLimpiar);
@@ -408,7 +410,7 @@ public class GuiSupplier extends JFrame implements Gui {
 		comboFiltro.setBackground(new Color(0, 51, 153));
 		comboFiltro
 		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
-		comboFiltro.setBounds(931, 87, 139, 22);
+		comboFiltro.setBounds(488, 11, 139, 22);
 		contentPane.add(comboFiltro);
 
 		JLabel lblNewLabel = new JLabel("Datos generales");
@@ -425,6 +427,11 @@ public class GuiSupplier extends JFrame implements Gui {
 		lblContactoElectrnico.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblContactoElectrnico.setBounds(200, 154, 206, 23);
 		contentPane.add(lblContactoElectrnico);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(GuiSupplier.class.getResource("/recursosVisuales/lupa.png")));
+		lblNewLabel_1.setBounds(448, 11, 30, 30);
+		contentPane.add(lblNewLabel_1);
 
 		actualizarTabla("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers ");
 	}
@@ -542,6 +549,7 @@ public class GuiSupplier extends JFrame implements Gui {
 	}
 
 	String op1, op2, op3;
+	private JLabel lblNewLabel_1;
 
 	@Override
 	public void setOps(JComboBox<String> caja) {

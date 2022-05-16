@@ -60,7 +60,7 @@ public class GuiLogin extends JFrame {
 		setTitle("Inicio de sesi\u00F3n");
 		setBounds(100, 100, 295, 547);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(153, 102, 204));
+		contentPane.setBackground(new Color(153, 204, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

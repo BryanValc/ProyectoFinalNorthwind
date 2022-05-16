@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class GuiCategory extends JFrame implements Gui{
 
@@ -103,14 +104,15 @@ public class GuiCategory extends JFrame implements Gui{
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(10, 36, 46, 14);
+		lblNombre.setBounds(10, 36, 69, 14);
 		contentPane.add(lblNombre);
 
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
 		lblDescripcin.setBounds(10, 61, 91, 14);
 		contentPane.add(lblDescripcin);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton("");
+		btnLimpiar.setIcon(new ImageIcon(GuiCategory.class.getResource("/recursosVisuales/escoba.png")));
 		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setBackground(new Color(0, 102, 102));
 		btnLimpiar.setToolTipText("Limpiar el formulario");
@@ -119,7 +121,7 @@ public class GuiCategory extends JFrame implements Gui{
 				limpiarCampos();
 			}
 		});
-		btnLimpiar.setBounds(10, 85, 89, 23);
+		btnLimpiar.setBounds(26, 86, 30, 30);
 		contentPane.add(btnLimpiar);
 
 		comboFiltro = new JComboBox();
@@ -136,7 +138,7 @@ public class GuiCategory extends JFrame implements Gui{
 		comboOperacion.setForeground(new Color(255, 255, 255));
 		comboOperacion.setBackground(new Color(0, 102, 102));
 		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
-		comboOperacion.setBounds(298, 32, 138, 22);
+		comboOperacion.setBounds(298, 40, 138, 22);
 		comboOperacion.setToolTipText("Selecciona el tipo de operaci�n");
 		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +161,7 @@ public class GuiCategory extends JFrame implements Gui{
 				}).start();
 			}
 		});
-		btnOperacion.setBounds(298, 57, 89, 23);
+		btnOperacion.setBounds(298, 65, 89, 23);
 		contentPane.add(btnOperacion);
 
 		JButton btnAplicar = new JButton("Aplicar");
@@ -178,7 +180,7 @@ public class GuiCategory extends JFrame implements Gui{
 		btnAplicar.setForeground(new Color(255, 255, 255));
 		btnAplicar.setBackground(new Color(0, 102, 102));
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
-		btnAplicar.setBounds(298, 85, 89, 23);
+		btnAplicar.setBounds(298, 93, 89, 23);
 		contentPane.add(btnAplicar);
 
 		caja1 = new JTextField();
@@ -221,6 +223,11 @@ public class GuiCategory extends JFrame implements Gui{
 			}
 		});
 		scrollPane_1.setViewportView(caja3);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(GuiCategory.class.getResource("/recursosVisuales/lupa.png")));
+		lblNewLabel_1.setBounds(256, 7, 30, 30);
+		contentPane.add(lblNewLabel_1);
 	}
 
 	public Category createCategory(boolean isForDeletion) {
@@ -518,5 +525,4 @@ public class GuiCategory extends JFrame implements Gui{
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
-
 }

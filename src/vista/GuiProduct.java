@@ -34,6 +34,7 @@ import conexionBD.Conexion;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class GuiProduct extends JFrame implements Gui {
 
@@ -186,7 +187,8 @@ public class GuiProduct extends JFrame implements Gui {
 		btnAplicar.setBounds(124, 149, 89, 23);
 		contentPane.add(btnAplicar);
 
-		JButton btnLimpiar = new JButton("Limpiar");
+		JButton btnLimpiar = new JButton("");
+		btnLimpiar.setIcon(new ImageIcon(GuiProduct.class.getResource("/recursosVisuales/escoba.png")));
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarCampos();
@@ -195,7 +197,7 @@ public class GuiProduct extends JFrame implements Gui {
 		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setBackground(new Color(204, 153, 0));
 		btnLimpiar.setToolTipText("Limpiar el formulario");
-		btnLimpiar.setBounds(10, 149, 89, 23);
+		btnLimpiar.setBounds(10, 135, 30, 30);
 		contentPane.add(btnLimpiar);
 
 		JLabel lblNewLabel = new JLabel("ID producto:");
@@ -413,6 +415,11 @@ public class GuiProduct extends JFrame implements Gui {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_2.setBounds(750, 5, 182, 26);
 		contentPane.add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setIcon(new ImageIcon(GuiProduct.class.getResource("/recursosVisuales/lupa.png")));
+		lblNewLabel_3.setBounds(463, 11, 30, 30);
+		contentPane.add(lblNewLabel_3);
 
 		actualizarTabla(
 				"SELECT ProductID AS 'ID Producto', ProductName AS Nombre, SupplierID AS 'ID Proveedor',"
@@ -872,6 +879,7 @@ public class GuiProduct extends JFrame implements Gui {
 	int peCaja2 = 0;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
 
 	private void validacionDouble(java.awt.event.KeyEvent evt, double valorMaximo, int limite1, int limite2,
 			JTextField caja, JTextField siguienteCaja) {
