@@ -1,54 +1,55 @@
 package vista;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import conexionBD.Conexion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
-
 public class GuiPrincipal extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
 	private JPanel contentPane;
+	private Logger logger = Logger.getLogger("Log de GuiPrincipal");
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiPrincipal frame = new GuiPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> { 
+			try {
+				GuiPrincipal frame = new GuiPrincipal();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		});
+	      });
+
 	}
 
 	/**
@@ -60,30 +61,9 @@ public class GuiPrincipal extends JFrame {
 		setResizable(false);
 		Conexion cn = new Conexion(2);
 		cn.getConexion();
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent we) {
-
-				int result = JOptionPane.showConfirmDialog(null,"¿Quieres aplicar los cambios?", "Cerrando programa",JOptionPane.YES_NO_OPTION);
-				if(result == JOptionPane.YES_OPTION){
-					try {
-						cn.guardar();
-					} catch (SQLException e) {
-						System.out.println("No se pudieron guardar los cambios");
-						e.printStackTrace();
-					}
-				}else{
-					try {
-						cn.volver();
-					} catch (SQLException e) {
-						System.out.println("No se pudo regresar al estado anterior");
-						e.printStackTrace();
-					}
-				}
-			}
-		});
 
 		setTitle("Menu principal");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1092, 660);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(102, 102, 102));
@@ -93,7 +73,6 @@ public class GuiPrincipal extends JFrame {
 
 		JButton btnCategory = new JButton("");
 		btnCategory.setToolTipText("Gestionar categor\u00EDas");
-		//btnCategory.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/categoryy.png")));
 		btnCategory.setForeground(new Color(255, 255, 255));
 		btnCategory.setBackground(new Color(0, 153, 153));
 		btnCategory.addActionListener(new ActionListener() {
@@ -105,7 +84,6 @@ public class GuiPrincipal extends JFrame {
 				});
 			}
 		});
-
 		JLabel lblUsuarios = new JLabel("Usuarios");
 		lblUsuarios.setForeground(new Color(255, 255, 255));
 		lblUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
@@ -149,7 +127,6 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnProduct.setToolTipText("Gestionar productos");
-		//btnProduct.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/product.png")));
 		btnProduct.setForeground(Color.WHITE);
 		btnProduct.setBackground(new Color(255, 204, 102));
 		btnProduct.setBounds(276, 46, 256, 256);
@@ -168,7 +145,6 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnSupplier.setToolTipText("Gestionar proveedores");
-		//btnSupplier.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/supplier.png")));
 		btnSupplier.setForeground(Color.WHITE);
 		btnSupplier.setBackground(new Color(51, 102, 204));
 		btnSupplier.setBounds(138, 349, 256, 256);
@@ -187,7 +163,6 @@ public class GuiPrincipal extends JFrame {
 			}
 		});
 		btnUsuario.setToolTipText("Gestionar usuarios del sistema");
-		//btnUsuario.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/usuario.png")));
 		btnUsuario.setForeground(Color.WHITE);
 		btnUsuario.setBackground(new Color(153, 204, 51));
 		btnUsuario.setBounds(404, 349, 256, 256);
@@ -200,21 +175,18 @@ public class GuiPrincipal extends JFrame {
 		btnInventario.setBackground(new Color(153, 102, 255));
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				try {
-					Conexion cn = new Conexion(2);
-					//cn.getConexion();
 					String ruta=System.getProperty("user.dir")+"/src/vista/reporteInventario.jasper";
 					JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
 					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
 					JasperViewer view= new JasperViewer(print,false);
 					view.setVisible(true);
 				} catch (Exception ex) {
-					System.err.println("Error al generar el reporte---->"+ex.getMessage());
+					logger.log(Level.SEVERE,"Error al generar el reporte",ex);
 				}
-
 			}
 		});
+		
 		btnInventario.setBounds(808, 46, 256, 256);
 		ImageIcon iconoInventario=new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/inventario.png"));
         btnInventario.setIcon(resizeIcon(iconoInventario,btnInventario));
@@ -230,7 +202,6 @@ public class GuiPrincipal extends JFrame {
 				});
 			}
 		});
-		//btnListado.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/Listado.png")));
 		btnListado.setToolTipText("Gestionar usuarios del sistema");
 		btnListado.setForeground(Color.WHITE);
 		btnListado.setBackground(new Color(255, 153, 102));

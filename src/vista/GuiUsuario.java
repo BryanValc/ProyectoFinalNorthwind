@@ -1,35 +1,37 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import conexionBD.Conexion;
 import controlador.UsuarioDAO;
 import modelo.Usuario;
 
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
+
 
 public class GuiUsuario extends JFrame implements Gui {
 
+	/**
+	 * 
+	 */
 	private JPanel contentPane;
 	private JTextField caja1;
 	private JTextField caja2;
@@ -41,22 +43,8 @@ public class GuiUsuario extends JFrame implements Gui {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private ResultSetTableModel modeloDatos = null;
-
-	/**
-	 * Launch the application.
-	 */
-	//	public static void main(String[] args) {
-	//		EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				try {
-	//					GuiUsuario frame = new GuiUsuario();
-	//					frame.setVisible(true);
-	//				} catch (Exception e) {
-	//					e.printStackTrace();
-	//				}
-	//			}
-	//		});
-	//	}
+	
+	private Logger logger = Logger.getLogger("Log de GuiUsuario");
 
 	/**
 	 * Create the frame.
@@ -81,23 +69,25 @@ public class GuiUsuario extends JFrame implements Gui {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Usuario:");
-		lblNewLabel.setBounds(10, 11, 66, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setBounds(10, 11, 66, 14);
+		contentPane.add(lblUsuario);
 
-		JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a:");
-		lblNewLabel_1.setBounds(10, 36, 89, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblContrasena = new JLabel("Contrase\u00F1a:");
+		lblContrasena.setBounds(10, 36, 89, 14);
+		contentPane.add(lblContrasena);
 
 		caja1 = new JTextField();
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
 
+			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt, 255, caja1, caja2);
 			}
 
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				cajaKeyReleased(evt);
+				cajaKeyReleased();
 			}
 		});
 		caja1.setBounds(86, 8, 109, 20);
@@ -107,52 +97,43 @@ public class GuiUsuario extends JFrame implements Gui {
 		caja2 = new JTextField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
 
+			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				validacionString(evt, 255, caja2, caja1);
 			}
 
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				cajaKeyReleased(evt);
+				cajaKeyReleased();
 			}
 		});
 		caja2.setColumns(10);
 		caja2.setBounds(86, 33, 109, 20);
 		contentPane.add(caja2);
 
-		comboFiltro = new JComboBox();
+		comboFiltro = new JComboBox<>();
 		comboFiltro.setToolTipText(
 				"Selecciona el tipo de b\u00FAsqueda, la b\u00FAsqueda \r\namplia busca cualquier coincidencia en \r\ncualquier campo, la b\u00FAsqueda precisa \r\nbusca que todos los campos coincidan");
 		comboFiltro.setBackground(new Color(51, 102, 0));
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro
-		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel<>(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(250, 11, 131, 22);
 		contentPane.add(comboFiltro);
 
-		comboOperacion = new JComboBox();
+		comboOperacion = new JComboBox<>();
 		comboOperacion.setToolTipText("Seleccione el tipo de operaci\u00F3n");
 		comboOperacion.setBackground(new Color(51, 102, 0));
 		comboOperacion.setForeground(new Color(255, 255, 255));
-		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Borrar", "Modificar" }));
+		comboOperacion.setModel(new DefaultComboBoxModel<>(new String[] { "Insertar", "Borrar", "Modificar" }));
 		comboOperacion.setBounds(250, 44, 131, 22);
-		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboOperacionActionPerformed(evt);
-			}
-		});
+		comboOperacion.addActionListener(this::comboOperacionActionPerformed);
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
-		btnOperacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						btnOperacionActionPerformed(e);
-					}
-				}).start();
-			}
-		});
+		btnOperacion.addActionListener(e -> 
+			new Thread(() -> btnOperacionActionPerformed(e)).start()
+		);
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.setBackground(new Color(51, 102, 0));
 		btnOperacion.setForeground(new Color(255, 255, 255));
@@ -161,11 +142,7 @@ public class GuiUsuario extends JFrame implements Gui {
 
 		btnLimpiar = new JButton("");
 		btnLimpiar.setIcon(new ImageIcon(GuiUsuario.class.getResource("/recursosVisuales/escoba.png")));
-		btnLimpiar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarCampos();
-			}
-		});
+		btnLimpiar.addActionListener(e -> limpiarCampos());
 		btnLimpiar.setToolTipText("Limpiar el formulario");
 		btnLimpiar.setBackground(new Color(51, 102, 0));
 		btnLimpiar.setForeground(new Color(255, 255, 255));
@@ -173,23 +150,8 @@ public class GuiUsuario extends JFrame implements Gui {
 		contentPane.add(btnLimpiar);
 
 		btnAplicar = new JButton("Aplicar");
-		btnAplicar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//				Thread t = new Thread() {
-				//				    public void run() {
-				//				    	Conexion cn = new Conexion(2);
-				//						cn.getConexion();
-				//						try {
-				//							cn.guardar();
-				//						} catch (SQLException ex) {
-				//							System.out.println("No se pudieron guardar los cambios");
-				//							ex.printStackTrace();
-				//							cn.cerrarConexion();
-				//						}
-				//				    }
-				//				};
-				//				t.start();
-			}
+		btnAplicar.addActionListener(e ->{
+
 		});
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
 		btnAplicar.setBackground(new Color(51, 102, 0));
@@ -209,16 +171,17 @@ public class GuiUsuario extends JFrame implements Gui {
 			}
 		});
 		table.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				obtenerRegistroTabla();
 			}
 		});
 		scrollPane.setViewportView(table);
 		
-		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(GuiUsuario.class.getResource("/recursosVisuales/lupa.png")));
-		lblNewLabel_2.setBounds(210, 11, 30, 30);
-		contentPane.add(lblNewLabel_2);
+		lblLupa = new JLabel("");
+		lblLupa.setIcon(new ImageIcon(GuiUsuario.class.getResource("/recursosVisuales/lupa.png")));
+		lblLupa.setBounds(210, 11, 30, 30);
+		contentPane.add(lblLupa);
 
 		actualizarTabla("SELECT * FROM Usuarios");
 	}
@@ -229,26 +192,19 @@ public class GuiUsuario extends JFrame implements Gui {
 				+ "user=vistaTablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+		new Thread(() -> {
 				try {
 					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-					if(modeloDatos!=null) {
-						table.setModel(modeloDatos);
-					}
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+					table.setModel(modeloDatos);
+				} catch (ClassNotFoundException|SQLException e1) {
+					logger.log(Level.SEVERE,"Error al actualizar la tabla",e1);
 				}
-			}
 		}).start();
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Error al interrumpir la ejecucion principal",e);
+		    Thread.currentThread().interrupt();
 		}
 
 	}
@@ -275,8 +231,10 @@ public class GuiUsuario extends JFrame implements Gui {
 		return true;
 	}
 
-	String op1, op2, op3;
-	private JLabel lblNewLabel_2;
+	String op1;
+	String op2;
+	String op3;
+	private JLabel lblLupa;
 
 	@Override
 	public void setOps(JComboBox<String> caja) {
@@ -302,27 +260,19 @@ public class GuiUsuario extends JFrame implements Gui {
 		setOps(comboFiltro);
 
 		boolean primero = true;
-		if (!caja1.getText().toString().equals("")) {
-			if (!primero) {
-				sql += op2;
-			} else {
-				sql += "WHERE ";
-			}
+		if (!caja1.getText().equals("")) {
+			sql += "WHERE ";
 			primero = false;
-			sql += ("username " + op1 + " '" + op3 + caja1.getText().toString() + op3 + "'");
+			sql += ("username " + op1 + " '" + op3 + caja1.getText() + op3 + "'");
 		}
-		if (!btnOperacion.getText().contains("Modificar")) {
-			if (!caja2.getText().toString().equals("")) {
+		if (!btnOperacion.getText().contains("Modificar")&&!caja2.getText().equals("")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
-				primero = false;
-				sql += ("password " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
-			}
+				sql += ("password " + op1 + " '" + op3 + caja2.getText() + op3 + "'");
 		}
-		//		System.out.println(sql);
 		return sql;
 	}
 
@@ -341,14 +291,6 @@ public class GuiUsuario extends JFrame implements Gui {
 
 	}
 
-	@Override
-	public void comboOperacionActionPerformed(ActionEvent evt) {
-		btnOperacion.setText("" + comboOperacion.getSelectedItem());
-
-		String sql = consulta();
-		actualizarTabla(sql);
-	}
-
 	public Usuario createUsuario(boolean isForDeletion){
 		Usuario usuario = null;
 		if(isForDeletion){
@@ -362,7 +304,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	@Override
 	public void btnOperacionActionPerformed(ActionEvent evt) {
 		String operacion = btnOperacion.getText();
-		ArrayList<Usuario> comprobacion = new ArrayList<Usuario>();
+		ArrayList<Usuario> comprobacion;
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		Usuario usuario = null;
 
@@ -374,7 +316,7 @@ public class GuiUsuario extends JFrame implements Gui {
 			}
 			usuario = createUsuario(true);
 			comprobacion = usuarioDAO.buscar("SELECT * FROM Usuarios WHERE username = '"+ caja1.getText() + "'");
-			if (comprobacion.size() == 0) {
+			if (comprobacion.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
 				return;
 			}
@@ -398,7 +340,7 @@ public class GuiUsuario extends JFrame implements Gui {
 			comprobacion = usuarioDAO
 					.buscar("SELECT * FROM Usuarios WHERE username = '"
 							+ caja1.getText() + "'");
-			if (comprobacion.size() == 0) {
+			if (comprobacion.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
 				return;
 			}
@@ -429,9 +371,8 @@ public class GuiUsuario extends JFrame implements Gui {
 
 	}
 
-	private void cajaKeyReleased(java.awt.event.KeyEvent evt) {
+	private void cajaKeyReleased() {
 		String sql = consulta();
-		// System.out.println(sql);
 		actualizarTabla(sql);
 	}
 
@@ -440,13 +381,20 @@ public class GuiUsuario extends JFrame implements Gui {
 		if (code == KeyEvent.VK_ENTER) {
 			caja.setEditable(true);
 			siguienteCaja.requestFocus();
-		} else if ((caja.getText().equals("") ? true
-				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+		}else if ((caja.getText().equals("") || !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
 		} else {
 			caja.setEditable(false);
 		}
+	}
+
+	@Override
+	public void comboOperacionActionPerformed(ActionEvent evt) {
+		btnOperacion.setText("" + comboOperacion.getSelectedItem());
+
+		String sql = consulta();
+		actualizarTabla(sql);
 	}
 
 }

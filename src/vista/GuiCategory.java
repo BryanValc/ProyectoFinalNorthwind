@@ -1,61 +1,42 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import conexionBD.Conexion;
 import controlador.CategoryDAO;
 import modelo.Category;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-
 public class GuiCategory extends JFrame implements Gui{
-
-
 
 	private JPanel contentPane;
 	private JTable table;
 	private ResultSetTableModel modeloDatos = null;
 	private JScrollPane scrollPane;
-	private JButton btnLimpiar, btnOperacion;
-	JComboBox<String> comboOperacion, comboFiltro;
-
-	/**
-	 * Launch the application.
-	 */
-	//	public static void main(String[] args) {
-	//		EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				try {
-	//					GuiCategory frame = new GuiCategory();
-	//					frame.setVisible(true);
-	//				} catch (Exception e) {
-	//					e.printStackTrace();
-	//				}
-	//			}
-	//		});
-	//	}
+	private JButton btnLimpiar;
+	private JButton btnOperacion;
+	JComboBox<String> comboOperacion;
+	JComboBox<String> comboFiltro;
+	
+	private Logger logger = Logger.getLogger("Log de GuiCategory");
 
 	/**
 	 * Create the frame.
@@ -92,6 +73,7 @@ public class GuiCategory extends JFrame implements Gui{
 			}
 		});
 		table.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				obtenerRegistroTabla();
 			}
@@ -116,67 +98,40 @@ public class GuiCategory extends JFrame implements Gui{
 		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setBackground(new Color(0, 102, 102));
 		btnLimpiar.setToolTipText("Limpiar el formulario");
-		btnLimpiar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limpiarCampos();
-			}
-		});
+		btnLimpiar.addActionListener(e->limpiarCampos());
 		btnLimpiar.setBounds(26, 86, 30, 30);
 		contentPane.add(btnLimpiar);
 
-		comboFiltro = new JComboBox();
+		comboFiltro = new JComboBox<>();
 		comboFiltro.setForeground(new Color(255, 255, 255));
 		comboFiltro.setBackground(new Color(0, 102, 102));
 		comboFiltro.setToolTipText(
 				"Selecciona el tipo de busqueda, la b\u00FAsqueda amplia busca cualquier coincidencia en cualquier campo, la b\u00FAsqueda precisa busca que todos los campos coincidan");
 		comboFiltro
-		.setModel(new DefaultComboBoxModel(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
+		.setModel(new DefaultComboBoxModel<>(new String[] { "B\u00FAsqueda amplia", "B\u00FAsqueda precisa" }));
 		comboFiltro.setBounds(298, 7, 138, 22);
 		contentPane.add(comboFiltro);
 
-		comboOperacion = new JComboBox();
+		comboOperacion = new JComboBox<>();
 		comboOperacion.setForeground(new Color(255, 255, 255));
 		comboOperacion.setBackground(new Color(0, 102, 102));
-		comboOperacion.setModel(new DefaultComboBoxModel(new String[] { "Insertar", "Modificar", "Borrar" }));
+		comboOperacion.setModel(new DefaultComboBoxModel<>(new String[] { "Insertar", "Modificar", "Borrar" }));
 		comboOperacion.setBounds(298, 40, 138, 22);
 		comboOperacion.setToolTipText("Selecciona el tipo de operaciï¿½n");
-		comboOperacion.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboOperacionActionPerformed(evt);
-			}
-		});
+		comboOperacion.addActionListener(evt->comboOperacionActionPerformed(evt));
 		contentPane.add(comboOperacion);
 
 		btnOperacion = new JButton("Insertar");
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.setForeground(new Color(255, 255, 255));
 		btnOperacion.setBackground(new Color(0, 102, 102));
-		btnOperacion.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						btnOperacionActionPerformed(evt);
-					}
-				}).start();
-			}
-		});
+		btnOperacion.addActionListener(evt-> 
+		new Thread(() -> btnOperacionActionPerformed(evt)).start()
+				);
 		btnOperacion.setBounds(298, 65, 89, 23);
 		contentPane.add(btnOperacion);
 
 		JButton btnAplicar = new JButton("Aplicar");
-		btnAplicar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Conexion cn = new Conexion(2);
-				cn.getConexion();
-				try {
-					cn.guardar();
-				} catch (SQLException ex) {
-					System.out.println("No se pudieron guardar los cambios");
-					ex.printStackTrace();
-				}
-			}
-		});
 		btnAplicar.setForeground(new Color(255, 255, 255));
 		btnAplicar.setBackground(new Color(0, 102, 102));
 		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
@@ -185,12 +140,14 @@ public class GuiCategory extends JFrame implements Gui{
 
 		caja1 = new JTextField();
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				caja1KeyPressed(evt);
 			}
 
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				caja1KeyReleased(evt);
+				cajaKeyReleased(evt);
 			}
 		});
 		caja1.setBounds(108, 8, 86, 20);
@@ -200,34 +157,37 @@ public class GuiCategory extends JFrame implements Gui{
 
 		caja2 = new JTextField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
 				caja2KeyPressed(evt);
 			}
 
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				caja2KeyReleased(evt);
+				cajaKeyReleased(evt);
 			}
 		});
 		caja2.setColumns(10);
 		caja2.setBounds(108, 33, 126, 20);
 		contentPane.add(caja2);
 
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(111, 61, 161, 52);
-		contentPane.add(scrollPane_1);
+		scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(111, 61, 161, 52);
+		contentPane.add(scrollPane1);
 
 		caja3 = new JTextArea();
 		caja3.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				caja3KeyReleased(evt);
+				cajaKeyReleased(evt);
 			}
 		});
-		scrollPane_1.setViewportView(caja3);
+		scrollPane1.setViewportView(caja3);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(GuiCategory.class.getResource("/recursosVisuales/lupa.png")));
-		lblNewLabel_1.setBounds(256, 7, 30, 30);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblLupa = new JLabel("");
+		lblLupa.setIcon(new ImageIcon(GuiCategory.class.getResource("/recursosVisuales/lupa.png")));
+		lblLupa.setBounds(256, 7, 30, 30);
+		contentPane.add(lblLupa);
 	}
 
 	public Category createCategory(boolean isForDeletion) {
@@ -250,7 +210,7 @@ public class GuiCategory extends JFrame implements Gui{
 
 	public void btnOperacionActionPerformed(java.awt.event.ActionEvent evt) {
 		String operacion = btnOperacion.getText();
-		ArrayList<Category> comprobacion = new ArrayList<Category>();
+		ArrayList<Category> comprobacion;
 		CategoryDAO categoryDAO = new CategoryDAO();
 		Category category = null;
 
@@ -265,7 +225,7 @@ public class GuiCategory extends JFrame implements Gui{
 			comprobacion = categoryDAO
 					.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
 							+ caja1.getText() + "'");
-			if (comprobacion.size() == 0) {
+			if (comprobacion.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
 				return;
 			}
@@ -290,7 +250,7 @@ public class GuiCategory extends JFrame implements Gui{
 			comprobacion = categoryDAO
 					.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
 							+ caja1.getText() + "'");
-			if (comprobacion.size() == 0) {
+			if (comprobacion.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
 				return;
 			}
@@ -329,34 +289,20 @@ public class GuiCategory extends JFrame implements Gui{
 				+ "user=vistaTablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-					if(modeloDatos!=null) {
-						table.setModel(modeloDatos);
-					}
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+		new Thread(() -> {
+			try {
+				modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
+				table.setModel(modeloDatos);
+			} catch (ClassNotFoundException|SQLException e1) {
+				logger.log(Level.SEVERE,"Error al actualizar la tabla",e1);
 			}
 		}).start();
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE,"Error al interrumpir la ejecución principal",e);
+			Thread.currentThread().interrupt();
 		}
-		//		try {
-		//			modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
-		//		} catch (ClassNotFoundException e1) {
-		//			e1.printStackTrace();
-		//		} catch (SQLException e1) {
-		//			e1.printStackTrace();
-		//		}
 
 	}
 
@@ -385,9 +331,11 @@ public class GuiCategory extends JFrame implements Gui{
 	private JTextField caja1;
 	private JTextField caja2;
 	private JTextArea caja3;
-	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane1;
 
-	String op1, op2, op3;
+	String op1;
+	String op2;
+	String op3;
 
 	public void setOps(JComboBox<String> caja) {
 		switch ("" + caja.getSelectedItem()) {
@@ -430,33 +378,28 @@ public class GuiCategory extends JFrame implements Gui{
 		setOps(comboFiltro);
 
 		boolean primero = true;
-		if (!caja1.getText().toString().equals("")) {
-			if (!primero) {
-				sql += op2;
-			} else {
-				sql += "WHERE ";
-			}
+		if (!caja1.getText().equals("")) {
+			sql += "WHERE ";
 			primero = false;
-			sql += ("CategoryID " + op1 + " '" + op3 + caja1.getText().toString() + op3 + "'");
+			sql += ("CategoryID " + op1 + " '" + op3 + caja1.getText() + op3 + "'");
 		}
 		if (!btnOperacion.getText().contains("Modificar")) {
-			if (!caja2.getText().toString().equals("")) {
+			if (!caja2.getText().equals("")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
 				primero = false;
-				sql += ("CategoryName " + op1 + " '" + op3 + caja2.getText().toString() + op3 + "'");
+				sql += ("CategoryName " + op1 + " '" + op3 + caja2.getText() + op3 + "'");
 			}
-			if (!caja3.getText().toString().equals("")) {
+			if (!caja3.getText().equals("")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
-				primero = false;
-				sql += ("Description " + op1 + " '" + op3 + caja3.getText().toString() + op3 + "'");
+				sql += ("Description " + op1 + " '" + op3 + caja3.getText() + op3 + "'");
 			}
 		}
 		return sql;
@@ -479,7 +422,7 @@ public class GuiCategory extends JFrame implements Gui{
 		int limite = 10;
 		int valorMaximo = 2147483647;
 		JTextField caja = caja1;
-		if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) && caja.getText().length() < limite) {
+		if ((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') && caja.getText().length() < limite) {
 			try {
 				int valorCaja = Integer.parseInt(caja.getText() + evt.getKeyChar());
 				if (valorCaja <= valorMaximo) {
@@ -488,6 +431,7 @@ public class GuiCategory extends JFrame implements Gui{
 					caja.setEditable(false);
 				}
 			} catch (Exception e) {
+				logger.log(Level.SEVERE,"Error al convertir de String a int en el formulario",e);
 				caja.setEditable(false);
 			}
 		} else if (code == KeyEvent.VK_BACK_SPACE) {
@@ -504,8 +448,7 @@ public class GuiCategory extends JFrame implements Gui{
 		int code = evt.getKeyCode();
 		int limite = 15;
 		JTextField caja = caja2;
-		if ((caja.getText().equals("") ? true
-				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+		if ((caja.getText().equals("") || !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
 		} else if (code == KeyEvent.VK_ENTER) {
@@ -516,18 +459,9 @@ public class GuiCategory extends JFrame implements Gui{
 		}
 	}
 
-	private void caja1KeyReleased(java.awt.event.KeyEvent evt) {
+	private void cajaKeyReleased(java.awt.event.KeyEvent evt) {
 		String sql = consulta();
 		actualizarTabla(sql);
 	}
-
-	private void caja2KeyReleased(java.awt.event.KeyEvent evt) {
-		String sql = consulta();
-		actualizarTabla(sql);
-	}
-
-	private void caja3KeyReleased(java.awt.event.KeyEvent evt) {
-		String sql = consulta();
-		actualizarTabla(sql);
-	}
+	
 }

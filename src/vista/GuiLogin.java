@@ -1,36 +1,33 @@
 package vista;
 
-import modelo.Usuario;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controlador.UsuarioDAO;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.Toolkit;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+
+import controlador.UsuarioDAO;
+import modelo.Usuario;
 
 public class GuiLogin extends JFrame {
 
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField caja1;
 	private JPasswordField caja2;
@@ -39,14 +36,12 @@ public class GuiLogin extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuiLogin frame = new GuiLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				GuiLogin frame = new GuiLogin();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -72,22 +67,23 @@ public class GuiLogin extends JFrame {
 		lblNewLabel.setBounds(10, 41, 256, 256);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Iniciar sesi\u00F3n");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1.setBounds(34, 11, 208, 32);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblNewLabe2 = new JLabel("Iniciar sesi\u00F3n");
+		lblNewLabe2.setForeground(Color.WHITE);
+		lblNewLabe2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabe2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabe2.setBounds(34, 11, 208, 32);
+		contentPane.add(lblNewLabe2);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Usuario:");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1_1.setBounds(34, 288, 208, 32);
-		contentPane.add(lblNewLabel_1_1);
+		JLabel lblNewLabel3 = new JLabel("Usuario:");
+		lblNewLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel3.setForeground(Color.WHITE);
+		lblNewLabel3.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel3.setBounds(34, 288, 208, 32);
+		contentPane.add(lblNewLabel3);
 		
 		caja1 = new JTextField();
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				validacionString(evt,255,caja1,caja2);
 			}
@@ -98,15 +94,16 @@ public class GuiLogin extends JFrame {
 		contentPane.add(caja1);
 		caja1.setColumns(10);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Contrase\u00F1a:");
-		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1_1_1.setBounds(34, 374, 208, 32);
-		contentPane.add(lblNewLabel_1_1_1);
+		JLabel lblNewLabel4 = new JLabel("Contrase\u00F1a:");
+		lblNewLabel4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel4.setForeground(Color.WHITE);
+		lblNewLabel4.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel4.setBounds(34, 374, 208, 32);
+		contentPane.add(lblNewLabel4);
 		
 		caja2 = new JPasswordField();
 		caja2.addKeyListener(new java.awt.event.KeyAdapter() {
+			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				jPasswordFieldKeyReleased(evt,255,caja1);
 			}
@@ -118,11 +115,7 @@ public class GuiLogin extends JFrame {
 		contentPane.add(caja2);
 		
 		JButton btnNewButton = new JButton("Ingresar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				jButtonActionPerformed(e);
-			}
-		});
+		btnNewButton.addActionListener(this::jButtonActionPerformed);
 		btnNewButton.setToolTipText("Ingresar a la cuenta");
 		btnNewButton.setBackground(new Color(102, 51, 204));
 		btnNewButton.setForeground(Color.WHITE);
@@ -131,14 +124,21 @@ public class GuiLogin extends JFrame {
 		contentPane.add(btnNewButton);
 	}
 	
-	private void jButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
+	private void jButtonActionPerformed(java.awt.event.ActionEvent evt) { 
+		/*
+		 * public static void main(String[] args) {
+		EventQueue.invokeLater(() -> {
+			try {
+				GuiLogin frame = new GuiLogin();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+		 * */
         if (verificar()) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {             
-					new GuiPrincipal().setVisible(true);
-				}
-			});
+			SwingUtilities.invokeLater(() -> {new GuiPrincipal().setVisible(true);});
 			setVisible(false);
 		}else {
 			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
@@ -150,8 +150,7 @@ public class GuiLogin extends JFrame {
 		if (code == KeyEvent.VK_ENTER) {
 			caja.setEditable(true);
 			siguienteCaja.requestFocus();
-		} else if ((caja.getText().equals("") ? true
-				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+		} else if ((caja.getText().equals("") || !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
 		} else {
@@ -160,38 +159,16 @@ public class GuiLogin extends JFrame {
 	}
 	
 	private void jPasswordFieldKeyReleased(java.awt.event.KeyEvent evt, int limite, JTextField caja) {                                            
-		//        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-		//            if (verificar()) {
-		//			SwingUtilities.invokeLater(new Runnable() {
-		//				@Override
-		//				public void run() {
-		//                                    
-		//					new GuiPrincipal().setVisible(true);
-		//				}
-		//			});
-		//			setVisible(false);
-		//		}else {
-		//			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-		//		}
-		//           
-		//        }
         
         int code = evt.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
 			if (verificar()) {
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-	                                    
-						new GuiPrincipal().setVisible(true);
-					}
-				});
+				SwingUtilities.invokeLater(() -> new GuiPrincipal().setVisible(true));
 				setVisible(false);
 			}else {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
 			}
-		} else if ((caja.getText().equals("") ? true
-				: !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
+		} else if ((caja.getText().equals("") || !(caja.getText().charAt(caja.getText().length() - 1) == ' ' && code == KeyEvent.VK_SPACE))
 				&& (caja.getText().length() < limite || code == KeyEvent.VK_BACK_SPACE)) {
 			caja.setEditable(true);
 		} else {
@@ -204,7 +181,7 @@ public class GuiLogin extends JFrame {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			ArrayList<Usuario> listaUsuarios = usuarioDAO.buscar("SELECT * FROM Usuarios WHERE username = '"+caja1.getText()+"'");
-			if (listaUsuarios.size()!=0) {
+			if (!listaUsuarios.isEmpty()) {
                 Usuario usuario = listaUsuarios.get(0);
                 return usuario.getPassword().equals(caja2.getText());
             }
