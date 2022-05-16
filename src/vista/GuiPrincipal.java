@@ -196,7 +196,7 @@ public class GuiPrincipal extends JFrame {
 		contentPane.add(btnUsuario);
 
 		JButton btnInventario = new JButton("");
-		btnInventario.setToolTipText("Imprimir un inventario que \r\ntiene un litado de todos los\r\nproductos existentes junto\r\ncon los productos que est\u00E1n\r\nen camino");
+		btnInventario.setToolTipText("Imprimir un inventario que tiene un litado de todos los productos existentes junto con los productos que est\u00E1n en camino");
 		btnInventario.setBackground(new Color(153, 102, 255));
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -204,7 +204,7 @@ public class GuiPrincipal extends JFrame {
 				try {
 					Conexion cn = new Conexion(2);
 					//cn.getConexion();
-					String ruta=System.getProperty("user.dir")+"/src/vista/reporte.jasper";
+					String ruta=System.getProperty("user.dir")+"/src/vista/reporteInventario.jasper";
 					JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
 					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
 					JasperViewer view= new JasperViewer(print,false);
