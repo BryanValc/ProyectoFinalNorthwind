@@ -259,55 +259,60 @@ public class GuiCategory extends JFrame implements Gui{
 			if (caja1.getText().equals("")) {
 				JOptionPane.showMessageDialog(null,
 						"No se esta especificando el codigo de la categoria a eliminar");
+				return;
+			}
+			category = createCategory(true);
+			comprobacion = categoryDAO
+					.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
+				return;
+			}
+			int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la categoria?",
+					"Alerta!", JOptionPane.YES_NO_OPTION);
+			if (reply == JOptionPane.NO_OPTION) {
+				return;
+			}
+			if (categoryDAO.borrarRegistro(category)) {
+				JOptionPane.showMessageDialog(null, "Categoria eliminada exitosamente");
+				limpiarCampos();
 			} else {
-				category = createCategory(true);
-				comprobacion = categoryDAO
-						.buscar("SELECT CategoryID AS ID , CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a eliminar");
-				} else {
-					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar la categoria?",
-							"Alerta!", JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						if (categoryDAO.borrarRegistro(category)) {
-							JOptionPane.showMessageDialog(null, "Categoria eliminada exitosamente");
-							limpiarCampos();
-						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria");
-						}
-					}
-				}
+				JOptionPane.showMessageDialog(null, "No se pudo eliminar la categoria");
 			}
 			break;
 		case "Modificar":
-			if (comprobarCampos()) {
-				category = createCategory(false);
-
-				comprobacion = categoryDAO
-						.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
-				} else {
-					if (categoryDAO.modificarRegistro(category)) {
-						JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");
-					} else {
-						JOptionPane.showMessageDialog(null, "No se pudo modificar la categoria");
-					}
-				}
+			if (!comprobarCampos()) {
+				return;
 			}
+			category = createCategory(false);
+
+			comprobacion = categoryDAO
+					.buscar("SELECT CategoryID AS ID, CategoryName AS Nombre, Description AS Descripcion FROM Categories WHERE CategoryID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar la categoria a modificar");
+				return;
+			}
+			if (categoryDAO.modificarRegistro(category)) {
+				JOptionPane.showMessageDialog(null, "Categoria modificada exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo modificar la categoria");
+			}
+			
+			
 
 			break;
 		case "Insertar":
-			if (comprobarCampos()) {
-				category = createCategory(false);
-				if (categoryDAO.insertarRegistro(category)) {
-					JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente");
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"No se pudo agregar la categoria, quiza ya hay una con el mismo ID");
-				}
+			if (!comprobarCampos()) {
+				return;
+			}
+			category = createCategory(false);
+			if (categoryDAO.insertarRegistro(category)) {
+				JOptionPane.showMessageDialog(null, "Categoria agregada exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"No se pudo agregar la categoria, quiza ya hay una con el mismo ID");
 			}
 			break;
 		default:

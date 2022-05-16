@@ -764,56 +764,65 @@ public class GuiProduct extends JFrame implements Gui {
 			if (caja1.getText().equals("")) {
 				JOptionPane.showMessageDialog(null,
 						"No se esta especificando el codigo del producto a eliminar");
-			} else {
-				product = createProduct(true);
-				comprobacion = productDAO
-						.buscar("SELECT * FROM Products WHERE ProductID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a eliminar");
-				} else {
-					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el producto?",
-							"Alerta!", JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						if (productDAO.borrarRegistro(product)) {
-							JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente");
-							limpiarCampos();
-						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto");
-						}
-					}
-				}
+				return;
 			}
+			product = createProduct(true);
+			comprobacion = productDAO
+					.buscar("SELECT * FROM Products WHERE ProductID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a eliminar");
+				return;
+			}
+			int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el producto?",
+					"Alerta!", JOptionPane.YES_NO_OPTION);
+			if (reply == JOptionPane.NO_OPTION) {
+				return;
+			}
+			if (productDAO.borrarRegistro(product)) {
+				JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente");
+				limpiarCampos();
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto");
+			}
+			
+			
+			
 			break;
 		case "Modificar":
-			if (comprobarCampos()) {
-				product = createProduct(false);
-
-				comprobacion = productDAO
-						.buscar("SELECT * FROM Products WHERE ProductID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a modificar");
-				} else {
-					if (productDAO.modificarRegistro(product)) {
-						JOptionPane.showMessageDialog(null, "Producto modificado exitosamente");
-					} else {
-						JOptionPane.showMessageDialog(null, "No se pudo modificar el producto");
-					}
-				}
+			if (!comprobarCampos()) {
+				return;
 			}
+			product = createProduct(false);
+
+			comprobacion = productDAO
+					.buscar("SELECT * FROM Products WHERE ProductID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto a modificar");
+				return;
+			}
+			if (productDAO.modificarRegistro(product)) {
+				JOptionPane.showMessageDialog(null, "Producto modificado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo modificar el producto");
+			}
+			
+			
 
 			break;
 		case "Insertar":
-			if (comprobarCampos()) {
-				product = createProduct(false);
-				if (productDAO.insertarRegistro(product)) {
-					JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"No se pudo agregar el producto, quiza ya hay uno con el mismo ID");
-				}
+			if (!comprobarCampos()) {
+				return;
 			}
+			product = createProduct(false);
+			if (productDAO.insertarRegistro(product)) {
+				JOptionPane.showMessageDialog(null, "Producto agregado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"No se pudo agregar el producto, quiza ya hay uno con el mismo ID");
+			}
+			
 			break;
 		default:
 			break;
@@ -884,16 +893,11 @@ public class GuiProduct extends JFrame implements Gui {
 	private void validacionDouble(java.awt.event.KeyEvent evt, double valorMaximo, int limite1, int limite2,
 			JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
-		// int limite1 = 3;
-		// int limite2 = 4;
-		// double valorMaximo = 115.2;
-		// JTextField caja = caja2;
 		if (code == KeyEvent.VK_ENTER) {
 			caja.setEditable(true);
 			siguienteCaja.requestFocus();
 		} else if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') && !caja.getText().contains("."))
 				&& caja.getText().length() < (limite1) || (code == KeyEvent.VK_BACK_SPACE)) {
-			// caja.setEditable(true);
 			double valorCaja = Double.parseDouble(caja.getText() + evt.getKeyChar());
 			if (valorCaja <= valorMaximo) {
 				caja.setEditable(true);
@@ -906,7 +910,6 @@ public class GuiProduct extends JFrame implements Gui {
 			caja.setEditable(true);
 		} else if ((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')
 				&& (caja.getText().length() < (peCaja2 + limite2 + 1)) && caja.getText().contains(".")) {
-			// caja.setEditable(true);
 			double valorCaja = Double.parseDouble(caja.getText() + evt.getKeyChar());
 			if (valorCaja <= valorMaximo) {
 				caja.setEditable(true);

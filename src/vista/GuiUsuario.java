@@ -369,57 +369,55 @@ public class GuiUsuario extends JFrame implements Gui {
 		switch (operacion) {
 		case "Borrar":
 			if (caja1.getText().equals("")) {
-				JOptionPane.showMessageDialog(null,
-						"No se esta especificando el usuario a eliminar");
-			} else {
-				usuario = createUsuario(true);
-				comprobacion = usuarioDAO
-						.buscar("SELECT * FROM Usuarios WHERE username = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
-				} else {
-					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el usuario?",
-							"Alerta!", JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						if (usuarioDAO.borrarRegistro(usuario)) {
-							JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
-							limpiarCampos();
-						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario");
-						}
-					}
-				}
+				JOptionPane.showMessageDialog(null,"No se esta especificando el usuario a eliminar");
+				return;
+			}
+			usuario = createUsuario(true);
+			comprobacion = usuarioDAO.buscar("SELECT * FROM Usuarios WHERE username = '"+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a eliminar");
+				return;
+			}
+			int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el usuario?",
+					"Alerta!", JOptionPane.YES_NO_OPTION);
+			if (reply == JOptionPane.NO_OPTION) {
+				return;
+			}
+			if (usuarioDAO.borrarRegistro(usuario)) {
+				JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
+				limpiarCampos();
+			}else {
+				JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario");
 			}
 			break;
 		case "Modificar":
-			if (comprobarCampos()) {
-				usuario = createUsuario(false);
-
-				comprobacion = usuarioDAO
-						.buscar("SELECT * FROM Usuarios WHERE username = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
-				} else {
-					if (usuarioDAO.modificarRegistro(usuario)) {
-						JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
-					} else {
-						JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario");
-					}
-				}
+			if (!comprobarCampos()) {
+				return;
 			}
-
+			usuario = createUsuario(false);
+			comprobacion = usuarioDAO
+					.buscar("SELECT * FROM Usuarios WHERE username = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el usuario a modificar");
+				return;
+			}
+			if (usuarioDAO.modificarRegistro(usuario)) {
+				JOptionPane.showMessageDialog(null, "Usuario modificado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo modificar el usuario");
+			}
 			break;
 		case "Insertar":
-			if (comprobarCampos()) {
-				usuario = createUsuario(false);
-				if (usuarioDAO.insertarRegistro(usuario)) {
-					JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"No se pudo agregar el usuario, quiza ya hay uno con el mismo nombre");
-				}
+			if (!comprobarCampos()) {
+				return;
+			}
+			usuario = createUsuario(false);
+			if (usuarioDAO.insertarRegistro(usuario)) {
+				JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"No se pudo agregar el usuario, quiza ya hay uno con el mismo nombre");
 			}
 			break;
 		default:

@@ -785,55 +785,63 @@ public class GuiSupplier extends JFrame implements Gui {
 			if (caja1.getText().equals("")) {
 				JOptionPane.showMessageDialog(null,
 						"No se esta especificando el codigo del proveedor a eliminar");
-			} else {
-				supplier = createSupplier(true);
-				comprobacion = supplierDAO
-						.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a eliminar");
-				} else {
-					int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el proveedor?",
-							"Alerta!", JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						if (supplierDAO.borrarRegistro(supplier)) {
-							JOptionPane.showMessageDialog(null, "Proveedor eliminada exitosamente");
-							limpiarCampos();
-						} else {
-							JOptionPane.showMessageDialog(null, "No se pudo eliminar el proveedor");
-						}
-					}
-				}
+				return;
 			}
+			supplier = createSupplier(true);
+			comprobacion = supplierDAO
+					.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a eliminar");
+				return;
+			}
+			int reply = JOptionPane.showConfirmDialog(null, "Seguro que deseas eliminar el proveedor?",
+					"Alerta!", JOptionPane.YES_NO_OPTION);
+			if (reply == JOptionPane.NO_OPTION) {
+				return;
+			}
+			if (supplierDAO.borrarRegistro(supplier)) {
+				JOptionPane.showMessageDialog(null, "Proveedor eliminada exitosamente");
+				limpiarCampos();
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo eliminar el proveedor");
+			}
+			
+			
+			
 			break;
 		case "Modificar":
-			if (comprobarCampos()) {
-				supplier = createSupplier(false);
-
-				comprobacion = supplierDAO
-						.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
-								+ caja1.getText() + "'");
-				if (comprobacion.size() == 0) {
-					JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a modificar");
-				} else {
-					if (supplierDAO.modificarRegistro(supplier)) {
-						JOptionPane.showMessageDialog(null, "Proveedor modificado exitosamente");
-					} else {
-						JOptionPane.showMessageDialog(null, "No se pudo modificar el proveedor");
-					}
-				}
+			if (!comprobarCampos()) {
+				return;
 			}
+			supplier = createSupplier(false);
+
+			comprobacion = supplierDAO
+					.buscar("SELECT SupplierID AS ID, CompanyName AS Nombre, ContactName AS Contacto, ContactTitle AS Titulo, Address AS Direccion, City AS Ciudad, Region AS Region, PostalCode AS CP, Country AS Pais, Phone AS Telefono, Fax, HomePage AS Pagina FROM Suppliers WHERE SupplierID = '"
+							+ caja1.getText() + "'");
+			if (comprobacion.size() == 0) {
+				JOptionPane.showMessageDialog(null, "No se pudo encontrar el proveedor a modificar");
+				return;
+			}
+			if (supplierDAO.modificarRegistro(supplier)) {
+				JOptionPane.showMessageDialog(null, "Proveedor modificado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null, "No se pudo modificar el proveedor");
+			}
+
+			
 
 			break;
 		case "Insertar":
-			if (comprobarCampos()) {
-				supplier = createSupplier(false);
-				if (supplierDAO.insertarRegistro(supplier)) {
-					JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente");
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"No se pudo agregar el proveedor, quiza ya hay uno con el mismo ID");
-				}
+			if (!comprobarCampos()) {
+				return;
+			}
+			supplier = createSupplier(false);
+			if (supplierDAO.insertarRegistro(supplier)) {
+				JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"No se pudo agregar el proveedor, quiza ya hay uno con el mismo ID");
 			}
 			break;
 		default:
