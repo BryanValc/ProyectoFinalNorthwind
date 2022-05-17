@@ -42,6 +42,7 @@ public class GuiPrincipal extends JFrame {
 	private static final long serialVersionUID = 2L;
 	private JPanel contentPane;
 	private Logger logger = Logger.getLogger("Log de GuiPrincipal");
+	private JasperViewer jasperView = null;
 
 
 	/**
@@ -53,6 +54,8 @@ public class GuiPrincipal extends JFrame {
 		setResizable(false);
 		Conexion cn = new Conexion(2);
 		cn.getConexion();
+		
+		
 
 		setTitle("Menu principal");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -168,10 +171,13 @@ public class GuiPrincipal extends JFrame {
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(jasperView!=null){
+						jasperView.setVisible(false);
+					}
 					JasperReport jaspe=(JasperReport)JRLoader.loadObject(GuiPrincipal.class.getResource("/reportes/reporteInventario.jasper"));
 					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
-					JasperViewer view= new JasperViewer(print,false);
-					view.setVisible(true);
+					jasperView= new JasperViewer(print,false);
+					jasperView.setVisible(true);
 				} catch (Exception ex) {
 					logger.log(Level.SEVERE,"Error al generar el reporte",ex);
 				}
@@ -218,7 +224,7 @@ public class GuiPrincipal extends JFrame {
 				});
 			}
 		});
-		btnGraficaPastel.setToolTipText("Gestionar usuarios del sistema");
+		btnGraficaPastel.setToolTipText("Ver una gr\u00E1fica con el stock de cada proveedor");
 		btnGraficaPastel.setForeground(Color.WHITE);
 		btnGraficaPastel.setBackground(new Color(204, 51, 51));
 		btnGraficaPastel.setBounds(670, 349, 256, 256);
@@ -239,6 +245,27 @@ public class GuiPrincipal extends JFrame {
 		lblImprimirInventario.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblImprimirInventario.setBounds(808, 11, 256, 24);
 		contentPane.add(lblImprimirInventario);
+		
+		JButton btnRefrescar = new JButton("");
+		btnRefrescar.setForeground(Color.LIGHT_GRAY);
+		btnRefrescar.setToolTipText("Se cierran todas las ventanas menos la principal");
+		btnRefrescar.setIcon(new ImageIcon(GuiPrincipal.class.getResource("/recursosVisuales/refrescar.png")));
+		btnRefrescar.setBackground(new Color(255, 255, 255));
+		btnRefrescar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GuiCategory.getInstance().setVisible(false);
+				GuiGrafica.getInstance().setVisible(false);
+				GuiProduct.getInstance().setVisible(false);
+				GuiSupplier.getInstance().setVisible(false);
+				GuiUsuario.getInstance().setVisible(false);
+				ListadoProductos.getInstance().setVisible(false);
+				if(jasperView!=null){
+					jasperView.setVisible(false);
+				}
+			}
+		});
+		btnRefrescar.setBounds(10, 411, 120, 120);
+		contentPane.add(btnRefrescar);
 	}
 	
 	private Icon resizeIcon(ImageIcon icon,JButton boton) {
@@ -246,5 +273,4 @@ public class GuiPrincipal extends JFrame {
         Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
-	
 }
