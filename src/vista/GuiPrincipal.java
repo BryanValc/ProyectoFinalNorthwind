@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +20,14 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.lowagie.text.pdf.codec.Base64.InputStream;
+
 import conexionBD.Conexion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -162,8 +168,7 @@ public class GuiPrincipal extends JFrame {
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String ruta=System.getProperty("user.dir")+"/src/vista/reporteInventario.jasper";
-					JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+					JasperReport jaspe=(JasperReport)JRLoader.loadObject(GuiPrincipal.class.getResource("/reportes/reporteInventario.jasper"));
 					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
 					JasperViewer view= new JasperViewer(print,false);
 					view.setVisible(true);
