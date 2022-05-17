@@ -283,7 +283,7 @@ public class GuiSupplier extends JFrame implements Gui {
 
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt,24,caja10, caja11);
+				validacionTelefono(evt,24,caja10, caja11);
 			}
 
 			@Override
@@ -300,7 +300,7 @@ public class GuiSupplier extends JFrame implements Gui {
 
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt,24,caja11, caja12);
+				validacionTelefono(evt,24,caja11, caja12);
 			}
 
 			@Override
@@ -844,6 +844,20 @@ public class GuiSupplier extends JFrame implements Gui {
 			} catch (Exception e) {
 				caja.setEditable(false);
 			}
+		} else if (code == KeyEvent.VK_BACK_SPACE) {
+			caja.setEditable(true);
+		} else {
+			caja.setEditable(false);
+		}
+	}
+	
+	private void validacionTelefono(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
+		int code = evt.getKeyCode();
+		if (code == KeyEvent.VK_ENTER) {
+			caja.setEditable(true);
+			siguienteCaja.requestFocus();
+		} else if (((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == '('|| evt.getKeyChar() == ')'|| evt.getKeyChar() == '-') && caja.getText().length() < limite) {
+			caja.setEditable(true);
 		} else if (code == KeyEvent.VK_BACK_SPACE) {
 			caja.setEditable(true);
 		} else {

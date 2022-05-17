@@ -37,20 +37,6 @@ public class GuiPrincipal extends JFrame {
 	private JPanel contentPane;
 	private Logger logger = Logger.getLogger("Log de GuiPrincipal");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> { 
-			try {
-				GuiPrincipal frame = new GuiPrincipal();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	      });
-
-	}
 
 	/**
 	 * Create the frame.

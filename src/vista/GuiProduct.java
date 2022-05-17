@@ -42,13 +42,13 @@ public class GuiProduct extends JFrame implements Gui {
 	private JTextField caja5;
 	private JTextField caja6;
 	private JTextField caja7;
-	private JTextField caja8;
+	JComboBox<String> comboDescontinuado;
 	private JTable table;
 	private ArrayList<Supplier> proveedores;
 	private ArrayList<Category> categorias;
 	private ResultSetTableModel modeloDatos = null;
-	JComboBox<String> combo1;
-	JComboBox<String> combo2;
+	JComboBox<String> comboProveedores;
+	JComboBox<String> comboCategorias;
 	JComboBox<String> comboFiltro;
 	JComboBox<String> comboOperacion;
 	JButton btnOperacion;
@@ -58,8 +58,8 @@ public class GuiProduct extends JFrame implements Gui {
 	private Logger logger = Logger.getLogger("Log de GuiUsuario");
 
 	public void llenarCombos() {
-		combo1.removeAllItems();
-		combo2.removeAllItems();
+		comboProveedores.removeAllItems();
+		comboCategorias.removeAllItems();
 
 		proveedores = new ArrayList<>();
 		SupplierDAO supplierDAO = new SupplierDAO();
@@ -72,7 +72,7 @@ public class GuiProduct extends JFrame implements Gui {
 			proveedoresStr.add(/*supplier.getSupplierID() + "-" +*/ supplier.getCompanyName());
 		}
 
-		combo1.setModel(new DefaultComboBoxModel(proveedoresStr.toArray()));
+		comboProveedores.setModel(new DefaultComboBoxModel(proveedoresStr.toArray()));
 
 		categorias = new ArrayList<>();
 		CategoryDAO categoryDAO = new CategoryDAO();
@@ -85,7 +85,7 @@ public class GuiProduct extends JFrame implements Gui {
 			categoriasStr.add(/*category.getCategoryID() + "-" +*/ category.getCategoryName());
 		}
 
-		combo2.setModel(new DefaultComboBoxModel(categoriasStr.toArray()));
+		comboCategorias.setModel(new DefaultComboBoxModel(categoriasStr.toArray()));
 
 	}
 
@@ -233,16 +233,16 @@ public class GuiProduct extends JFrame implements Gui {
 		contentPane.add(caja2);
 		caja2.setColumns(10);
 
-		combo1 = new JComboBox<>();
-		combo1.setBounds(97, 72, 205, 22);
-		contentPane.add(combo1);
+		comboProveedores = new JComboBox<>();
+		comboProveedores.setBounds(97, 72, 205, 22);
+		contentPane.add(comboProveedores);
 
-		combo2 = new JComboBox<>();
-		combo2.setBounds(97, 97, 205, 22);
-		contentPane.add(combo2);
+		comboCategorias = new JComboBox<>();
+		comboCategorias.setBounds(97, 97, 205, 22);
+		contentPane.add(comboCategorias);
 
-		AutoCompleteDecorator.decorate(combo1);
-		AutoCompleteDecorator.decorate(combo2);
+		AutoCompleteDecorator.decorate(comboProveedores);
+		AutoCompleteDecorator.decorate(comboCategorias);
 		llenarCombos();
 
 		caja3 = new JTextField();
@@ -318,7 +318,7 @@ public class GuiProduct extends JFrame implements Gui {
 
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionInt(evt, 5, 32767, caja7, caja8);
+				validacionInt(evt, 5, 32767, caja7, caja1);
 			}
 
 			@Override
@@ -330,22 +330,10 @@ public class GuiProduct extends JFrame implements Gui {
 		caja7.setBounds(942, 69, 86, 20);
 		contentPane.add(caja7);
 
-		caja8 = new JTextField();
-		caja8.addKeyListener(new java.awt.event.KeyAdapter() {
-			
-			@Override
-			public void keyPressed(java.awt.event.KeyEvent evt) {
-				validacionString(evt, 5, caja8, caja1);
-			}
-
-			@Override
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				cajaKeyReleased(evt);
-			}
-		});
-		caja8.setColumns(10);
-		caja8.setBounds(942, 94, 44, 20);
-		contentPane.add(caja8);
+		comboDescontinuado = new JComboBox();
+		comboDescontinuado.setModel(new DefaultComboBoxModel(new String[] {" ","S\u00ED", "No"}));
+		comboDescontinuado.setBounds(942, 94, 54, 20);
+		contentPane.add(comboDescontinuado);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 183, 1038, 284);
@@ -420,7 +408,7 @@ public class GuiProduct extends JFrame implements Gui {
 		int indiceCombo1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 		for (Supplier supplier : proveedores) {
 			if(supplier.getSupplierID()==indiceCombo1) {
-				combo1.setSelectedItem(supplier.getCompanyName());
+				comboProveedores.setSelectedItem(supplier.getCompanyName());
 			}
 		}
 		
@@ -428,7 +416,7 @@ public class GuiProduct extends JFrame implements Gui {
 		int indiceCombo2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 3).toString());
 		for (Category category : categorias) {
 			if(category.getCategoryID()==indiceCombo2) {
-				combo2.setSelectedItem(category.getCategoryName());
+				comboCategorias.setSelectedItem(category.getCategoryName());
 			}
 		}
 
@@ -437,7 +425,15 @@ public class GuiProduct extends JFrame implements Gui {
 		caja5.setText(table.getValueAt(table.getSelectedRow(), 6).toString());
 		caja6.setText(table.getValueAt(table.getSelectedRow(), 7).toString());
 		caja7.setText(table.getValueAt(table.getSelectedRow(), 8).toString());
-		caja8.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
+		
+		String descontinuado = table.getValueAt(table.getSelectedRow(), 9).toString();
+		if(descontinuado.equals("true")) {
+			comboDescontinuado.setSelectedItem("S\u00ED");
+		}else {
+			comboDescontinuado.setSelectedItem("No");
+		}
+		
+		//comboDescontinuado.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
 
 	}
 
@@ -453,14 +449,14 @@ public class GuiProduct extends JFrame implements Gui {
 			caja2.requestFocus();
 			return false;
 		}
-		if (combo1.getSelectedItem().toString().equals("")) {
+		if (comboProveedores.getSelectedItem().toString().equals("")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el ID del proveedor");
-			combo1.requestFocus();
+			comboProveedores.requestFocus();
 			return false;
 		}
-		if (combo2.getSelectedItem().toString().equals("")) {
+		if (comboCategorias.getSelectedItem().toString().equals("")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el ID de la categoria");
-			combo2.requestFocus();
+			comboCategorias.requestFocus();
 			return false;
 		}
 		if (caja3.getText().equals("")) {
@@ -488,9 +484,9 @@ public class GuiProduct extends JFrame implements Gui {
 			caja7.requestFocus();
 			return false;
 		}
-		if (caja8.getText().equals("")) {
+		if (comboDescontinuado.getSelectedItem().toString().equals(" ")) {
 			JOptionPane.showMessageDialog(null, "No has introducido el estado del producto");
-			caja8.requestFocus();
+			comboDescontinuado.requestFocus();
 			return false;
 		}
 		return true;
@@ -545,24 +541,24 @@ public class GuiProduct extends JFrame implements Gui {
 				sql += ("ProductName " + op1 + " '" + op3 + caja2.getText().replace("'", "'+CHAR(39)+'")
 						+ op3 + "'");
 			}
-			if (!combo1.getSelectedItem().toString().equals(" ")) {
+			if (!comboProveedores.getSelectedItem().toString().equals(" ")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
 				primero = false;
-				int supplierID = proveedores.get(combo1.getSelectedIndex()-1).getSupplierID();
+				int supplierID = proveedores.get(comboProveedores.getSelectedIndex()-1).getSupplierID();
 				sql += ("SupplierID " + op1 + " '" + op3 + supplierID + op3 + "'");
 			}
-			if (!combo2.getSelectedItem().toString().equals(" ")) {
+			if (!comboCategorias.getSelectedItem().toString().equals(" ")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
 				primero = false;
-				int categoryID = categorias.get(combo2.getSelectedIndex()-1).getCategoryID();
+				int categoryID = categorias.get(comboCategorias.getSelectedIndex()-1).getCategoryID();
 				sql += ("CategoryID " + op1 + " '" + op3 + categoryID + op3 + "'");
 			}
 			if (!caja3.getText().equals("")) {
@@ -611,13 +607,19 @@ public class GuiProduct extends JFrame implements Gui {
 				primero = false;
 				sql += ("ReorderLevel " + op1 + " '" + op3 + caja7.getText() + op3 + "'");
 			}
-			if (!caja8.getText().equals("")) {
+			if (!comboDescontinuado.getSelectedItem().toString().equals(" ")) {
 				if (!primero) {
 					sql += op2;
 				} else {
 					sql += "WHERE ";
 				}
-				sql += ("Discontinued " + op1 + " '" + op3 + caja8.getText() + op3 + "'");
+				String descontinuado="";
+				if(comboDescontinuado.getSelectedItem().toString().equals("S\u00ED")) {
+					descontinuado = "true";
+				}else if (comboDescontinuado.getSelectedItem().toString().equals("No")) {
+					descontinuado = "false";
+				}
+				sql += ("Discontinued " + op1 + " '" + op3 + descontinuado + op3 + "'");
 			}
 
 		}
@@ -633,9 +635,9 @@ public class GuiProduct extends JFrame implements Gui {
 		caja5.setText("");
 		caja6.setText("");
 		caja7.setText("");
-		caja8.setText("");
-		combo1.setSelectedIndex(0);
-		combo2.setSelectedIndex(0);
+		comboDescontinuado.setSelectedIndex(0);
+		comboProveedores.setSelectedIndex(0);
+		comboCategorias.setSelectedIndex(0);
 
 		if (!btnOperacion.getText().contains("Insertar")) {
 			caja1.setEditable(true);
@@ -646,7 +648,6 @@ public class GuiProduct extends JFrame implements Gui {
 		caja5.setEditable(true);
 		caja6.setEditable(true);
 		caja7.setEditable(true);
-		caja8.setEditable(true);
 
 		String sql = consulta();
 		actualizarTabla(sql);
@@ -655,8 +656,17 @@ public class GuiProduct extends JFrame implements Gui {
 
 	public Product createProduct(boolean isForDeletion) {
 		Product product = null;
-		int supplierID = proveedores.get(combo1.getSelectedIndex()-1).getSupplierID();
-		int categoryID = categorias.get(combo2.getSelectedIndex()-1).getCategoryID();
+		int supplierID = proveedores.get(comboProveedores.getSelectedIndex()-1).getSupplierID();
+		int categoryID = categorias.get(comboCategorias.getSelectedIndex()-1).getCategoryID();
+		
+		boolean descontinuado=true;
+		if(comboDescontinuado.getSelectedItem().toString().equals("S\u00ED")) {
+			descontinuado = true;
+		}else if (comboDescontinuado.getSelectedItem().toString().equals("No")) {
+			descontinuado = false;
+		}
+		 
+		
 		if (isForDeletion) {
 			product = new Product(Integer.parseInt(caja1.getText()), "", 0, 0, "", 0.0, 0, 0, 0, false);
 		} else if (btnOperacion.getText().equals("Insertar")) {
@@ -670,7 +680,7 @@ public class GuiProduct extends JFrame implements Gui {
 					Integer.parseInt(caja5.getText()),
 					Integer.parseInt(caja6.getText()),
 					Integer.parseInt(caja7.getText()),
-					Boolean.parseBoolean(caja8.getText()));
+					descontinuado);
 		} else {
 			product = new Product(
 					Integer.parseInt(caja1.getText()),
@@ -682,7 +692,7 @@ public class GuiProduct extends JFrame implements Gui {
 					Integer.parseInt(caja5.getText()),
 					Integer.parseInt(caja6.getText()),
 					Integer.parseInt(caja7.getText()),
-					Boolean.parseBoolean(caja8.getText()));
+					descontinuado);
 		}
 		return product;
 	}
@@ -818,7 +828,7 @@ public class GuiProduct extends JFrame implements Gui {
 	private void validacionString(java.awt.event.KeyEvent evt, int limite, JTextField caja, JTextField siguienteCaja) {
 		int code = evt.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
-			if(caja==caja8&&btnOperacion.getText().equals("Insertar")) {
+			if(caja==caja7&&btnOperacion.getText().equals("Insertar")) {
 				caja.setEditable(true);
 				caja2.requestFocus();
 			}else {

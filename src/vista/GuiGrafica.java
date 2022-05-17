@@ -50,7 +50,7 @@ public class GuiGrafica extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 1050, 1050);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(51, 204, 153));
+		contentPane.setBackground(new Color(204, 51, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

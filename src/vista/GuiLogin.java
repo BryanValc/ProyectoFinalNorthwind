@@ -117,7 +117,7 @@ public class GuiLogin extends JFrame {
 		JButton btnNewButton = new JButton("Ingresar");
 		btnNewButton.addActionListener(this::jButtonActionPerformed);
 		btnNewButton.setToolTipText("Ingresar a la cuenta");
-		btnNewButton.setBackground(new Color(102, 51, 204));
+		btnNewButton.setBackground(new Color(51, 102, 0));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnNewButton.setBounds(34, 460, 208, 32);
@@ -125,23 +125,11 @@ public class GuiLogin extends JFrame {
 	}
 	
 	private void jButtonActionPerformed(java.awt.event.ActionEvent evt) { 
-		/*
-		 * public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				GuiLogin frame = new GuiLogin();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-		 * */
         if (verificar()) {
 			SwingUtilities.invokeLater(() -> {new GuiPrincipal().setVisible(true);});
 			setVisible(false);
 		}else {
-			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+			JOptionPane.showMessageDialog(null, "Usuario o contrase\u00F1a incorrectos");
 		}
     } 
 	

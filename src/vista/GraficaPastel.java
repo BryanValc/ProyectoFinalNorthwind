@@ -45,11 +45,8 @@ public class GraficaPastel {
 	        int x=1000;
 	        int y=1000;
 	        icono = new ImageIcon(chart.createBufferedImage(x, y));
-			//File f = new File("Grafica.png");
-			//ChartUtilities.saveChartAsPNG(f, chart, x, y);
-		} catch (/*IO8*/Exception ex) {
-            //Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
-            //return false;
+		} catch (Exception ex) {
+            Logger.getLogger(GraficaPastel.class.getName()).log(Level.SEVERE, null, ex);
         }
 		return icono;
 	}

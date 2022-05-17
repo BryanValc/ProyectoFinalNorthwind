@@ -25,21 +25,6 @@ public class ListadoProductos extends JFrame {
 	private ResultSetTableModel modeloDatos = null;
 	JScrollPane scrollPane;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ListadoProductos frame = new ListadoProductos();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
