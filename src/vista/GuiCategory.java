@@ -286,7 +286,7 @@ public class GuiCategory extends JFrame implements Gui{
 
 	public void actualizarTabla(String sql) {
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=vistaTablas;"
+				+ "user=tablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
 		new Thread(() -> {
@@ -300,7 +300,7 @@ public class GuiCategory extends JFrame implements Gui{
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			logger.log(Level.SEVERE,"Error al interrumpir la ejecución principal",e);
+			logger.log(Level.SEVERE,"Error al interrumpir la ejecuciï¿½n principal",e);
 			Thread.currentThread().interrupt();
 		}
 

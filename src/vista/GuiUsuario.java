@@ -189,7 +189,7 @@ public class GuiUsuario extends JFrame implements Gui {
 	@Override
 	public void actualizarTabla(String sql) {
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=vistaTablas;"
+				+ "user=tablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
 		new Thread(() -> {

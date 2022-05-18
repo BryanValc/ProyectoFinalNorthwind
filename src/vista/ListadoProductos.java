@@ -83,7 +83,7 @@ public class ListadoProductos extends JFrame {
 		String sql = "SELECT * FROM \"Products by Category\";";
 		
 		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=vistaTablas;"
+				+ "user=tablas;"
 				+ "password=c1s1g7o;"
 				+ "encrypt=true;trustServerCertificate=true;";
 		new Thread(new Runnable() {

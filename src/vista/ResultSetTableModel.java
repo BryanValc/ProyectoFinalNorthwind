@@ -28,7 +28,7 @@ public class ResultSetTableModel extends AbstractTableModel {
       Class.forName( controlador );
 
       // conectarse a la base de datos
-      conexion = DriverManager.getConnection( url,"vistaTablas","c1s1g7o" );
+      conexion = DriverManager.getConnection( url,"tablas","c1s1g7o" );
 
       // crear objeto Statement para consultar la base de datos
       instruccion = conexion.createStatement(
