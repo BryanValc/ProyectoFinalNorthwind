@@ -432,8 +432,6 @@ public class GuiProduct extends JFrame implements Gui {
 		}else {
 			comboDescontinuado.setSelectedItem("No");
 		}
-		
-		//comboDescontinuado.setText(table.getValueAt(table.getSelectedRow(), 9).toString());
 
 	}
 

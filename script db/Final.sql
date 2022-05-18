@@ -429,4 +429,65 @@ GO
 USE [Northwind]
 GO
 
+USE [master]
+GO
 
+/****** Object:  Login [asd]    Script Date: 5/18/2022 12:52:15 PM ******/
+CREATE LOGIN [asd] WITH PASSWORD = 'c1s1g7o' , DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=ON, CHECK_POLICY=ON
+GO
+
+ALTER SERVER ROLE [sysadmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [securityadmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [serveradmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [setupadmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [processadmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [diskadmin] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [dbcreator] ADD MEMBER [asd]
+GO
+
+ALTER SERVER ROLE [bulkadmin] ADD MEMBER [asd]
+GO
+
+
+USE [master]
+GO
+
+/****** Object:  Login [tablas]    Script Date: 5/18/2022 12:52:58 PM ******/
+CREATE LOGIN [tablas] WITH PASSWORD = 'c1s1g7o' , DEFAULT_DATABASE=[master], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=ON, CHECK_POLICY=ON
+GO
+
+ALTER SERVER ROLE [sysadmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [securityadmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [serveradmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [setupadmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [processadmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [diskadmin] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [dbcreator] ADD MEMBER [tablas]
+GO
+
+ALTER SERVER ROLE [bulkadmin] ADD MEMBER [tablas]
+GO
