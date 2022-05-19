@@ -174,7 +174,7 @@ public class GuiPrincipal extends JFrame {
 					if(jasperView!=null){
 						jasperView.setVisible(false);
 					}
-					JasperReport jaspe=(JasperReport)JRLoader.loadObject(GuiPrincipal.class.getResource("/reportes/reporteInv.jasper"));
+					JasperReport jaspe=(JasperReport)JRLoader.loadObject(GuiPrincipal.class.getResource("/reportes/reporteInventario.jasper"));
 					JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
 					jasperView= new JasperViewer(print,false);
 					jasperView.setVisible(true);
