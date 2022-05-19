@@ -82,10 +82,8 @@ public class ListadoProductos extends JFrame {
 	public void actualizarTabla() {
 		String sql = "SELECT * FROM \"Products by Category\";";
 		
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=tablas;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
+		String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

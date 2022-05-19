@@ -78,6 +78,9 @@ CREATE TABLE [dbo].[Usuarios](
 ) ON [PRIMARY]
 GO
 
+ALTER TABLE Usuarios
+ADD CONSTRAINT PK_Usuario PRIMARY KEY (username);
+
 INSERT "Usuarios" VALUES ('admin', 'admin');
 GO
 

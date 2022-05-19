@@ -29,18 +29,15 @@ public class Conexion {
 
     private Conexion() {
         try {
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-                    + "user=asd;"
-                    + "password=c1s1g7o;"
-                    + "encrypt=true;trustServerCertificate=true;";
-            
+            String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+
             conexionBD = DriverManager.getConnection(url);
-            
+
             conexionBD.setAutoCommit(false);
             sp = conexionBD.setSavepoint("Inicio");
-           
+
         } catch (SQLException e) {
-        	logger.log(Level.SEVERE,"Error de Conexion",e);
+            logger.log(Level.SEVERE, "Error de Conexion", e);
         }
     }
 
@@ -59,7 +56,7 @@ public class Conexion {
             pstm.close();
             conexionBD.close();
         } catch (SQLException e) {
-        	logger.log(Level.SEVERE,"Error al cerrar la conexion",e);
+            logger.log(Level.SEVERE, "Error al cerrar la conexion", e);
         }
 
     }
@@ -71,7 +68,7 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
+            conexionBD.rollback(sp);
             ex.printStackTrace();
         }
         return false;
@@ -83,7 +80,7 @@ public class Conexion {
             pstm = conexionBD.prepareStatement(consulta);
             return pstm.executeQuery();
         } catch (Exception e) {
-        	logger.log(Level.SEVERE,"Error al ejecutar la consulta",e);
+            logger.log(Level.SEVERE, "Error al ejecutar la consulta", e);
         }
         return null;
     }
@@ -99,20 +96,21 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al actualizar la categoria",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al actualizar la categoria", ex);
         }
         return false;
 
     }
 
-    public static boolean actualizarRegistro(Product producto) throws SQLException{
+    public static boolean actualizarRegistro(Product producto) throws SQLException {
         try {
-            pstm = conexionBD.prepareStatement("UPDATE Products SET productName = ?, supplierID = ?, categoryID = ?, quantityPerUnit = ?, unitPrice = ?, "
-                    + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = ?");
+            pstm = conexionBD.prepareStatement(
+                    "UPDATE Products SET productName = ?, supplierID = ?, categoryID = ?, quantityPerUnit = ?, unitPrice = ?, "
+                            + "unitsInStock = ?, unitsOnOrder = ?, reorderLevel = ?, discontinued = ? WHERE productID = ?");
             pstm.setString(1, producto.getProductName());
-            pstm.setInt(2,producto.getSupplierID());
-            pstm.setInt(3,producto.getCategoryID());
+            pstm.setInt(2, producto.getSupplierID());
+            pstm.setInt(3, producto.getCategoryID());
             pstm.setString(4, producto.getQuantityPerUnit());
             pstm.setDouble(5, producto.getUnitPrice());
             pstm.setInt(6, producto.getUnitsInStock());
@@ -124,8 +122,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al modificar el producto",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al modificar el producto", ex);
         }
         return false;
 
@@ -133,8 +131,9 @@ public class Conexion {
 
     public static boolean actualizarRegistro(Supplier proveedor) throws SQLException {
         try {
-            pstm = conexionBD.prepareStatement("UPDATE Suppliers SET companyName = ?, contactName = ?, contactTitle = ?, "
-                    + "address = ?, city = ?, region = ?, postalCode = ?, country = ?, phone = ?, fax = ?, homePage = ? WHERE supplierID = ?");
+            pstm = conexionBD
+                    .prepareStatement("UPDATE Suppliers SET companyName = ?, contactName = ?, contactTitle = ?, "
+                            + "address = ?, city = ?, region = ?, postalCode = ?, country = ?, phone = ?, fax = ?, homePage = ? WHERE supplierID = ?");
             pstm.setString(1, proveedor.getCompanyName());
             pstm.setString(2, proveedor.getContactName());
             pstm.setString(3, proveedor.getContactTitle());
@@ -151,13 +150,13 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al modificar el proveedor",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al modificar el proveedor", ex);
         }
         return false;
     }
-    
-    public static boolean actualizarRegistro(Usuario usuario) throws SQLException{
+
+    public static boolean actualizarRegistro(Usuario usuario) throws SQLException {
         try {
             pstm = conexionBD.prepareStatement("UPDATE Usuarios SET password = ? WHERE username = ?");
             pstm.setString(1, usuario.getPassword());
@@ -166,8 +165,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al modificar el usuario",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al modificar el usuario", ex);
         }
         return false;
     }
@@ -181,8 +180,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al insertar el usuario",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al insertar el usuario", ex);
         }
         return false;
     }
@@ -196,8 +195,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al insertar la categoria",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al insertar la categoria", ex);
         }
         return false;
     }
@@ -219,8 +218,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al insertar el producto",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al insertar el producto", ex);
         }
         return false;
     }
@@ -244,8 +243,8 @@ public class Conexion {
             conexionBD.commit();
             return true;
         } catch (Exception ex) {
-        	conexionBD.rollback(sp);
-        	logger.log(Level.SEVERE,"Error al insertar el proveedor",ex);
+            conexionBD.rollback(sp);
+            logger.log(Level.SEVERE, "Error al insertar el proveedor", ex);
         }
         return false;
     }

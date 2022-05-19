@@ -131,13 +131,6 @@ public class GuiCategory extends JFrame implements Gui{
 		btnOperacion.setBounds(298, 65, 89, 23);
 		contentPane.add(btnOperacion);
 
-		JButton btnAplicar = new JButton("Aplicar");
-		btnAplicar.setForeground(new Color(255, 255, 255));
-		btnAplicar.setBackground(new Color(0, 102, 102));
-		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
-		btnAplicar.setBounds(298, 93, 89, 23);
-		contentPane.add(btnAplicar);
-
 		caja1 = new JTextField();
 		caja1.addKeyListener(new java.awt.event.KeyAdapter() {
 			@Override
@@ -285,10 +278,8 @@ public class GuiCategory extends JFrame implements Gui{
 	}
 
 	public void actualizarTabla(String sql) {
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=tablas;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
+		String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            
 		new Thread(() -> {
 			try {
 				modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);

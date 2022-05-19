@@ -142,13 +142,6 @@ public class GuiProduct extends JFrame implements Gui {
 		btnOperacion.setBounds(871, 135, 89, 23);
 		contentPane.add(btnOperacion);
 
-		JButton btnAplicar = new JButton("Aplicar");
-		btnAplicar.setForeground(new Color(255, 255, 255));
-		btnAplicar.setBackground(new Color(204, 153, 0));
-		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
-		btnAplicar.setBounds(124, 149, 89, 23);
-		contentPane.add(btnAplicar);
-
 		JButton btnLimpiar = new JButton("");
 		btnLimpiar.setIcon(new ImageIcon(GuiProduct.class.getResource("/recursosVisuales/escoba.png")));
 		btnLimpiar.addActionListener(e -> limpiarCampos());
@@ -379,10 +372,8 @@ public class GuiProduct extends JFrame implements Gui {
 
 	@Override
 	public void actualizarTabla(String sql) {
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=tablas;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
+		String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            
 		new Thread(() -> {
 			try {
 				modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);

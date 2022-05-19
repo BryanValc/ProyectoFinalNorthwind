@@ -39,7 +39,6 @@ public class GuiUsuario extends JFrame implements Gui {
 	private JComboBox<String> comboOperacion;
 	private JButton btnOperacion;
 	private JButton btnLimpiar;
-	private JButton btnAplicar;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private ResultSetTableModel modeloDatos = null;
@@ -149,16 +148,6 @@ public class GuiUsuario extends JFrame implements Gui {
 		btnLimpiar.setBounds(10, 61, 30, 30);
 		contentPane.add(btnLimpiar);
 
-		btnAplicar = new JButton("Aplicar");
-		btnAplicar.addActionListener(e ->{
-
-		});
-		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
-		btnAplicar.setBackground(new Color(51, 102, 0));
-		btnAplicar.setForeground(new Color(255, 255, 255));
-		btnAplicar.setBounds(179, 73, 89, 23);
-		contentPane.add(btnAplicar);
-
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 103, 371, 147);
 		contentPane.add(scrollPane);
@@ -188,10 +177,8 @@ public class GuiUsuario extends JFrame implements Gui {
 
 	@Override
 	public void actualizarTabla(String sql) {
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=tablas;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
+		String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            
 		new Thread(() -> {
 				try {
 					modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);

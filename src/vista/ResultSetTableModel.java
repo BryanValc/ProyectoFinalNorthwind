@@ -22,43 +22,42 @@ public class ResultSetTableModel extends AbstractTableModel {
 
    // inicializar conjuntoResultados y obtener su objeto de meta datos;
    // determinar el n�mero de filas
-   public ResultSetTableModel( String controlador, String url, String consulta ) throws SQLException, ClassNotFoundException
-   {
+   public ResultSetTableModel(String controlador, String url, String consulta)
+         throws SQLException, ClassNotFoundException {
       // cargar clase de controlador de base de datos
-      Class.forName( controlador );
+      Class.forName(controlador);
 
       // conectarse a la base de datos
-      conexion = DriverManager.getConnection( url,"tablas","c1s1g7o" );
+      conexion = DriverManager.getConnection(url, "asd", "c1s1g7o$");
 
       // crear objeto Statement para consultar la base de datos
       instruccion = conexion.createStatement(
-         ResultSet.TYPE_SCROLL_INSENSITIVE,
-         ResultSet.CONCUR_READ_ONLY );
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY);
 
       // actualizar estado de conexi�n a la base de datos
       conectadoALaBaseDeDatos = true;
 
       // establecer consulta y ejecutarla
-      establecerConsulta( consulta );
+      establecerConsulta(consulta);
    }
 
    // obtener la clase que representa al tipo de columna
-   public Class getColumnClass( int columna ) throws IllegalStateException
-   {
+   public Class getColumnClass(int columna) throws IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       // determinar la clase de Java de columna
       try {
-         String nombreClase = metaDatos.getColumnClassName( columna + 1 );
+         String nombreClase = metaDatos.getColumnClassName(columna + 1);
 
          // devolver objeto Class que representa a nombreClase
-         return Class.forName( nombreClase );
+         return Class.forName(nombreClase);
       }
 
       // atrapar excepciones SQLException y ClassNotFoundException
-      catch ( Exception excepcion ) {
+      catch (Exception excepcion) {
          excepcion.printStackTrace();
       }
 
@@ -67,11 +66,10 @@ public class ResultSetTableModel extends AbstractTableModel {
    }
 
    // obtener el n�mero de columnas en el objeto ResultSet
-   public int getColumnCount() throws IllegalStateException
-   {
+   public int getColumnCount() throws IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       // determinar el n�mero de columnas
       try {
@@ -79,7 +77,7 @@ public class ResultSetTableModel extends AbstractTableModel {
       }
 
       // atrapar excepciones SQLException e imprimir mensaje de error
-      catch ( SQLException excepcionSQL ) {
+      catch (SQLException excepcionSQL) {
          excepcionSQL.printStackTrace();
       }
 
@@ -88,19 +86,18 @@ public class ResultSetTableModel extends AbstractTableModel {
    }
 
    // obtener el nombre de una columna espec�fica en el objeto ResultSet
-   public String getColumnName( int columna ) throws IllegalStateException
-   {
+   public String getColumnName(int columna) throws IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       // determinar el nombre de la columna
       try {
-         return metaDatos.getColumnName( columna + 1 );
+         return metaDatos.getColumnName(columna + 1);
       }
 
       // atrapar excepciones SQLException e imprimir mensaje de error
-      catch ( SQLException excepcionSQL ) {
+      catch (SQLException excepcionSQL) {
          excepcionSQL.printStackTrace();
       }
 
@@ -109,32 +106,30 @@ public class ResultSetTableModel extends AbstractTableModel {
    }
 
    // devolver el n�mero de filas en el objeto ResultSet
-   public int getRowCount() throws IllegalStateException
-   {
+   public int getRowCount() throws IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       return numeroDeFilas;
    }
 
    // obtener el valor en una fila y columna espec�ficas
-   public Object getValueAt( int fila, int columna )
-      throws IllegalStateException
-   {
+   public Object getValueAt(int fila, int columna)
+         throws IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       // obtener un valor en una fila y columna espec�ficas del objeto ResultSet
       try {
-         conjuntoResultados.absolute( fila + 1 );
+         conjuntoResultados.absolute(fila + 1);
 
-         return conjuntoResultados.getObject( columna + 1 );
+         return conjuntoResultados.getObject(columna + 1);
       }
 
       // atrapar excepciones SQLExceptions e imprimir mensaje de error
-      catch ( SQLException excepcionSQL ) {
+      catch (SQLException excepcionSQL) {
          excepcionSQL.printStackTrace();
       }
 
@@ -143,30 +138,28 @@ public class ResultSetTableModel extends AbstractTableModel {
    }
 
    // establecer nueva cadena de consulta para la base de datos
-   public void establecerConsulta( String consulta )
-      throws SQLException, IllegalStateException
-   {
+   public void establecerConsulta(String consulta)
+         throws SQLException, IllegalStateException {
       // asegurar que la conexi�n a la base de datos est� disponible
-      if ( !conectadoALaBaseDeDatos )
-         throw new IllegalStateException( "No hay conexion a la base de datos" );
+      if (!conectadoALaBaseDeDatos)
+         throw new IllegalStateException("No hay conexion a la base de datos");
 
       // especificar consulta y ejecutarla
-      conjuntoResultados = instruccion.executeQuery( consulta );
+      conjuntoResultados = instruccion.executeQuery(consulta);
 
       // obtener meta datos para el objeto ResultSet
       metaDatos = conjuntoResultados.getMetaData();
 
       // determinar el n�mero de filas en el objeto ResultSet
-      conjuntoResultados.last();                   // mover a la �ltima fila
-      numeroDeFilas = conjuntoResultados.getRow();  // obtener n�mero de fila
+      conjuntoResultados.last(); // mover a la �ltima fila
+      numeroDeFilas = conjuntoResultados.getRow(); // obtener n�mero de fila
 
       // notificar al objeto JTable que el modelo ha cambiado
       fireTableStructureChanged();
    }
 
    // cerrar objetos Statement y Connection
-   public void desconectarDeLaBaseDeDatos()
-   {
+   public void desconectarDeLaBaseDeDatos() {
       // cerrar objetos Statement y Connection
       try {
          instruccion.close();
@@ -174,7 +167,7 @@ public class ResultSetTableModel extends AbstractTableModel {
       }
 
       // atrapar excepciones SQLException e imprimir mensaje de error
-      catch ( SQLException excepcionSQL ) {
+      catch (SQLException excepcionSQL) {
          excepcionSQL.printStackTrace();
       }
 
@@ -184,22 +177,19 @@ public class ResultSetTableModel extends AbstractTableModel {
       }
    }
 
-}  // fin de la clase ResultSetTableModel
-
-
-
+} // fin de la clase ResultSetTableModel
 
 /**************************************************************************
- * (C) Copyright 1992-2003 by Deitel & Associates, Inc. and               *
- * Prentice Hall. All Rights Reserved.                                    *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
+ * (C) Copyright 1992-2003 by Deitel & Associates, Inc. and *
+ * Prentice Hall. All Rights Reserved. *
+ * *
+ * DISCLAIMER: The authors and publisher of this book have used their *
+ * best efforts in preparing the book. These efforts include the *
+ * development, research, and testing of the theories and programs *
+ * to determine their effectiveness. The authors and publisher make *
+ * no warranty of any kind, expressed or implied, with regard to these *
  * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
+ * and publisher shall not be liable in any event for incidental or *
+ * consequential damages in connection with, or arising out of, the *
+ * furnishing, performance, or use of these programs. *
  *************************************************************************/

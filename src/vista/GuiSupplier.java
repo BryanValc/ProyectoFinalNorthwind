@@ -358,13 +358,6 @@ public class GuiSupplier extends JFrame implements Gui {
 
 		contentPane.add(btnLimpiar);
 
-		btnAplicar = new JButton("Aplicar");
-		btnAplicar.setToolTipText("Aplicar los cambios realizados a la base de datos");
-		btnAplicar.setForeground(new Color(255, 255, 255));
-		btnAplicar.setBackground(new Color(0, 51, 153));
-		btnAplicar.setBounds(981, 212, 89, 23);
-		contentPane.add(btnAplicar);
-
 		btnOperacion = new JButton("Insertar");
 		btnOperacion.setToolTipText("Realizar la operaci\u00F3n indicada en este bot\u00F3n");
 		btnOperacion.addActionListener(evt -> 
@@ -418,10 +411,8 @@ public class GuiSupplier extends JFrame implements Gui {
 
 	@Override
 	public void actualizarTabla(String sql) {
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Northwind;"
-				+ "user=tablas;"
-				+ "password=c1s1g7o;"
-				+ "encrypt=true;trustServerCertificate=true;";
+		String url = "jdbc:sqlserver://dbaas-prueba.database.windows.net:1433;database=Northwind;user=asd@dbaas-prueba;password=c1s1g7o$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            
 		new Thread(() -> {
 			try {
 				modeloDatos = new ResultSetTableModel("com.microsoft.sqlserver.jdbc.SQLServerDriver", url, sql);
