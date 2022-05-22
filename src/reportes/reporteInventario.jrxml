@@ -16,7 +16,7 @@ FROM "Products" p
 WHERE 
 	 p."UnitsInStock" > 1 
 	 OR p."UnitsOnOrder" > 1 
-ORDER BY p."ProductName" DESC]]>
+ORDER BY p."ProductName" ASC]]>
 	</queryString>
 	<field name="ProductName" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ProductName"/>
@@ -54,7 +54,7 @@ ORDER BY p."ProductName" DESC]]>
 					<text><![CDATA[Producto:]]></text>
 				</staticText>
 				<textField>
-					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#943895" backcolor="#E6E6E6" uuid="1230bf7a-6afb-4e9c-84ae-a9f57cd52528"/>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="1230bf7a-6afb-4e9c-84ae-a9f57cd52528"/>
 					<textElement>
 						<font size="24" isBold="true"/>
 					</textElement>
@@ -75,7 +75,7 @@ ORDER BY p."ProductName" DESC]]>
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#953896" uuid="a2834ee3-519d-49e9-bcee-53049769d2e1"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#6F3C99" uuid="a2834ee3-519d-49e9-bcee-53049769d2e1"/>
 				<staticText>
 					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="2f6e759c-7808-4e45-ba4a-3506379860a3"/>
 					<textElement>
@@ -102,7 +102,7 @@ ORDER BY p."ProductName" DESC]]>
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="1a9b1b8d-b079-40c9-962a-99641197cdd3"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#943895" backcolor="#E6E6E6" uuid="cd83fc5c-c734-4c5d-aa82-de4030506101">
+				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="cd83fc5c-c734-4c5d-aa82-de4030506101">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82d0112e-046f-4d7b-aeb1-b9cba58f8f60"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -111,7 +111,7 @@ ORDER BY p."ProductName" DESC]]>
 				<text><![CDATA[Tamaño/unidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#943895" backcolor="#E6E6E6" uuid="5b7ac641-5067-4e86-ba06-2586bd9dc725">
+				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="5b7ac641-5067-4e86-ba06-2586bd9dc725">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76416889-9490-4f87-a8d4-c7660d017aa7"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -120,7 +120,7 @@ ORDER BY p."ProductName" DESC]]>
 				<text><![CDATA[En existencias]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#943895" backcolor="#E6E6E6" uuid="c9e0a25a-bcb2-4d2b-a9ac-ed986863a300">
+				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="c9e0a25a-bcb2-4d2b-a9ac-ed986863a300">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adc1b5ab-b33b-4e36-ae83-206e71c1db2e"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -129,7 +129,7 @@ ORDER BY p."ProductName" DESC]]>
 				<text><![CDATA[En camino]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#943895" backcolor="#E6E6E6" uuid="78b2806a-ff04-470f-ae18-d7cce419935f">
+				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="78b2806a-ff04-470f-ae18-d7cce419935f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ca9bdb17-b3ce-40c1-9835-3409b1c1a3ab"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -138,7 +138,7 @@ ORDER BY p."ProductName" DESC]]>
 				<text><![CDATA[Precio unitario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#943895" backcolor="#E6E6E6" uuid="2124815f-8908-40fc-a9d4-88bc392cf08d">
+				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#6F3C99" backcolor="#E6E6E6" uuid="2124815f-8908-40fc-a9d4-88bc392cf08d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38fb5d38-2ab7-4903-a83b-ea7c03bf01df"/>
 				</reportElement>
 				<textElement textAlignment="Center">
