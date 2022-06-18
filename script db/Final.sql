@@ -494,3 +494,17 @@ GO
 
 ALTER SERVER ROLE [bulkadmin] ADD MEMBER [tablas]
 GO
+
+--Procedimiento para mapa mundial
+
+CREATE PROCEDURE [dbo].[sp_SuppliersStock_WithLocation]
+AS
+SELECT 
+	s.CompanyName AS Proveedor,
+	s.Country,
+	s.City,
+	SUM(p.UnitPrice * (p.UnitsInStock+p.UnitsOnOrder)) AS 'Valor en stock'
+FROM Products p
+JOIN Suppliers s ON p.SupplierID = s.SupplierID
+GROUP BY s.Country, s.City, s.CompanyName
+GO
