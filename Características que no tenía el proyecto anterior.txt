@@ -1,0 +1,19 @@
+cada combobox está decorada, de forma que se puede escribir el nombre en lugar de escribir la llave foránea
+
+se bloquea la caja de ID cuando se agregará un registro, se desbloquea cuando se hará otro tipo de operación
+
+se puede navegar entre los campos usando la tecla enter
+
+hay validación para strings, enteros y doubles, de forma que en los campos númericos, en primera instancia no pueden exceder un valor máximo
+
+se desbloquean las cajas en cuanto se pasa a otra caja
+
+solo puede haber una instancia de cada interfaz, hay un botón en el menú principal que puede cerrar todas las ventanas del programa
+
+cada interfaz tiene su propio icono
+
+se están usando lambdas para objetos anonimos que nomás tienen un método anónimo
+
+se está usando sonarlint para verificar que se están siguiendo todas las convenciones
+
+se está usando logger para los mensajes en lugar de la consola
